@@ -23,6 +23,7 @@ defmodule PinPayments.MixProject do
     [
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:mix_test_watch, "~> 0.6", only: :dev},
+      {:hackney, "~> 1.12"},
       {:jason, "~> 1.0"},
       {:tesla, "~> 0.10.0"}
     ]

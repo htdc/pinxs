@@ -1,5 +1,6 @@
 defmodule PinPayments.HTTP.PinApi do
   use Tesla
+  adapter :hackney, pool: :pin_api
 
   alias PinPayments.Cards.Card
   alias PinPayments.Charges.Charge

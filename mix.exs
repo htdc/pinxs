@@ -25,7 +25,7 @@ defmodule PinPayments.MixProject do
       {:mix_test_watch, "~> 0.6", only: :dev},
       {:hackney, "~> 1.12"},
       {:jason, "~> 1.0"},
-      {:tesla, "~> 0.10.0"}
+      {:tesla, git: "https://github.com/teamon/tesla.git"}
     ]
   end
 end

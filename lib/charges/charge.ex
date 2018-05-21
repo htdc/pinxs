@@ -1,5 +1,8 @@
 defmodule PinPayments.Charges.Charge do
-  @derive Jason.Encoder
+  alias PinPayments.HTTP.API
+  alias __MODULE__
+
+  @derive [Poison.Encoder]
   defstruct [
     :email,
     :description,
@@ -10,7 +13,16 @@ defmodule PinPayments.Charges.Charge do
     :metadata,
     :card,
     :card_token,
-    :customer_token
+    :customer_token,
+    :transfer,
+    :amount_refunded,
+    :total_fees,
+    :merchant_entitlement,
+    :refund_pending,
+    :authorisation_expired,
+    :captured,
+    :settlement_currency,
+    :metadata
   ]
 
   @moduledoc """
@@ -21,7 +33,7 @@ defmodule PinPayments.Charges.Charge do
   - amount
   - ip_address
 
-  and one of 
+  and one of
   - card
   - card_token
   - customer_token
@@ -32,19 +44,21 @@ defmodule PinPayments.Charges.Charge do
   - capture
   - metadata
 
-  ```
-  %Card{
-  "number": "5520000000000000",
-  "expiry_month": "05",
-  "expiry_year": "2019",
-  "cvc": "123",
-  "name": "Roland Robot",
-  "address_line1": "42 Sevenoaks St",
-  "address_city": "Lathlain",
-  "address_postcode": "6454",
-  "address_state": "WA",
-  "address_country": "Australia"
-  }
-  ```
   """
+  def create(%Charge{card: card} = charge_map) when not is_nil(card), do: create_charge(charge_map)
+
+  def create(%Charge{card_token: card_token} = charge_map) when not is_nil(card_token), do: create_charge(charge_map)
+
+  def create(%Charge{customer_token: customer_token} = charge_map) when not is_nil(customer_token), do: create_charge(charge_map)
+
+  defp create_charge(charge_map) do
+    API.post("/charges", charge_map)
+    |> handle_response
+  end
+
+  defp handle_response({:ok, response}) do
+    {:ok, struct(%__MODULE__{}, response.body.response)}
+  end
+  defp handle_response(response), do: response
+
 end

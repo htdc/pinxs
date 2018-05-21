@@ -1,5 +1,6 @@
 defmodule PinPayments.Customers.Customer do
   alias PinPayments.HTTP.API
+  alias PinPayments.Response
   alias __MODULE__
 
   @derive Poison.Encoder
@@ -26,12 +27,7 @@ defmodule PinPayments.Customers.Customer do
 
   defp create_customer(customer) do
     API.post("/customers", customer)
-    |> handle_response
+    |> Response.transform(__MODULE__)
   end
 
-  defp handle_response({:ok, response}) do
-    {:ok, struct(%__MODULE__{}, response.body.response)}
-  end
-
-  defp handle_response(response), do: response
 end

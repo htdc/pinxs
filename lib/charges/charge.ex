@@ -1,5 +1,6 @@
 defmodule PinPayments.Charges.Charge do
   alias PinPayments.HTTP.API
+  alias PinPayments.Response
   alias __MODULE__
 
   @derive [Poison.Encoder]
@@ -53,12 +54,6 @@ defmodule PinPayments.Charges.Charge do
 
   defp create_charge(charge_map) do
     API.post("/charges", charge_map)
-    |> handle_response
+    |> Response.transform(__MODULE__)
   end
-
-  defp handle_response({:ok, response}) do
-    {:ok, struct(%__MODULE__{}, response.body.response)}
-  end
-  defp handle_response(response), do: response
-
 end

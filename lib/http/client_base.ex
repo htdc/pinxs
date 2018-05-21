@@ -5,8 +5,6 @@ defmodule PinPayments.HTTP.ClientBase do
   @pin_api_key Application.get_env(:pin_payments, :api_key)
   @encoded Base.encode64("#{@pin_api_key}:")
 
-  # plug(Tesla.Middleware.JSON, engine: Poison)
-
   def process_url(endpoint) do
     @pin_url <> endpoint
   end
@@ -15,6 +13,7 @@ defmodule PinPayments.HTTP.ClientBase do
     [{"Authorization", "Basic #{@encoded}"}, {"Content-Type", "application/json"}  ]
   end
 
+  def process_response_body(""), do: ""
   def process_response_body(body), do: Poison.decode!(body, keys: :atoms)
   def process_request_body(body), do: Poison.encode!(body)
 

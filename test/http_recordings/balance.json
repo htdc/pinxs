@@ -1,0 +1,37 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": {
+        "Authorization": "***"
+      },
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/balance"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"available\":[{\"amount\":50000,\"currency\":\"AUD\"}],\"pending\":[{\"amount\":50000,\"currency\":\"AUD\"}]}}",
+      "headers": {
+        "Date": "Mon, 21 May 2018 03:31:58 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "108",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "ETag": "W/\"bab2cc71383d355c6a66c5fe52ffa245\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "db2e54cb-0e30-4e47-a231-4514aa76438b",
+        "X-Runtime": "0.008982",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

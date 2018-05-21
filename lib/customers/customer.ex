@@ -30,4 +30,39 @@ defmodule PinPayments.Customers.Customer do
     |> Response.transform(__MODULE__)
   end
 
+  def get(customer_token) do
+    API.get("/customers/#{customer_token}")
+    |> Response.transform(__MODULE__)
+  end
+
+  def get_all() do
+    API.get("/customers")
+    |> Response.transform(__MODULE__)
+  end
+
+  def get_all(page) when is_integer(page) do
+    API.get("/customers?page=#{page}")
+    |> Response.transform(__MODULE__)
+  end
+
+  def get_cards(%Customer{token: token}) do
+    API.get("/customers/#{token}/cards")
+    |> Response.transform(PinPayments.Cards.Card)
+  end
+
+
+  def get_charges(%Customer{token: token}) do
+    API.get("/customers/#{token}/charges")
+    |> Response.transform(PinPayments.Charges.Charge)
+  end
+
+  def update(%Customer{token: customer_token}, params) when not is_nil(customer_token) do
+    API.put("/customers/#{customer_token}", params)
+    |> Response.transform(__MODULE__)
+  end
+
+  def delete(%Customer{token: customer_token}) do
+    API.delete("/customers/#{customer_token}")
+    |> Response.transform(__MODULE__)
+  end
 end

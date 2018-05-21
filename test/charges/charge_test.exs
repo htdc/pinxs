@@ -52,7 +52,7 @@ defmodule PinPayments.Charges.ChargeTest do
       charge_map = %{ charge | card_token: card_token}
       {:error, err} = Charge.create(charge_map)
 
-      assert err.body.error_description == "Token already used. Card tokens can only be used once, to create a charge or assign a card to a customer"
+      assert err.error_description == "Token already used. Card tokens can only be used once, to create a charge or assign a card to a customer"
     end
   end
 

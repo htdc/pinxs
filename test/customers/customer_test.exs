@@ -32,7 +32,7 @@ defmodule PinPayments.Customers.CustomerTest do
     use_cassette("create_customer_with_missing_fields") do
       {:error, err} = Customer.create(%Customer{card: card})
 
-      assert err.body.error_description == "One or more parameters were missing or invalid"
+      assert err.error_description == "One or more parameters were missing or invalid"
     end
   end
 end

@@ -1,11 +1,8 @@
 defmodule PinPayments.Cards.Card do
-  alias PinPayments.Cards.Card
-  alias PinPayments.HTTP.PinApi
+  alias PinPayments.HTTP.API
+  alias __MODULE__
 
-  import PinApi
-  import PinPayments.HTTP.Response
-
-  @derive Jason.Encoder
+  @derive Poison.Encoder
   defstruct [
     :address_city,
     :address_country,
@@ -40,7 +37,14 @@ defmodule PinPayments.Cards.Card do
   """
 
   def create(%Card{} = card_map) do
-    post("/cards", card_map)
-    |> normalize
+    API.post("/cards", card_map)
+    |> handle_response
   end
+
+  defp handle_response({:ok, response}) do
+    {:ok, struct(%__MODULE__{}, response.body.response)}
+  end
+
+  defp handle_response(response), do: response
+
 end

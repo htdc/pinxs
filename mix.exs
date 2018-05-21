@@ -22,10 +22,11 @@ defmodule PinPayments.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
+      {:exvcr, "~> 0.10", only: :test},
       {:mix_test_watch, "~> 0.6", only: :dev},
       {:hackney, "~> 1.12"},
-      {:jason, "~> 1.0"},
-      {:tesla, git: "https://github.com/teamon/tesla.git"}
+      {:httpoison, "~> 1.1.1"},
+      {:poison, "~> 3.1"},
     ]
   end
 end

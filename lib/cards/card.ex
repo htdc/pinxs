@@ -14,7 +14,8 @@ defmodule PinPayments.Cards.Card do
     :expiry_month,
     :expiry_year,
     :name,
-    :number
+    :number,
+    :token
   ]
 
   @moduledoc """
@@ -36,8 +37,8 @@ defmodule PinPayments.Cards.Card do
   - address_state
   """
 
-  def create(%Card{} = card_map) do
-    API.post("/cards", card_map)
+  def create(%Card{} = card) do
+    API.post("/cards", card)
     |> handle_response
   end
 

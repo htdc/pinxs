@@ -35,8 +35,7 @@ defmodule PinPayments.Cards.CardTest do
     use_cassette("card_with_missing_field") do
       {:error, response} = Card.create(card)
 
-      assert response.error_description ==
-               "One or more parameters were missing or invalid"
+      assert response.error_description == "One or more parameters were missing or invalid"
     end
   end
 end

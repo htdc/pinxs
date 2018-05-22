@@ -1,0 +1,73 @@
+[
+  {
+    "request": {
+      "body": "{\"transfer\":null,\"total_fees\":null,\"token\":null,\"settlement_currency\":null,\"refund_pending\":null,\"metadata\":null,\"merchant_entitlement\":null,\"ip_address\":\"127.0.0.1\",\"email\":\"hagrid@hogwarts.wiz\",\"description\":\"Dragon eggs\",\"customer_token\":null,\"currency\":null,\"card_token\":null,\"card\":{\"token\":null,\"number\":\"5520000000000000\",\"name\":\"Rubius Hagrid\",\"expiry_year\":\"20\",\"expiry_month\":\"12\",\"cvc\":\"321\",\"address_state\":null,\"address_postcode\":null,\"address_line2\":null,\"address_line1\":\"The Game Keepers Cottage\",\"address_country\":\"England\",\"address_city\":\"Hogwarts\"},\"captured\":null,\"capture\":false,\"authorisation_expired\":null,\"amount_refunded\":null,\"amount\":50000}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/charges"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"ch_lHGnMQU16dxHx3XhVIFWow\",\"success\":true,\"amount\":50000,\"currency\":\"AUD\",\"description\":\"Dragon eggs\",\"email\":\"hagrid@hogwarts.wiz\",\"ip_address\":\"127.0.0.1\",\"created_at\":\"2018-05-22T08:11:10Z\",\"status_message\":\"Successful Authorisation\",\"error_message\":null,\"card\":{\"token\":\"card_vGq6Vx7zS0rZwkhlNbj5ng\",\"scheme\":\"master\",\"display_number\":\"XXXX-XXXX-XXXX-0000\",\"expiry_month\":12,\"expiry_year\":2020,\"name\":\"Rubius Hagrid\",\"address_line1\":\"The Game Keepers Cottage\",\"address_line2\":null,\"address_city\":\"Hogwarts\",\"address_postcode\":null,\"address_state\":null,\"address_country\":\"England\",\"customer_token\":null,\"primary\":null},\"transfer\":[],\"amount_refunded\":0,\"total_fees\":null,\"merchant_entitlement\":null,\"refund_pending\":false,\"authorisation_expired\":false,\"captured\":false,\"settlement_currency\":\"AUD\",\"metadata\":{}}}",
+      "headers": {
+        "Date": "Tue, 22 May 2018 08:11:10 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "837",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "ETag": "W/\"6bc8a3ef2e12aee5746ac37cac563426\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "892f8adc-1323-45b2-aa4b-e93bd6fee64c",
+        "X-Runtime": "0.127301",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "{\"amount\":200}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "put",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/charges/ch_lHGnMQU16dxHx3XhVIFWow/capture"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"error\":\"invalid_capture_amount\",\"error_description\":\"You must capture the full amount that was authorised\",\"charge_token\":\"ch_lHGnMQU16dxHx3XhVIFWow\"}",
+      "headers": {
+        "Date": "Tue, 22 May 2018 08:11:10 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "152",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "Cache-Control": "no-cache",
+        "X-Request-Id": "14bf9701-1150-4b68-81be-05ab347d75c4",
+        "X-Runtime": "0.013456",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 400,
+      "type": "ok"
+    }
+  }
+]

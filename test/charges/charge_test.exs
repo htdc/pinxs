@@ -85,5 +85,47 @@ defmodule PinPayments.Charges.ChargeTest do
     end
   end
 
+  test "Capture a charge", %{charge: charge, card: card} do
+    use_cassette("capture_full_charge") do
+      {:ok, uncaptured_charge} = Charge.create(%{ charge | capture: false, card: card})
+
+      assert uncaptured_charge.captured == false
+
+      {:ok, captured_charge} = Charge.capture(uncaptured_charge)
+
+      assert captured_charge.captured == true
+    end
+  end
+
+  test "Capture a partial charge", %{charge: charge, card: card} do
+    use_cassette("capture_partial_charge") do
+      {:ok, uncaptured_charge} = Charge.create(%{ charge | capture: false, card: card})
+
+      assert uncaptured_charge.captured == false
+
+      {:error, err} = Charge.capture(uncaptured_charge, %{amount: 200})
+
+      assert err.error_description == "You must capture the full amount that was authorised"
+    end
+  end
+
+  test "Get all charges" do
+    use_cassette("get_all_charges") do
+      {:ok, charges} = Charge.get_all()
+
+      %{ items: [charge | _]} = charges
+
+      assert charge.amount == 50000
+      assert length(charges.items) == 25
+    end
+  end
+
+  test "Get a specific charge", %{charge: charge, card: card} do
+    {:ok, created_charge} = Charge.create(%{ charge | card: card})
+
+    {:ok, retreived_charge} = Charge.get(created_charge.token)
+
+    assert created_charge == retreived_charge
+  end
 
 end

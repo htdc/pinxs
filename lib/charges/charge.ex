@@ -5,25 +5,25 @@ defmodule PinPayments.Charges.Charge do
 
   @derive [Poison.Encoder]
   defstruct [
-    :email,
-    :description,
-    :amount,
-    :ip_address,
-    :currency,
-    :capture,
-    :metadata,
-    :card,
-    :card_token,
-    :customer_token,
-    :transfer,
     :amount_refunded,
-    :total_fees,
-    :merchant_entitlement,
-    :refund_pending,
+    :amount,
     :authorisation_expired,
+    :capture,
     :captured,
+    :card_token,
+    :card,
+    :currency,
+    :customer_token,
+    :description,
+    :email,
+    :ip_address,
+    :merchant_entitlement,
+    :metadata,
+    :refund_pending,
     :settlement_currency,
-    :metadata
+    :total_fees,
+    :token,
+    :transfer,
   ]
 
   @moduledoc """
@@ -46,6 +46,11 @@ defmodule PinPayments.Charges.Charge do
   - metadata
 
   """
+  def capture(%Charge{token: token}, amount \\ %{}) do
+    API.put("/charges/#{token}/capture", amount)
+    |> Response.transform(__MODULE__)
+  end
+
   def create(%Charge{card: card} = charge_map) when not is_nil(card), do: create_charge(charge_map)
 
   def create(%Charge{card_token: card_token} = charge_map) when not is_nil(card_token), do: create_charge(charge_map)
@@ -54,6 +59,21 @@ defmodule PinPayments.Charges.Charge do
 
   defp create_charge(charge_map) do
     API.post("/charges", charge_map)
+    |> Response.transform(__MODULE__)
+  end
+
+  def get_all() do
+    API.get("/charges")
+    |> Response.transform(__MODULE__)
+  end
+
+  def get_all(page) do
+    API.get("/charges?page=#{page}")
+    |> Response.transform(__MODULE__)
+  end
+
+  def get(token) do
+    API.get("/charges/#{token}")
     |> Response.transform(__MODULE__)
   end
 end

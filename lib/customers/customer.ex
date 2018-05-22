@@ -1,6 +1,7 @@
 defmodule PinPayments.Customers.Customer do
   alias PinPayments.HTTP.API
   alias PinPayments.Response
+  alias PinPayments.Cards.Card
   alias __MODULE__
 
   @derive Poison.Encoder
@@ -22,6 +23,16 @@ defmodule PinPayments.Customers.Customer do
   - card_token
   """
 
+  def add_card(%Customer{token: token}, %Card{} = card) do
+    API.post("/customers/#{token}/cards", card)
+    |> Response.transform(Card)
+  end
+
+  def add_card(%Customer{token: token}, card_token) when is_binary(card_token) do
+    API.post("/customers/#{token}/cards", %{card_token: card_token})
+    |> Response.transform(Card)
+  end
+
   def create(%Customer{card: card} = customer) when not is_nil(card), do: create_customer(customer)
   def create(%Customer{card_token: card_token} = customer) when not is_nil(card_token), do: create_customer(customer)
 
@@ -30,8 +41,18 @@ defmodule PinPayments.Customers.Customer do
     |> Response.transform(__MODULE__)
   end
 
-  def get(customer_token) do
-    API.get("/customers/#{customer_token}")
+  def delete(%Customer{token: token}) do
+    API.delete("/customers/#{token}")
+    |> Response.transform(__MODULE__)
+  end
+
+  def delete_card(%Customer{token: token}, card_token) do
+    API.delete("/customers/#{token}/cards/#{card_token}")
+    |> Response.transform(__MODULE__)
+  end
+
+  def get(token) do
+    API.get("/customers/#{token}")
     |> Response.transform(__MODULE__)
   end
 
@@ -47,22 +68,18 @@ defmodule PinPayments.Customers.Customer do
 
   def get_cards(%Customer{token: token}) do
     API.get("/customers/#{token}/cards")
-    |> Response.transform(PinPayments.Cards.Card)
+    |> Response.transform(Card)
   end
-
 
   def get_charges(%Customer{token: token}) do
     API.get("/customers/#{token}/charges")
     |> Response.transform(PinPayments.Charges.Charge)
   end
 
-  def update(%Customer{token: customer_token}, params) when not is_nil(customer_token) do
-    API.put("/customers/#{customer_token}", params)
-    |> Response.transform(__MODULE__)
-  end
+  # TODO Add 'Subscriptions'
 
-  def delete(%Customer{token: customer_token}) do
-    API.delete("/customers/#{customer_token}")
+  def update(%Customer{token: token}, params) when not is_nil(token) do
+    API.put("/customers/#{token}", params)
     |> Response.transform(__MODULE__)
   end
 end

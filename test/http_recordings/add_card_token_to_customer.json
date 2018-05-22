@@ -1,0 +1,111 @@
+[
+  {
+    "request": {
+      "body": "{\"token\":null,\"email\":\"hagrid@hogwarts.wiz\",\"card_token\":null,\"card\":{\"token\":null,\"number\":\"5520000000000000\",\"name\":\"Rubius Hagrid\",\"expiry_year\":\"20\",\"expiry_month\":\"12\",\"cvc\":\"321\",\"address_state\":null,\"address_postcode\":null,\"address_line2\":null,\"address_line1\":\"The Game Keepers Cottage\",\"address_country\":\"England\",\"address_city\":\"Hogwarts\"}}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/customers"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"cus_1QM-jcuGk-bnTLpUdL4j7g\",\"email\":\"hagrid@hogwarts.wiz\",\"created_at\":\"2018-05-22T07:25:33Z\",\"card\":{\"token\":\"card_zMIqLqJXfzi2b8hNtd9zOg\",\"scheme\":\"master\",\"display_number\":\"XXXX-XXXX-XXXX-0000\",\"expiry_month\":12,\"expiry_year\":2020,\"name\":\"Rubius Hagrid\",\"address_line1\":\"The Game Keepers Cottage\",\"address_line2\":null,\"address_city\":\"Hogwarts\",\"address_postcode\":null,\"address_state\":null,\"address_country\":\"England\",\"customer_token\":\"cus_1QM-jcuGk-bnTLpUdL4j7g\",\"primary\":true}}}",
+      "headers": {
+        "Date": "Tue, 22 May 2018 07:25:33 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "505",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "ETag": "W/\"d4e91b02da3293587930c741a232519b\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "b51da20a-b273-4b2f-b821-8fb24bb43750",
+        "X-Runtime": "0.074478",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "{\"token\":null,\"number\":\"5520000000000000\",\"name\":\"Rubius Hagrid\",\"expiry_year\":2018,\"expiry_month\":\"12\",\"cvc\":\"321\",\"address_state\":null,\"address_postcode\":null,\"address_line2\":null,\"address_line1\":\"The Game Keepers Cottage\",\"address_country\":\"England\",\"address_city\":\"Hogwarts\"}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/cards"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"card_Pzft5omj2Fkl83f7hNwKNw\",\"scheme\":\"master\",\"display_number\":\"XXXX-XXXX-XXXX-0000\",\"expiry_month\":12,\"expiry_year\":2018,\"name\":\"Rubius Hagrid\",\"address_line1\":\"The Game Keepers Cottage\",\"address_line2\":null,\"address_city\":\"Hogwarts\",\"address_postcode\":null,\"address_state\":null,\"address_country\":\"England\",\"customer_token\":null,\"primary\":null},\"ip_address\":\"103.217.167.81\"}",
+      "headers": {
+        "Date": "Tue, 22 May 2018 07:25:33 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "399",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "X-Requested-From": "103.217.167.81",
+        "ETag": "W/\"33be4fc990cd72079cf0f770cd735036\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "4e5b0ef4-6947-4c17-87b1-75cd90ef90df",
+        "X-Runtime": "0.035752",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "{\"card_token\":\"card_Pzft5omj2Fkl83f7hNwKNw\"}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/customers/cus_1QM-jcuGk-bnTLpUdL4j7g/cards"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"card_Pzft5omj2Fkl83f7hNwKNw\",\"scheme\":\"master\",\"display_number\":\"XXXX-XXXX-XXXX-0000\",\"expiry_month\":12,\"expiry_year\":2018,\"name\":\"Rubius Hagrid\",\"address_line1\":\"The Game Keepers Cottage\",\"address_line2\":null,\"address_city\":\"Hogwarts\",\"address_postcode\":null,\"address_state\":null,\"address_country\":\"England\",\"customer_token\":\"cus_1QM-jcuGk-bnTLpUdL4j7g\",\"primary\":false}}",
+      "headers": {
+        "Date": "Tue, 22 May 2018 07:25:33 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "394",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "ETag": "W/\"4ababee20d402d3dee0c24df18caaceb\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "2e8507c7-ca36-44b5-b20a-8fccb6c9c9b0",
+        "X-Runtime": "0.034560",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  }
+]

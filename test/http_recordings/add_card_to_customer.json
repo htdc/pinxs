@@ -1,0 +1,75 @@
+[
+  {
+    "request": {
+      "body": "{\"token\":null,\"email\":\"hagrid@hogwarts.wiz\",\"card_token\":null,\"card\":{\"token\":null,\"number\":\"5520000000000000\",\"name\":\"Rubius Hagrid\",\"expiry_year\":\"20\",\"expiry_month\":\"12\",\"cvc\":\"321\",\"address_state\":null,\"address_postcode\":null,\"address_line2\":null,\"address_line1\":\"The Game Keepers Cottage\",\"address_country\":\"England\",\"address_city\":\"Hogwarts\"}}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/customers"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"cus_sEDYjkaJ5fb5OoxMz66fYg\",\"email\":\"hagrid@hogwarts.wiz\",\"created_at\":\"2018-05-22T07:23:24Z\",\"card\":{\"token\":\"card_ONDoAcM44_XT-DOgmiq_6w\",\"scheme\":\"master\",\"display_number\":\"XXXX-XXXX-XXXX-0000\",\"expiry_month\":12,\"expiry_year\":2020,\"name\":\"Rubius Hagrid\",\"address_line1\":\"The Game Keepers Cottage\",\"address_line2\":null,\"address_city\":\"Hogwarts\",\"address_postcode\":null,\"address_state\":null,\"address_country\":\"England\",\"customer_token\":\"cus_sEDYjkaJ5fb5OoxMz66fYg\",\"primary\":true}}}",
+      "headers": {
+        "Date": "Tue, 22 May 2018 07:23:25 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "505",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "ETag": "W/\"56caa12658ff9a09270584629d976919\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "20a54db0-47c1-43cb-a65e-b0254d933fc6",
+        "X-Runtime": "0.114544",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "{\"token\":null,\"number\":\"5520000000000000\",\"name\":\"Rubius Hagrid\",\"expiry_year\":2019,\"expiry_month\":\"12\",\"cvc\":\"321\",\"address_state\":null,\"address_postcode\":null,\"address_line2\":null,\"address_line1\":\"The Game Keepers Cottage\",\"address_country\":\"England\",\"address_city\":\"Hogwarts\"}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/customers/cus_sEDYjkaJ5fb5OoxMz66fYg/cards"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"card__m8ivSV-i8Yahja02z836g\",\"scheme\":\"master\",\"display_number\":\"XXXX-XXXX-XXXX-0000\",\"expiry_month\":12,\"expiry_year\":2019,\"name\":\"Rubius Hagrid\",\"address_line1\":\"The Game Keepers Cottage\",\"address_line2\":null,\"address_city\":\"Hogwarts\",\"address_postcode\":null,\"address_state\":null,\"address_country\":\"England\",\"customer_token\":\"cus_sEDYjkaJ5fb5OoxMz66fYg\",\"primary\":false},\"ip_address\":\"103.217.167.81\"}",
+      "headers": {
+        "Date": "Tue, 22 May 2018 07:23:25 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "424",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "X-Requested-From": "103.217.167.81",
+        "ETag": "W/\"d217717a6780e203282a814c7b23d409\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "30a9c5f8-0aeb-404e-9bec-783cd16e655e",
+        "X-Runtime": "0.058497",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  }
+]

@@ -16,6 +16,7 @@ defmodule PinPayments.Customers.CustomerTest do
       address_country: "England",
       cvc: "321"
     }
+
     customer = %Customer{email: "hagrid@hogwarts.wiz", card: card}
 
     {:ok, customer: customer, card: card}
@@ -84,7 +85,6 @@ defmodule PinPayments.Customers.CustomerTest do
     use_cassette("delete_customer") do
       {:ok, created_customer} = Customer.create(customer)
 
-
       {:ok, deleted} = Customer.delete(created_customer)
 
       assert deleted == true
@@ -102,20 +102,53 @@ defmodule PinPayments.Customers.CustomerTest do
         amount: 50000,
         customer_token: created_customer.token
       }
+
       {:ok, _} = Charge.create(charge)
 
-      {:ok, %{items: [ charge | _ ]}} = Customer.get_charges(created_customer)
+      {:ok, %{items: [charge | _]}} = Customer.get_charges(created_customer)
 
       assert charge.description == "Dragon eggs"
     end
   end
 
   test "Get customer's cards", %{customer: customer} do
-    {:ok, created_customer} = Customer.create(customer)
-    {:ok, %{items: [ card | _ ]}} = Customer.get_cards(created_customer)
+    use_cassette("get_customer_cards") do
+      {:ok, created_customer} = Customer.create(customer)
+      {:ok, %{items: [card | _]}} = Customer.get_cards(created_customer)
 
-    assert card.expiry_year == 2020
+      assert card.expiry_year == 2020
+    end
   end
 
+  test "Add card to customer", %{customer: customer, card: card} do
+    use_cassette("add_card_to_customer") do
+      {:ok, created_customer} = Customer.create(customer)
 
+      {:ok, created_card} = Customer.add_card(created_customer, %{card | expiry_year: 2019})
+
+      assert created_card.expiry_year == 2019
+    end
+  end
+
+  test "Add card to customer with token", %{customer: customer, card: card} do
+    use_cassette("add_card_token_to_customer") do
+      {:ok, created_customer} = Customer.create(customer)
+      {:ok, created_card} = Card.create(%{card | expiry_year: 2018})
+
+      {:ok, added_card} = Customer.add_card(created_customer, created_card.token)
+
+      assert added_card.expiry_year == 2018
+    end
+  end
+
+  test "Delete customer card", %{customer: customer, card: card} do
+    use_cassette("delete_customer_card") do
+      {:ok, created_customer} = Customer.create(customer)
+      {:ok, created_card} = Customer.add_card(created_customer, %{card | expiry_year: 2019})
+
+      {:ok, delete_card} = Customer.delete_card(created_customer, created_card.token)
+
+      assert delete_card == true
+    end
+  end
 end

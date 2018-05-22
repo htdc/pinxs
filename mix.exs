@@ -7,7 +7,11 @@ defmodule PinPayments.MixProject do
       version: "0.1.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      docs: [
+        logo: "./images/pin_payments.png",
+        extras: ["README.md"]
+      ]
     ]
   end
 
@@ -26,7 +30,7 @@ defmodule PinPayments.MixProject do
       {:mix_test_watch, "~> 0.6", only: :dev},
       {:hackney, "~> 1.12"},
       {:httpoison, "~> 1.1.1"},
-      {:poison, "~> 3.1"},
+      {:poison, "~> 3.1"}
     ]
   end
 end

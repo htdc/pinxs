@@ -1,13 +1,27 @@
 defmodule PinPayments.Response do
+  @moduledoc """
+  Provides a standard way of converting all HTTP responses into tagged
+  tuples
+
+  In particular, all failed requests will be transformed into error tuples.
+
+  The reason for this is that whilst the network request may have been successful,
+  we consider any HTTP status code not in the  200 range to be an error.
+  """
+
+  @spec transform({:ok, map()} | {:error, map()}, module()) ::
+          {:ok, struct()} | {:error, PinPayments.Error.t()}
   def transform(
         {:ok, %{body: %{count: count, pagination: pagination, response: response}}},
         module
       )
       when is_list(response) and not is_nil(count) and not is_nil(pagination) do
-    paginated = %{}
-    |> Map.put(:count, count)
-    |> Map.put(:pagination, pagination)
-    |> Map.put(:items, Enum.map(response, &struct(module, &1)))
+    paginated =
+      %{}
+      |> Map.put(:count, count)
+      |> Map.put(:pagination, pagination)
+      |> Map.put(:items, Enum.map(response, &struct(module, &1)))
+
     {:ok, paginated}
   end
 
@@ -28,5 +42,4 @@ defmodule PinPayments.Response do
 
     {:error, error}
   end
-
 end

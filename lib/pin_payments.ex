@@ -1,5 +1,3 @@
 defmodule PinPayments do
-  @moduledoc """
-  Documentation for PinPayments.
-  """
+  @moduledoc false
 end

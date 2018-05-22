@@ -16,12 +16,14 @@ defmodule PinPayments.Charges.ChargeTest do
       address_country: "England",
       cvc: "321"
     }
+
     charge = %Charge{
       email: "hagrid@hogwarts.wiz",
       description: "Dragon eggs",
       ip_address: "127.0.0.1",
-      amount: 50000,
+      amount: 50000
     }
+
     card_token = "card_R6khtY81EZE5RiqkidVhgA"
     customer = %Customer{email: "hagrid@hogwarts.wiz", card: card}
     {:ok, card: card, charge: charge, card_token: card_token, customer: customer}
@@ -29,7 +31,7 @@ defmodule PinPayments.Charges.ChargeTest do
 
   test "Create a charge with full card details", %{card: card, charge: charge} do
     use_cassette("charge_with_card") do
-      charge = %{ charge | card: card }
+      charge = %{charge | card: card}
       {:ok, charge} = Charge.create(charge)
       assert charge.amount == 50000
       assert charge.email == "hagrid@hogwarts.wiz"
@@ -40,7 +42,7 @@ defmodule PinPayments.Charges.ChargeTest do
 
   test "Create an uncaptured charge", %{card: card, charge: charge} do
     use_cassette("charge_uncaptured") do
-      charge = %{ charge | card: card, capture: false}
+      charge = %{charge | card: card, capture: false}
       {:ok, charge} = Charge.create(charge)
 
       assert charge.captured == false
@@ -49,10 +51,11 @@ defmodule PinPayments.Charges.ChargeTest do
 
   test "Create a charge with a used token", %{charge: charge, card_token: card_token} do
     use_cassette("charge_with_used_card_token") do
-      charge_map = %{ charge | card_token: card_token}
+      charge_map = %{charge | card_token: card_token}
       {:error, err} = Charge.create(charge_map)
 
-      assert err.error_description == "Token already used. Card tokens can only be used once, to create a charge or assign a card to a customer"
+      assert err.error_description ==
+               "Token already used. Card tokens can only be used once, to create a charge or assign a card to a customer"
     end
   end
 
@@ -60,25 +63,22 @@ defmodule PinPayments.Charges.ChargeTest do
     use_cassette("charge_with_card_token") do
       {:ok, card} = Card.create(card_map)
 
-      charge_map = %{ charge | card_token: card.token }
+      charge_map = %{charge | card_token: card.token}
 
       {:ok, charge} = Charge.create(charge_map)
-
 
       assert charge.captured == true
       assert charge.amount == 50000
     end
   end
 
-
   test "Create a charge with a customer token", %{charge: charge, customer: customer} do
     use_cassette("charge_with_customer_token") do
       {:ok, customer} = Customer.create(customer)
 
-      charge_map = %{ charge | customer_token: customer.token }
+      charge_map = %{charge | customer_token: customer.token}
 
       {:ok, charge} = Charge.create(charge_map)
-
 
       assert charge.captured == true
       assert charge.amount == 50000
@@ -87,7 +87,7 @@ defmodule PinPayments.Charges.ChargeTest do
 
   test "Capture a charge", %{charge: charge, card: card} do
     use_cassette("capture_full_charge") do
-      {:ok, uncaptured_charge} = Charge.create(%{ charge | capture: false, card: card})
+      {:ok, uncaptured_charge} = Charge.create(%{charge | capture: false, card: card})
 
       assert uncaptured_charge.captured == false
 
@@ -99,7 +99,7 @@ defmodule PinPayments.Charges.ChargeTest do
 
   test "Capture a partial charge", %{charge: charge, card: card} do
     use_cassette("capture_partial_charge") do
-      {:ok, uncaptured_charge} = Charge.create(%{ charge | capture: false, card: card})
+      {:ok, uncaptured_charge} = Charge.create(%{charge | capture: false, card: card})
 
       assert uncaptured_charge.captured == false
 
@@ -113,7 +113,7 @@ defmodule PinPayments.Charges.ChargeTest do
     use_cassette("get_all_charges") do
       {:ok, charges} = Charge.get_all()
 
-      %{ items: [charge | _]} = charges
+      %{items: [charge | _]} = charges
 
       assert charge.amount == 50000
       assert length(charges.items) == 25
@@ -121,11 +121,10 @@ defmodule PinPayments.Charges.ChargeTest do
   end
 
   test "Get a specific charge", %{charge: charge, card: card} do
-    {:ok, created_charge} = Charge.create(%{ charge | card: card})
+    {:ok, created_charge} = Charge.create(%{charge | card: card})
 
     {:ok, retreived_charge} = Charge.get(created_charge.token)
 
     assert created_charge == retreived_charge
   end
-
 end

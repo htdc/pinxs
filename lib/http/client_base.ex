@@ -1,4 +1,5 @@
 defmodule PinPayments.HTTP.ClientBase do
+  @moduledoc false
   use HTTPoison.Base
 
   @pin_url Application.get_env(:pin_payments, :pin_url)
@@ -10,7 +11,7 @@ defmodule PinPayments.HTTP.ClientBase do
   end
 
   def process_request_headers(_headers) do
-    [{"Authorization", "Basic #{@encoded}"}, {"Content-Type", "application/json"}  ]
+    [{"Authorization", "Basic #{@encoded}"}, {"Content-Type", "application/json"}]
   end
 
   def process_response_body(""), do: ""

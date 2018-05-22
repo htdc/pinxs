@@ -3,6 +3,23 @@ defmodule PinPayments.Cards.Card do
   alias PinPayments.Response
   alias __MODULE__
 
+  @moduledoc """
+  Provides functions for working with cards
+
+  ## Required Fields
+
+  When creating a card, the following fields much be provided
+
+  - number
+  - expiry_month
+  - expiry_year
+  - cvc
+  - name
+  - address_line1
+  - address_country
+
+  """
+
   @derive Poison.Encoder
   defstruct [
     :address_city,
@@ -19,28 +36,27 @@ defmodule PinPayments.Cards.Card do
     :token
   ]
 
-  @moduledoc """
-  # Required Fields
+  @type t :: %__MODULE__{
+          address_city: nil | String.t(),
+          address_country: String.t(),
+          address_line1: String.t(),
+          address_line2: nil | String.t(),
+          address_postcode: nil | String.t(),
+          address_state: nil | String.t(),
+          cvc: String.t(),
+          expiry_month: String.t(),
+          expiry_year: String.t(),
+          name: String.t(),
+          number: String.t(),
+          token: nil | String.t()
+        }
 
-  - number
-  - expiry_month
-  - expiry_year
-  - cvc
-  - name
-  - address_line1
-  - address_country
-
-  # Optional Fields
-
-  - address_city
-  - address_line1
-  - address_postcode
-  - address_state
+  @doc """
+  Creates a tokenized credit card
   """
-
+  @spec create(Card.t()) :: {:ok, Card.t()} | {:error, PinPayments.Error.t()}
   def create(%Card{} = card) do
     API.post("/cards", card)
     |> Response.transform(__MODULE__)
   end
-
 end

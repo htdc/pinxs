@@ -73,3 +73,15 @@ This enables us to leverage pattern matching and the `with` construct very nicel
     end
 
 ```
+
+## Testing
+
+All of the HTTP request / responses have been stored using ExVCR, this makes it relatively easy to test.
+
+If you need to make changes to the stored responses, then you'll need to set your Pin API key as an environment variable.
+
+```shell
+export PIN_API_KEY=mykey
+```
+
+And then you can run `mix vcr.delete` to remove all the stored response and work with your own set

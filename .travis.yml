@@ -1,6 +1,7 @@
 language: elixir
 
 elixir: "1.6.4"
+otp_release: "20.3.5"
 
 cache:
   directories:
@@ -9,4 +10,3 @@ cache:
 
 script:
   - mix test
-  - mix dialyzer

@@ -15,7 +15,8 @@ defmodule PINXS.MixProject do
       package: package(),
       docs: [
         logo: "./images/pin_payments.png",
-        extras: ["README.md"]
+        extras: ["README.md"],
+        main: "readme"
       ]
     ]
   end

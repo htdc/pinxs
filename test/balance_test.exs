@@ -1,5 +1,5 @@
 defmodule PinPayments.BalanceTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   alias PinPayments.Balance
   use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
 

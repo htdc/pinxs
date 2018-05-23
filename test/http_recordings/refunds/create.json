@@ -1,0 +1,74 @@
+[
+  {
+    "request": {
+      "body": "{\"transfer\":null,\"total_fees\":null,\"token\":null,\"settlement_currency\":null,\"refund_pending\":null,\"metadata\":null,\"merchant_entitlement\":null,\"ip_address\":\"127.0.0.1\",\"email\":\"hagrid@hogwarts.wiz\",\"description\":\"Dragon eggs\",\"customer_token\":null,\"currency\":null,\"card_token\":null,\"card\":{\"token\":null,\"number\":\"5520000000000000\",\"name\":\"Rubius Hagrid\",\"expiry_year\":\"20\",\"expiry_month\":\"12\",\"cvc\":\"321\",\"address_state\":null,\"address_postcode\":null,\"address_line2\":null,\"address_line1\":\"The Game Keepers Cottage\",\"address_country\":\"England\",\"address_city\":\"Hogwarts\"},\"captured\":null,\"capture\":null,\"authorisation_expired\":null,\"amount_refunded\":null,\"amount\":50000}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/charges"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"ch_NR_Kkm_ZLp7JWNzKgDX6bw\",\"success\":true,\"amount\":50000,\"currency\":\"AUD\",\"description\":\"Dragon eggs\",\"email\":\"hagrid@hogwarts.wiz\",\"ip_address\":\"127.0.0.1\",\"created_at\":\"2018-05-23T01:50:54Z\",\"status_message\":\"Success\",\"error_message\":null,\"card\":{\"token\":\"card_ZISnopSZtSXf6GDb95K4OA\",\"scheme\":\"master\",\"display_number\":\"XXXX-XXXX-XXXX-0000\",\"expiry_month\":12,\"expiry_year\":2020,\"name\":\"Rubius Hagrid\",\"address_line1\":\"The Game Keepers Cottage\",\"address_line2\":null,\"address_city\":\"Hogwarts\",\"address_postcode\":null,\"address_state\":null,\"address_country\":\"England\",\"customer_token\":null,\"primary\":null},\"transfer\":[],\"amount_refunded\":0,\"total_fees\":1530,\"merchant_entitlement\":48470,\"refund_pending\":false,\"authorisation_expired\":false,\"captured\":true,\"settlement_currency\":\"AUD\",\"metadata\":{}}}",
+      "headers": {
+        "Date": "Wed, 23 May 2018 01:50:55 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "820",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "ETag": "W/\"b8b6689435756d981c8d3181fbb14dbd\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "c22b500c-c319-4d1d-8203-ec63f72d5ddc",
+        "X-Runtime": "0.189590",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "{}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/charges/ch_NR_Kkm_ZLp7JWNzKgDX6bw/refunds"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"rf_sObj01dDMOFfjhHNP3aEEg\",\"success\":null,\"amount\":50000,\"currency\":\"AUD\",\"charge\":\"ch_NR_Kkm_ZLp7JWNzKgDX6bw\",\"created_at\":\"2018-05-23T01:50:55Z\",\"error_message\":null,\"status_message\":\"Pending\"}}",
+      "headers": {
+        "Date": "Wed, 23 May 2018 01:50:55 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "218",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "ETag": "W/\"c4aa0f50e977a89b566e21a93ee6f0a3\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "4f8326c3-4ed6-406d-94fb-14e36bac78dd",
+        "X-Runtime": "0.168613",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  }
+]

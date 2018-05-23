@@ -1,0 +1,110 @@
+[
+  {
+    "request": {
+      "body": "{\"token\":null,\"name\":\"Rubius Hagrid\",\"email\":\"hagrid@hogwarts.wiz\",\"created_at\":null,\"bank_account_token\":null,\"bank_account\":{\"token\":null,\"number\":\"123456\",\"name\":\"Rubius Hagrid\",\"bsb\":\"123456\",\"branch\":null,\"bank_name\":\"Gringotts\"}}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/recipients"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"rp_JDgYA5Ft-Q557DrdBQaevA\",\"name\":\"Rubius Hagrid\",\"email\":\"hagrid@hogwarts.wiz\",\"created_at\":\"2018-05-23T08:09:05Z\",\"bank_account\":{\"token\":\"ba_fN12ZxU01_jhf2ZzzrJNHQ\",\"name\":\"Rubius Hagrid\",\"bsb\":\"123456\",\"number\":\"XXX456\",\"bank_name\":\"\",\"branch\":\"\"}}}",
+      "headers": {
+        "Date": "Wed, 23 May 2018 08:09:05 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "275",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "ETag": "W/\"e83609ba98fe3673b3a75a97a261487f\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "669951f5-90e2-498e-98b9-0757d693d859",
+        "X-Runtime": "0.052455",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "{\"total_debits\":null,\"total_credits\":null,\"token\":null,\"status\":null,\"reference\":null,\"recipient\":\"rp_JDgYA5Ft-Q557DrdBQaevA\",\"paid_at\":null,\"description\":\"Earnings\",\"currency\":\"AUD\",\"created_at\":null,\"bank_account\":null,\"amount\":5000}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/transfers"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"tfer_Hiue4c7ADTPVJr6SP7I9sA\",\"status\":\"succeeded\",\"currency\":\"AUD\",\"description\":\"Earnings\",\"amount\":5000,\"total_debits\":0,\"total_credits\":5000,\"created_at\":\"2018-05-23T08:09:05Z\",\"paid_at\":\"2018-05-23T08:09:05Z\",\"reference\":\"Test Business\",\"bank_account\":{\"token\":\"ba_fN12ZxU01_jhf2ZzzrJNHQ\",\"name\":\"Rubius Hagrid\",\"bsb\":\"123456\",\"number\":\"XXX456\",\"bank_name\":\"\",\"branch\":\"\"},\"recipient\":\"rp_JDgYA5Ft-Q557DrdBQaevA\"}}",
+      "headers": {
+        "Date": "Wed, 23 May 2018 08:09:05 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "440",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "ETag": "W/\"3be9eff45592ad5e3f4fe9a44b77f305\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "fdea876c-e36f-402f-8fac-40130ae185fb",
+        "X-Runtime": "0.175490",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "\"\"",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/transfers/tfer_Hiue4c7ADTPVJr6SP7I9sA/line_items"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":[{\"type\":\"adjustment\",\"amount\":5000,\"currency\":\"AUD\",\"created_at\":\"2018-05-23T08:09:05Z\"}],\"count\":1,\"pagination\":{\"current\":1,\"previous\":null,\"next\":null,\"per_page\":25,\"pages\":1,\"count\":1}}",
+      "headers": {
+        "Date": "Wed, 23 May 2018 08:09:05 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "202",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "ETag": "W/\"7edc4b3bb86680944525f053c12e4ac3\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "e71ca26d-c099-45d8-96e8-4255caec856e",
+        "X-Runtime": "0.050349",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "request": {
+      "body": "{\"token\":null,\"name\":\"Rubius Hagrid\",\"email\":\"hagrid@hogwarts.wiz\",\"created_at\":null,\"bank_account_token\":null,\"bank_account\":{\"token\":null,\"number\":\"123456\",\"name\":\"Rubius Hagrid\",\"bsb\":\"123456\",\"branch\":null,\"bank_name\":\"Gringotts\"}}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/recipients"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"rp_fHd2oc04zMhcLGXsgwjtRA\",\"name\":\"Rubius Hagrid\",\"email\":\"hagrid@hogwarts.wiz\",\"created_at\":\"2018-05-23T07:44:46Z\",\"bank_account\":{\"token\":\"ba_rlSH2B93hpRJ51jghf7Idw\",\"name\":\"Rubius Hagrid\",\"bsb\":\"123456\",\"number\":\"XXX456\",\"bank_name\":\"\",\"branch\":\"\"}}}",
+      "headers": {
+        "Date": "Wed, 23 May 2018 07:44:47 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "275",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "ETag": "W/\"f301b40efeaad7e484b3caada8a8d7dc\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "a84636ca-c57c-4318-b07d-054a2ab85aa9",
+        "X-Runtime": "0.051798",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "{\"total_debits\":null,\"total_credits\":null,\"token\":null,\"status\":null,\"reference\":null,\"recipient\":\"rp_fHd2oc04zMhcLGXsgwjtRA\",\"paid_at\":null,\"description\":\"Earnings\",\"currency\":\"AUD\",\"created_at\":null,\"bank_account\":null,\"amount\":5000}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/transfers"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"tfer_v6uiIZoAfDAIND_-vSu-Iw\",\"status\":\"succeeded\",\"currency\":\"AUD\",\"description\":\"Earnings\",\"amount\":5000,\"total_debits\":0,\"total_credits\":5000,\"created_at\":\"2018-05-23T07:44:47Z\",\"paid_at\":\"2018-05-23T07:44:47Z\",\"reference\":\"Test Business\",\"bank_account\":{\"token\":\"ba_rlSH2B93hpRJ51jghf7Idw\",\"name\":\"Rubius Hagrid\",\"bsb\":\"123456\",\"number\":\"XXX456\",\"bank_name\":\"\",\"branch\":\"\"},\"recipient\":\"rp_fHd2oc04zMhcLGXsgwjtRA\"}}",
+      "headers": {
+        "Date": "Wed, 23 May 2018 07:44:47 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "440",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "ETag": "W/\"e02cbb27ae29ee3008187f8285d31336\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "143049f0-2c13-445b-bd56-1060238ed2ef",
+        "X-Runtime": "0.136704",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  }
+]

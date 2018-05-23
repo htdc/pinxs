@@ -1,0 +1,38 @@
+[
+  {
+    "request": {
+      "body": "\"\"",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/transfers?page=2"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":[],\"count\":0,\"pagination\":{\"current\":2,\"previous\":1,\"next\":null,\"per_page\":25,\"pages\":1,\"count\":2}}",
+      "headers": {
+        "Date": "Wed, 23 May 2018 07:58:18 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "111",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "ETag": "W/\"0bcc262e6153588da09fd0a119b34c6c\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "df4efc58-c234-4b0e-a434-00c55b987cb1",
+        "X-Runtime": "0.013913",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

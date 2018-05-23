@@ -4,7 +4,7 @@ defmodule PINXS.MixProject do
   def project do
     [
       app: :pinxs,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.6",
       source_url: "https://github.com/htdc/pinxs",
       description: """

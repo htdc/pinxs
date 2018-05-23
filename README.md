@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/htdc/pinxs.svg?branch=master)](https://travis-ci.org/htdc/pinxs)
+
 ![Pin Payments](https://pinpayments.com/assets/logo/default-2145a56bb434325675be86250bbbd1dc86f77b5f12fbedeee0bf31d5b7ce8438.svg)
 # PINXS
 

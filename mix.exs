@@ -6,12 +6,27 @@ defmodule PINXS.MixProject do
       app: :pinxs,
       version: "0.1.0",
       elixir: "~> 1.6",
+      source_url: "https://github.com/htdc/pinxs",
+      description: """
+      Use Pin Payments via Elixir
+      """,
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      package: package(),
       docs: [
         logo: "./images/pin_payments.png",
         extras: ["README.md"]
       ]
+    ]
+  end
+
+  def package do
+    [
+      licenses: ["MIT"],
+      maintainers: ["Martin Feckie"],
+      links: %{
+        "Github"=> "https://github.com/htdc/pinxs"
+      }
     ]
   end
 

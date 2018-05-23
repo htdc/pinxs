@@ -1,0 +1,12 @@
+language: elixir
+
+elixir: "1.6.4"
+
+cache:
+  directories:
+    - _build
+    - deps
+
+script:
+  - mix test
+  - mix dialyzer

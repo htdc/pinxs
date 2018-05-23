@@ -1,7 +1,7 @@
 ![Pin Payments](https://pinpayments.com/assets/logo/default-2145a56bb434325675be86250bbbd1dc86f77b5f12fbedeee0bf31d5b7ce8438.svg)
 # PINXS
 
-What could be a more Australian name for an Elixir library for using [Pin Payments](https://pinpayments.com/)?
+What could be a more Australian name for an Elixir library when using [Pin Payments](https://pinpayments.com/)?
 
 Made with love at [HotDoc](https://www.hotdoc.com.au)
 

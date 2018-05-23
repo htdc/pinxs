@@ -1,6 +1,5 @@
 defmodule PINXS.Cards.Card do
   alias PINXS.HTTP.API
-  alias PINXS.Response
   alias __MODULE__
 
   @moduledoc """
@@ -56,7 +55,6 @@ defmodule PINXS.Cards.Card do
   """
   @spec create(Card.t()) :: {:ok, Card.t()} | {:error, PINXS.Error.t()}
   def create(%Card{} = card) do
-    API.post("/cards", card)
-    |> Response.transform(__MODULE__)
+    API.post("/cards", card, __MODULE__)
   end
 end

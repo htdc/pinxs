@@ -1,6 +1,5 @@
 defmodule PINXS.Customers.Customer do
   alias PINXS.HTTP.API
-  alias PINXS.Response
   alias PINXS.Cards.Card
   alias PINXS.Charges.Charge
   alias __MODULE__
@@ -40,13 +39,11 @@ defmodule PINXS.Customers.Customer do
   """
   @spec add_card(Customer.t(), Card.t()) :: {:ok, Card.t()} | {:error, PINXS.Error.t()}
   def add_card(%Customer{token: token}, %Card{} = card) do
-    API.post("/customers/#{token}/cards", card)
-    |> Response.transform(Card)
+    API.post("/customers/#{token}/cards", card, Card)
   end
 
   def add_card(%Customer{token: token}, card_token) when is_binary(card_token) do
-    API.post("/customers/#{token}/cards", %{card_token: card_token})
-    |> Response.transform(Card)
+    API.post("/customers/#{token}/cards", %{card_token: card_token}, Card)
   end
 
   @doc """
@@ -60,8 +57,7 @@ defmodule PINXS.Customers.Customer do
     do: create_customer(customer)
 
   defp create_customer(customer) do
-    API.post("/customers", customer)
-    |> Response.transform(__MODULE__)
+    API.post("/customers", customer, __MODULE__)
   end
 
   @doc """
@@ -69,8 +65,7 @@ defmodule PINXS.Customers.Customer do
   """
   @spec delete(Customer.t()) :: {:ok, true} | {:error, PINXS.Error.t()}
   def delete(%Customer{token: token}) do
-    API.delete("/customers/#{token}")
-    |> Response.transform(__MODULE__)
+    API.delete("/customers/#{token}", __MODULE__)
   end
 
   @doc """
@@ -79,8 +74,7 @@ defmodule PINXS.Customers.Customer do
   @spec delete_card(Customer.t(), String.t()) ::
           {:ok, Customer.t()} | {:error, PINXS.Error.t()}
   def delete_card(%Customer{token: token}, card_token) do
-    API.delete("/customers/#{token}/cards/#{card_token}")
-    |> Response.transform(__MODULE__)
+    API.delete("/customers/#{token}/cards/#{card_token}", __MODULE__)
   end
 
   @doc """
@@ -88,8 +82,7 @@ defmodule PINXS.Customers.Customer do
   """
   @spec get(String.t()) :: {:ok, Customer.t()} | {:error, PINXS.Error.t()}
   def get(token) do
-    API.get("/customers/#{token}")
-    |> Response.transform(__MODULE__)
+    API.get("/customers/#{token}", __MODULE__)
   end
 
   @doc """
@@ -97,8 +90,7 @@ defmodule PINXS.Customers.Customer do
   """
   @spec get_all() :: {:ok, [Customer.t()]} | {:error, PINXS.Error.t()}
   def get_all() do
-    API.get("/customers")
-    |> Response.transform(__MODULE__)
+    API.get("/customers", __MODULE__)
   end
 
   @doc """
@@ -106,8 +98,7 @@ defmodule PINXS.Customers.Customer do
   """
   @spec get_all(integer()) :: {:ok, [Customer.t()]} | {:error, PINXS.Error.t()}
   def get_all(page) when is_integer(page) do
-    API.get("/customers?page=#{page}")
-    |> Response.transform(__MODULE__)
+    API.get("/customers?page=#{page}", __MODULE__)
   end
 
   @doc """
@@ -115,8 +106,7 @@ defmodule PINXS.Customers.Customer do
   """
   @spec get_cards(Customer.t()) :: {:ok, [Card.t()]} | {:error, PINXS.Error.t()}
   def get_cards(%Customer{token: token}) do
-    API.get("/customers/#{token}/cards")
-    |> Response.transform(Card)
+    API.get("/customers/#{token}/cards", Card)
   end
 
   @doc """
@@ -124,8 +114,7 @@ defmodule PINXS.Customers.Customer do
   """
   @spec get_charges(Customer.t()) :: {:ok, [Charge.t]} | {:error, PINXS.Error.t()}
   def get_charges(%Customer{token: token}) do
-    API.get("/customers/#{token}/charges")
-    |> Response.transform(PINXS.Charges.Charge)
+    API.get("/customers/#{token}/charges", PINXS.Charges.Charge)
   end
 
   # TODO Add 'Subscriptions'
@@ -135,7 +124,6 @@ defmodule PINXS.Customers.Customer do
   """
   @spec update(Customer.t(), map()) :: {:ok, Customer.t()} | {:error, PINXS.Error.t()}
   def update(%Customer{token: token}, params) when not is_nil(token) do
-    API.put("/customers/#{token}", params)
-    |> Response.transform(__MODULE__)
+    API.put("/customers/#{token}", params, __MODULE__)
   end
 end

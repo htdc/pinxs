@@ -1,6 +1,5 @@
 defmodule PINXS.Transfers.Transfer do
   alias PINXS.HTTP.API
-  alias PINXS.Response
   alias __MODULE__
 
   @moduledoc """
@@ -42,8 +41,7 @@ defmodule PINXS.Transfers.Transfer do
   """
   @spec create(Transfer.t) :: {:ok, Transfer.t} | {:error, PINXS.Error.t}
   def create(%Transfer{currency: "AUD"} = transfer) do
-    API.post("/transfers", transfer)
-    |> Response.transform(__MODULE__)
+    API.post("/transfers", transfer, __MODULE__)
   end
 
   def create(%Transfer{} = transfer) do
@@ -56,8 +54,7 @@ defmodule PINXS.Transfers.Transfer do
   """
   @spec get(String.t) :: {:ok, Transfer.t} | {:error, PINXS.Error.t}
   def get(transfer_token) do
-    API.get("/transfers/#{transfer_token}")
-    |> Response.transform(__MODULE__)
+    API.get("/transfers/#{transfer_token}", __MODULE__)
   end
 
   @doc """
@@ -65,8 +62,7 @@ defmodule PINXS.Transfers.Transfer do
   """
   @spec get_all() :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t}
   def get_all() do
-    API.get("/transfers")
-    |> Response.transform(__MODULE__)
+    API.get("/transfers", __MODULE__)
   end
 
   @doc """
@@ -74,12 +70,10 @@ defmodule PINXS.Transfers.Transfer do
   """
   @spec get_all(non_neg_integer()) :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t}
   def get_all(page) when is_integer(page) do
-    API.get("/transfers?page=#{page}")
-    |> Response.transform(__MODULE__)
+    API.get("/transfers?page=#{page}", __MODULE__)
   end
 
   def get_line_items(transfer_token) do
-    API.get("/transfers/#{transfer_token}/line_items")
-    |> Response.transform(__MODULE__)
+    API.get("/transfers/#{transfer_token}/line_items",__MODULE__)
   end
 end

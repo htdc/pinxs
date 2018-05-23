@@ -1,6 +1,5 @@
 defmodule PINXS.Charges.Charge do
   alias PINXS.HTTP.API
-  alias PINXS.Response
   alias __MODULE__
 
   @moduledoc """
@@ -75,8 +74,7 @@ defmodule PINXS.Charges.Charge do
   Captures a previously authorized charge
   """
   def capture(%Charge{token: token}, amount \\ %{}) do
-    API.put("/charges/#{token}/capture", amount)
-    |> Response.transform(__MODULE__)
+    API.put("/charges/#{token}/capture", amount, __MODULE__)
   end
 
   @doc """
@@ -98,8 +96,7 @@ defmodule PINXS.Charges.Charge do
       do: create_charge(charge_map)
 
   defp create_charge(charge_map) do
-    API.post("/charges", charge_map)
-    |> Response.transform(__MODULE__)
+    API.post("/charges", charge_map, __MODULE__)
   end
 
   @doc """
@@ -107,8 +104,7 @@ defmodule PINXS.Charges.Charge do
   """
   @spec get_all() :: {:ok, [Charge.t]} | {:error, PINXS.Error.t}
   def get_all() do
-    API.get("/charges")
-    |> Response.transform(__MODULE__)
+    API.get("/charges", __MODULE__)
   end
 
   @doc """
@@ -116,8 +112,7 @@ defmodule PINXS.Charges.Charge do
   """
   @spec get_all(integer()) :: {:ok, [Charge.t]} | {:error, PINXS.Error.t}
   def get_all(page) do
-    API.get("/charges?page=#{page}")
-    |> Response.transform(__MODULE__)
+    API.get("/charges?page=#{page}", __MODULE__)
   end
 
   @doc """
@@ -125,7 +120,6 @@ defmodule PINXS.Charges.Charge do
   """
   @spec get(String.t()) :: {:ok, Charge.t} | {:error, PINXS.Error.t()}
   def get(token) do
-    API.get("/charges/#{token}")
-    |> Response.transform(__MODULE__)
+    API.get("/charges/#{token}", __MODULE__)
   end
 end

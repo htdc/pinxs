@@ -1,6 +1,5 @@
 defmodule PINXS.Balance do
   alias PINXS.HTTP.API
-  alias PINXS.Response
   alias __MODULE__
 
   @moduledoc """
@@ -18,7 +17,6 @@ defmodule PINXS.Balance do
   """
   @spec get() :: {:ok, Balance.t()} | {:error, PINXS.Error.t()}
   def get() do
-    API.get("/balance")
-    |> Response.transform(__MODULE__)
+    API.get("/balance", __MODULE__)
   end
 end

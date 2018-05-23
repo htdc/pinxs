@@ -25,6 +25,7 @@ defmodule PINXS.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:exvcr, "~> 0.10", only: :test},
       {:mix_test_watch, "~> 0.6", only: :dev},

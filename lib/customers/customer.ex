@@ -122,7 +122,7 @@ defmodule PINXS.Customers.Customer do
   @doc """
   Retrieves all charges for customer
   """
-  @spec get_charges(Customer.t()) :: {:ok, [%Charge{}]} | {:error, PINXS.Error.t()}
+  @spec get_charges(Customer.t()) :: {:ok, [Charge.t]} | {:error, PINXS.Error.t()}
   def get_charges(%Customer{token: token}) do
     API.get("/customers/#{token}/charges")
     |> Response.transform(PINXS.Charges.Charge)

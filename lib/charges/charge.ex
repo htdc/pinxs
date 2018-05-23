@@ -86,7 +86,7 @@ defmodule PINXS.Charges.Charge do
 
 
   """
-  @spec create(%Charge{}) :: {:ok, %Charge{}} | {:error, PINXS.Error.t()}
+  @spec create(Charge.t) :: {:ok, Charge.t} | {:error, PINXS.Error.t()}
   def create(%Charge{card: card} = charge_map) when not is_nil(card),
     do: create_charge(charge_map)
 
@@ -105,7 +105,7 @@ defmodule PINXS.Charges.Charge do
   @doc """
   Retreives a paginated list of charges
   """
-  @spec get_all() :: {:ok, [%Charge{}]} | {:error, PINXS.Error.t}
+  @spec get_all() :: {:ok, [Charge.t]} | {:error, PINXS.Error.t}
   def get_all() do
     API.get("/charges")
     |> Response.transform(__MODULE__)
@@ -114,7 +114,7 @@ defmodule PINXS.Charges.Charge do
   @doc """
   Retreives a specific pages of charges
   """
-  @spec get_all(integer()) :: {:ok, [%Charge{}]} | {:error, PINXS.Error.t}
+  @spec get_all(integer()) :: {:ok, [Charge.t]} | {:error, PINXS.Error.t}
   def get_all(page) do
     API.get("/charges?page=#{page}")
     |> Response.transform(__MODULE__)
@@ -123,7 +123,7 @@ defmodule PINXS.Charges.Charge do
   @doc """
   Retreives a single charge
   """
-  @spec get(String.t()) :: {:ok, %Charge{}} | {:error, PINXS.Error.t()}
+  @spec get(String.t()) :: {:ok, Charge.t} | {:error, PINXS.Error.t()}
   def get(token) do
     API.get("/charges/#{token}")
     |> Response.transform(__MODULE__)

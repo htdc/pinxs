@@ -1,0 +1,111 @@
+[
+  {
+    "request": {
+      "body": "{\"token\":null,\"name\":\"Rubius Hagrid\",\"email\":\"hagrid@hogwarts.wiz\",\"created_at\":null,\"bank_account_token\":null,\"bank_account\":{\"token\":null,\"number\":\"123456\",\"name\":\"Rubius Hagrid\",\"bsb\":\"123456\",\"branch\":null,\"bank_name\":\"Gringotts\"}}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/recipients"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"rp_1QGVYnVPTtfltEMhxGVv1g\",\"name\":\"Rubius Hagrid\",\"email\":\"hagrid@hogwarts.wiz\",\"created_at\":\"2018-05-23T07:10:29Z\",\"bank_account\":{\"token\":\"ba_gFo5JDLyv3NL4CrJVgK3PA\",\"name\":\"Rubius Hagrid\",\"bsb\":\"123456\",\"number\":\"XXX456\",\"bank_name\":\"\",\"branch\":\"\"}}}",
+      "headers": {
+        "Date": "Wed, 23 May 2018 07:10:29 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "275",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "ETag": "W/\"d59de00f3d5552c045263beb6ccbcbca\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "1b5bbcad-54bc-4d0f-84e7-d272f0856997",
+        "X-Runtime": "0.060185",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "{\"token\":null,\"number\":\"123456\",\"name\":\"Rubius Hagrid\",\"bsb\":\"123456\",\"branch\":null,\"bank_name\":\"Gringotts\"}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/bank_accounts"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"ba_ommaFu5tQwIRR4b2GSJebw\",\"name\":\"Rubius Hagrid\",\"bsb\":\"123456\",\"number\":\"XXX456\",\"bank_name\":\"\",\"branch\":\"\"},\"ip_address\":\"103.217.167.81\"}",
+      "headers": {
+        "Date": "Wed, 23 May 2018 07:10:29 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "163",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "X-Requested-From": "103.217.167.81",
+        "ETag": "W/\"04dfd30139c9bcab88abeaf3892816cd\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "3f34ca89-910a-4d51-b24d-3e251ff931a6",
+        "X-Runtime": "0.043628",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "{\"bank_account_token\":\"ba_ommaFu5tQwIRR4b2GSJebw\"}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "put",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/recipients/rp_1QGVYnVPTtfltEMhxGVv1g"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"rp_1QGVYnVPTtfltEMhxGVv1g\",\"name\":\"Rubius Hagrid\",\"email\":\"hagrid@hogwarts.wiz\",\"created_at\":\"2018-05-23T07:10:29Z\",\"bank_account\":{\"token\":\"ba_ommaFu5tQwIRR4b2GSJebw\",\"name\":\"Rubius Hagrid\",\"bsb\":\"123456\",\"number\":\"XXX456\",\"bank_name\":\"\",\"branch\":\"\"}}}",
+      "headers": {
+        "Date": "Wed, 23 May 2018 07:10:30 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "275",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "ETag": "W/\"16be7daab7cf667e1bb003f365f05ce0\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "9f4ee073-20a2-45db-916d-111bf1e1efa8",
+        "X-Runtime": "0.055353",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

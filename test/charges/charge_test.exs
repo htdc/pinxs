@@ -121,10 +121,83 @@ defmodule PinPayments.Charges.ChargeTest do
   end
 
   test "Get a specific charge", %{charge: charge, card: card} do
-    {:ok, created_charge} = Charge.create(%{charge | card: card})
+    use_cassette("get_charge") do
+      {:ok, created_charge} = Charge.create(%{charge | card: card})
 
-    {:ok, retreived_charge} = Charge.get(created_charge.token)
+      {:ok, retreived_charge} = Charge.get(created_charge.token)
 
-    assert created_charge == retreived_charge
+      assert created_charge == retreived_charge
+    end
+  end
+
+  describe "Charge failures" do
+    @card_numbers %{
+      declined: "4100000000000001",
+      insufficient_funds: "4000000000000002",
+      invalid_cvc: "4900000000000003",
+      invalid_card: "4800000000000004",
+      processing_error: "4700000000000005",
+      suspected_fraud: "4600000000000006"
+    }
+
+    test "Card declined", %{charge: charge, card: card} do
+      failing_card = %{card | number: @card_numbers.declined}
+
+      use_cassette("charge_failures/declined") do
+        {:error, declined} = Charge.create(%{charge | card: failing_card})
+
+        assert declined.error_description == "The card was declined"
+      end
+    end
+
+    test "Insufficient funds", %{charge: charge, card: card} do
+      failing_card = %{card | number: @card_numbers.insufficient_funds}
+
+      use_cassette("charge_failures/insufficient_funds") do
+        {:error, declined} = Charge.create(%{charge | card: failing_card})
+
+        assert declined.error_description == "There are not enough funds available to process the requested amount"
+      end
+    end
+
+    test "Invalid CVC", %{charge: charge, card: card} do
+      failing_card = %{card | number: @card_numbers.invalid_cvc}
+
+      use_cassette("charge_failures/invalid_cvc") do
+        {:error, declined} = Charge.create(%{charge | card: failing_card})
+
+        assert declined.error_description == "The card verification code (cvc) was incorrect"
+      end
+    end
+
+    test "Invalid card", %{charge: charge, card: card} do
+      failing_card = %{card | number: @card_numbers.invalid_card}
+
+      use_cassette("charge_failures/invalid_card") do
+        {:error, declined} = Charge.create(%{charge | card: failing_card})
+
+        assert declined.error_description == "The card was invalid"
+      end
+    end
+
+    test "Processing error", %{charge: charge, card: card} do
+      failing_card = %{card | number: @card_numbers.processing_error}
+
+      use_cassette("charge_failures/processing_error") do
+        {:error, declined} = Charge.create(%{charge | card: failing_card})
+
+        assert declined.error_description == "An error occurred while processing the card"
+      end
+    end
+
+    test "Suspected fraud", %{charge: charge, card: card} do
+      failing_card = %{card | number: @card_numbers.suspected_fraud}
+
+      use_cassette("charge_failures/suspected_fraud") do
+        {:error, declined} = Charge.create(%{charge | card: failing_card})
+
+        assert declined.error_description == "The transaction was flagged as possibly fraudulent and subsequently declined"
+      end
+    end
   end
 end

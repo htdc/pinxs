@@ -1,9 +1,9 @@
-defmodule PinPayments.HTTP.ClientBase do
+defmodule PINXS.HTTP.ClientBase do
   @moduledoc false
   use HTTPoison.Base
 
-  @pin_url Application.get_env(:pin_payments, :pin_url)
-  @pin_api_key Application.get_env(:pin_payments, :api_key)
+  @pin_url Application.get_env(:pinxs, :pin_url)
+  @pin_api_key Application.get_env(:pinxs, :api_key)
   @encoded Base.encode64("#{@pin_api_key}:")
 
   def process_url(endpoint) do

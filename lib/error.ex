@@ -1,11 +1,11 @@
-defmodule PinPayments.Error do
+defmodule PINXS.Error do
   @moduledoc """
   Provides a struct for dealing with errors.
 
   ## Sample output
 
   ```
-  %PinPayments.Error{
+  %PINXS.Error{
     error: "invalid_resource",
     error_description: "One or more parameters were missing or invalid",
     messages: %{

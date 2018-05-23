@@ -1,6 +1,6 @@
-defmodule PinPayments.Balance do
-  alias PinPayments.HTTP.API
-  alias PinPayments.Response
+defmodule PINXS.Balance do
+  alias PINXS.HTTP.API
+  alias PINXS.Response
   alias __MODULE__
 
   @moduledoc """
@@ -16,7 +16,7 @@ defmodule PinPayments.Balance do
   @doc """
   Retrieves your balance information
   """
-  @spec get() :: {:ok, Balance.t()} | {:error, PinPayments.Error.t()}
+  @spec get() :: {:ok, Balance.t()} | {:error, PINXS.Error.t()}
   def get() do
     API.get("/balance")
     |> Response.transform(__MODULE__)

@@ -1,3 +1,3 @@
-alias PinPayments.HTTP.PinApi
-alias PinPayments.Cards.Card
-alias PinPayments.Charges.Charge
+alias PINXS.HTTP.PinApi
+alias PINXS.Cards.Card
+alias PINXS.Charges.Charge

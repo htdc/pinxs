@@ -1,9 +1,9 @@
-defmodule PinPayments.Charges.ChargeTest do
+defmodule PINXS.Charges.ChargeTest do
   use ExUnit.Case, async: true
   use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
-  alias PinPayments.Charges.Charge
-  alias PinPayments.Cards.Card
-  alias PinPayments.Customers.Customer
+  alias PINXS.Charges.Charge
+  alias PINXS.Cards.Card
+  alias PINXS.Customers.Customer
 
   setup do
     card = %Card{

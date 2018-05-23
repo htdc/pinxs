@@ -1,3 +1,3 @@
-defmodule PinPayments do
+defmodule PINXS do
   @moduledoc false
 end

@@ -1,6 +1,6 @@
-defmodule PinPayments.Recipients.Recipient do
-  alias PinPayments.HTTP.API
-  alias PinPayments.Response
+defmodule PINXS.Recipients.Recipient do
+  alias PINXS.HTTP.API
+  alias PINXS.Response
   alias __MODULE__
 
   @moduledoc """
@@ -38,7 +38,7 @@ defmodule PinPayments.Recipients.Recipient do
   @doc """
   Create a recipient
   """
-  @spec create(Recipient.t()) :: {:ok, Recipient.t()} | {:error, PinPayments.Error.t()}
+  @spec create(Recipient.t()) :: {:ok, Recipient.t()} | {:error, PINXS.Error.t()}
   def create(%Recipient{bank_account: bank_account} = recipient) when not is_nil(bank_account) do
     API.post("/recipients", recipient)
     |> Response.transform(__MODULE__)
@@ -53,7 +53,7 @@ defmodule PinPayments.Recipients.Recipient do
   @doc """
   Gets a recipient
   """
-  @spec get(String.t) :: {:ok, Recipient.t} | {:error, PinPayments.Error.t}
+  @spec get(String.t) :: {:ok, Recipient.t} | {:error, PINXS.Error.t}
   def get(recipient_token) do
     API.get("/recipients/#{recipient_token}")
     |> Response.transform(__MODULE__)
@@ -62,7 +62,7 @@ defmodule PinPayments.Recipients.Recipient do
   @doc """
   Gets a paginated list of recipients
   """
-  @spec get_all() :: {:ok, [Recipient.t]} | {:error, PinPayments.Error.t}
+  @spec get_all() :: {:ok, [Recipient.t]} | {:error, PINXS.Error.t}
   def get_all() do
     API.get("/recipients")
     |> Response.transform(__MODULE__)

@@ -13,7 +13,7 @@
     },
     "response": {
       "binary": false,
-      "body": "{\"error\":\"invalid_resource\",\"error_description\":\"One or more parameters were missing or invalid\",\"messages\":[{\"param\":\"number\",\"code\":\"number_invalid\",\"message\":\"Number is not a valid Pin Payments test card number.                           See https://pinpayments.com/docs/api/test-cards\"},{\"param\":\"address_city\",\"code\":\"address_city_invalid\",\"message\":\"Address city can't be blank\"},{\"param\":\"address_country\",\"code\":\"address_country_invalid\",\"message\":\"Address country can't be blank\"}]}",
+      "body": "{\"error\":\"invalid_resource\",\"error_description\":\"One or more parameters were missing or invalid\",\"messages\":[{\"param\":\"number\",\"code\":\"number_invalid\",\"message\":\"Number is not a valid Pin Payments test card number.                           See https://PINXS.com/docs/api/test-cards\"},{\"param\":\"address_city\",\"code\":\"address_city_invalid\",\"message\":\"Address city can't be blank\"},{\"param\":\"address_country\",\"code\":\"address_country_invalid\",\"message\":\"Address country can't be blank\"}]}",
       "headers": {
         "Date": "Mon, 21 May 2018 04:28:50 GMT",
         "Content-Type": "application/json; charset=utf-8",

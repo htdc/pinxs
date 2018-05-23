@@ -1,4 +1,4 @@
-defmodule PinPayments.Response do
+defmodule PINXS.Response do
   @moduledoc """
   Provides a standard way of converting all HTTP responses into tagged
   tuples
@@ -10,7 +10,7 @@ defmodule PinPayments.Response do
   """
 
   @spec transform({:ok, map()} | {:error, map()}, module()) ::
-          {:ok, struct()} | {:error, PinPayments.Error.t()}
+          {:ok, struct()} | {:error, PINXS.Error.t()}
   def transform(
         {:ok, %{body: %{count: count, pagination: pagination, response: response}}},
         module
@@ -37,7 +37,7 @@ defmodule PinPayments.Response do
 
   def transform({:error, %{body: body}}, module) do
     error =
-      struct(%PinPayments.Error{}, body)
+      struct(%PINXS.Error{}, body)
       |> Map.put(:module, module)
 
     {:error, error}

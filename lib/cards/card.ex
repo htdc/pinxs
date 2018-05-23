@@ -1,6 +1,6 @@
-defmodule PinPayments.Cards.Card do
-  alias PinPayments.HTTP.API
-  alias PinPayments.Response
+defmodule PINXS.Cards.Card do
+  alias PINXS.HTTP.API
+  alias PINXS.Response
   alias __MODULE__
 
   @moduledoc """
@@ -54,7 +54,7 @@ defmodule PinPayments.Cards.Card do
   @doc """
   Creates a tokenized credit card
   """
-  @spec create(Card.t()) :: {:ok, Card.t()} | {:error, PinPayments.Error.t()}
+  @spec create(Card.t()) :: {:ok, Card.t()} | {:error, PINXS.Error.t()}
   def create(%Card{} = card) do
     API.post("/cards", card)
     |> Response.transform(__MODULE__)

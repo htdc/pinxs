@@ -1,8 +1,8 @@
-defmodule PinPayments.Recipient.RecipientTest do
+defmodule PINXS.Recipient.RecipientTest do
   use ExUnit.Case, async: true
   use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
-  alias PinPayments.Recipients.Recipient
-  alias PinPayments.BankAccounts.BankAccount
+  alias PINXS.Recipients.Recipient
+  alias PINXS.BankAccounts.BankAccount
 
   setup do
     recipient = %Recipient{

@@ -1,7 +1,7 @@
-defmodule PinPayments.BankAccounts.BankAccountTest do
+defmodule PINXS.BankAccounts.BankAccountTest do
   use ExUnit.Case, async: true
   use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
-  alias PinPayments.BankAccounts.BankAccount
+  alias PINXS.BankAccounts.BankAccount
 
   test "Create a bank account" do
     bank_account = %BankAccount{

@@ -1,5 +1,5 @@
-defmodule PinPayments.HTTP.API do
-  alias PinPayments.HTTP.ClientBase, as: Client
+defmodule PINXS.HTTP.API do
+  alias PINXS.HTTP.ClientBase, as: Client
 
   @moduledoc """
   The API module provides low level functions for communicating with

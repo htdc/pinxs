@@ -1,0 +1,39 @@
+[
+  {
+    "request": {
+      "body": "{\"token\":null,\"number\":\"123456\",\"name\":\"Harry Potter\",\"bsb\":\"123456\",\"branch\":\"Diagon Alley\",\"bank_name\":\"Gringotts\"}",
+      "headers": {
+        "Authorization": "***",
+        "Content-Type": "application/json"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://test-api.pin.net.au/1/bank_accounts"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"response\":{\"token\":\"ba_PRNU-gZfs7TAFYQN4fRT9g\",\"name\":\"Harry Potter\",\"bsb\":\"123456\",\"number\":\"XXX456\",\"bank_name\":\"\",\"branch\":\"\"},\"ip_address\":\"103.217.167.81\"}",
+      "headers": {
+        "Date": "Wed, 23 May 2018 06:35:38 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "162",
+        "Connection": "keep-alive",
+        "Server": "nginx",
+        "X-Requested-From": "103.217.167.81",
+        "ETag": "W/\"d4bc2dc5564b4fde7d32903f49c330dc\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "59e44d13-e140-4135-9465-4fba479ae8fe",
+        "X-Runtime": "0.099758",
+        "Strict-Transport-Security": "max-age=252460800; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Download-Options": "noopen",
+        "X-Frame-Options": "DENY",
+        "X-Permitted-Cross-Domain-Policies": "none",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  }
+]

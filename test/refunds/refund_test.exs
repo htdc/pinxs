@@ -2,7 +2,6 @@ defmodule PinPayments.Refunds.RefundTest do
   use ExUnit.Case, async: true
   use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
   alias PinPayments.Cards.Card
-  alias PinPayments.Customers.Customer
   alias PinPayments.Charges.Charge
   alias PinPayments.Refunds.Refund
 

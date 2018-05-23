@@ -23,7 +23,7 @@ defmodule PINXS.Refunds.Refund do
   @type t :: %__MODULE__{
     token: String.t,
     success: boolean(),
-    amount: Integer.t,
+    amount: integer(),
     currency: String.t,
     charge: String.t,
     created_at: String.t,
@@ -60,7 +60,7 @@ defmodule PINXS.Refunds.Refund do
   @doc """
   Gets a specific page of refunds
   """
-  @spec get_all(Integer.t) :: {:ok, [Refund.t]} | {:error, PINXS.Error.t}
+  @spec get_all(integer()) :: {:ok, [Refund.t]} | {:error, PINXS.Error.t}
   def get_all(page) when is_integer(page) do
     API.get("/refunds?page=#{page}")
     |> Response.transform(__MODULE__)

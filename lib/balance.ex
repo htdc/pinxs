@@ -9,8 +9,8 @@ defmodule PINXS.Balance do
   defstruct [:available, :pending]
 
   @type t :: %__MODULE__{
-          available: [%{amount: Integer.t(), currency: String.t()}],
-          pending: [%{amount: Integer.t(), currency: String.t()}]
+          available: [%{amount: integer(), currency: String.t()}],
+          pending: [%{amount: integer(), currency: String.t()}]
         }
 
   @doc """

@@ -23,7 +23,7 @@ defmodule PINXS.Transfers.Transfer do
     :total_debits
   ]
   @type t :: %__MODULE__{
-    amount: Integer.t,
+    amount: integer(),
     bank_account: nil | PINXS.BankAccounts.BankAccount,
     created_at: nil | String.t,
     currency: nil | String.t,
@@ -33,8 +33,8 @@ defmodule PINXS.Transfers.Transfer do
     reference: String.t,
     status: nil | String.t,
     token: nil | String.t,
-    total_credits: nil | Integer.t,
-    total_debits: nil | Integer.t
+    total_credits: nil | integer(),
+    total_debits: nil | integer()
   }
 
   @doc """

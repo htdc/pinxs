@@ -2,6 +2,7 @@ defmodule PINXS.Customers.Customer do
   alias PINXS.HTTP.API
   alias PINXS.Response
   alias PINXS.Cards.Card
+  alias PINXS.Charges.Charge
   alias __MODULE__
 
   @moduledoc """
@@ -103,7 +104,7 @@ defmodule PINXS.Customers.Customer do
   @doc """
   Retreives a specific page of customers
   """
-  @spec get_all(Integer.t()) :: {:ok, [Customer.t()]} | {:error, PINXS.Error.t()}
+  @spec get_all(integer()) :: {:ok, [Customer.t()]} | {:error, PINXS.Error.t()}
   def get_all(page) when is_integer(page) do
     API.get("/customers?page=#{page}")
     |> Response.transform(__MODULE__)
@@ -121,7 +122,7 @@ defmodule PINXS.Customers.Customer do
   @doc """
   Retrieves all charges for customer
   """
-  @spec get_charges(Customer.t()) :: {:ok, [Charge.t()]} | {:error, PINXS.Error.t()}
+  @spec get_charges(Customer.t()) :: {:ok, [%Charge{}]} | {:error, PINXS.Error.t()}
   def get_charges(%Customer{token: token}) do
     API.get("/customers/#{token}/charges")
     |> Response.transform(PINXS.Charges.Charge)

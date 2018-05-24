@@ -74,6 +74,15 @@ defmodule PINXS.Transfers.TransferTest do
     end
   end
 
+  test "Search for a transfer" do
+    use_cassette("transfers/search") do
+      {:ok, retrieved_transfers} = Transfer.search(%{query: "hagrid@hogwarts.wiz"})
+
+      assert retrieved_transfers.count == 5
+      assert retrieved_transfers.items != []
+    end
+  end
+
   test "Get line items", %{transfer: transfer, recipient: recipient} do
     use_cassette("transfers/get_line_items") do
       {:ok, created_recipient} = Recipient.create(recipient)

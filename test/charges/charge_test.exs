@@ -130,6 +130,15 @@ defmodule PINXS.Charges.ChargeTest do
     end
   end
 
+  test "Search for a charge" do
+    use_cassette("search_charges") do
+      {:ok, retreived_charges} = Charge.search(%{query: "hagrid@hogwarts.wiz"})
+
+      assert retreived_charges.count == 25
+      assert retreived_charges.items != []
+    end
+  end
+
   describe "Charge failures" do
     @card_numbers %{
       declined: "4100000000000001",

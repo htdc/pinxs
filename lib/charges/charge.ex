@@ -100,7 +100,7 @@ defmodule PINXS.Charges.Charge do
   end
 
   @doc """
-  Retreives a paginated list of charges
+  Retrieves a paginated list of charges
   """
   @spec get_all() :: {:ok, [Charge.t]} | {:error, PINXS.Error.t}
   def get_all() do
@@ -108,7 +108,7 @@ defmodule PINXS.Charges.Charge do
   end
 
   @doc """
-  Retreives a specific pages of charges
+  Retrieves a specific pages of charges
   """
   @spec get_all(integer()) :: {:ok, [Charge.t]} | {:error, PINXS.Error.t}
   def get_all(page) do
@@ -116,10 +116,30 @@ defmodule PINXS.Charges.Charge do
   end
 
   @doc """
-  Retreives a single charge
+  Retrieves a single charge
   """
   @spec get(String.t()) :: {:ok, Charge.t} | {:error, PINXS.Error.t()}
   def get(token) do
     API.get("/charges/#{token}", __MODULE__)
+  end
+
+  @doc """
+  Retrieve charges based on search criteria
+
+  ## Search options
+  ```
+  %{
+    query: "",
+    start_date: "YYYY/MM/DD", # 2013/01/01
+    end_date: "YYYY/MM/DD", # 2013/12/25
+    sort: "", # field to sort by, default `created_at`
+    direction: 1 # 1 or -1
+  }
+  ```
+  """
+
+  @spec search(map()) :: {:ok, [Charge.t]} | {:error, PINXS.Error.t()}
+  def search(query_map) do
+    API.search("/charges/search", query_map, __MODULE__)
   end
 end

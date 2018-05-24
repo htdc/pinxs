@@ -76,4 +76,24 @@ defmodule PINXS.Transfers.Transfer do
   def get_line_items(transfer_token) do
     API.get("/transfers/#{transfer_token}/line_items",__MODULE__)
   end
+
+    @doc """
+  Retrieve transfers based on search criteria
+
+  ## Search options
+  ```
+  %{
+    query: "",
+    start_date: "YYYY/MM/DD", # 2013/01/01
+    end_date: "YYYY/MM/DD", # 2013/12/25
+    sort: "", # field to sort by, default `created_at`
+    direction: 1 # 1 or -1
+  }
+  ```
+  """
+
+  @spec search(map()) :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t()}
+  def search(query_map) do
+    API.search("/transfers/search", query_map, __MODULE__)
+  end
 end

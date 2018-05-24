@@ -14,6 +14,7 @@ defmodule PINXS.HTTP.API do
   def delete(url, module), do: delete(url) |> Response.transform(module)
   def get(url), do: Client.get(url)
   def get(url, module), do: get(url) |> Response.transform(module)
+  def search(url, params, module), do: Client.get(url, params) |> Response.transform(module)
   def post(url, params), do: Client.post(url, params)
   def post(url, params, module), do: post(url, params) |> Response.transform(module)
   def put(url, params), do: Client.put(url, params)

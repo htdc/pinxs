@@ -1,6 +1,6 @@
 defmodule PINXS.HTTP.API do
   alias PINXS.HTTP.ClientBase, as: Client
-  alias PINXS.Response
+  alias PINXS.HTTP.Response
 
   @moduledoc """
   The API module provides low level functions for communicating with

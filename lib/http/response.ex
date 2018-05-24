@@ -1,4 +1,4 @@
-defmodule PINXS.Response do
+defmodule PINXS.HTTP.Response do
   @moduledoc """
   Provides a standard way of converting all HTTP responses into tagged
   tuples

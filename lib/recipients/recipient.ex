@@ -26,7 +26,7 @@ defmodule PINXS.Recipients.Recipient do
   ]
 
   @type t :: %__MODULE__{
-          token: String.t(),
+          token: nil | String.t(),
           name: nil | String.t(),
           email: String.t(),
           created_at: nil | String.t(),

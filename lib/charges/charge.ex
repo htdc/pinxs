@@ -35,7 +35,6 @@ defmodule PINXS.Charges.Charge do
     :captured,
     :card_token,
     :card,
-    :currency,
     :customer_token,
     :description,
     :email,
@@ -46,7 +45,8 @@ defmodule PINXS.Charges.Charge do
     :settlement_currency,
     :total_fees,
     :token,
-    :transfer
+    :transfer,
+    currency: "AUD"
   ]
 
   @type t :: %__MODULE__{

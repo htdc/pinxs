@@ -29,7 +29,7 @@ defmodule PINXS.Transfers.Transfer do
     description: nil | String.t,
     paid_at: nil | String.t,
     recipient: String.t,
-    reference: String.t,
+    reference: nil | String.t,
     status: nil | String.t,
     token: nil | String.t,
     total_credits: nil | integer(),

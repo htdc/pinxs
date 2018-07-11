@@ -14,7 +14,7 @@ Made with love at [HotDoc](https://www.hotdoc.com.au)
 ```elixir
 def deps do
   [
-    {:pinxs, "~> 0.1.0"}
+    {:pinxs, "~> 0.1.3"}
   ]
 end
 ```

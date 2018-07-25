@@ -28,9 +28,9 @@ defmodule PINXS.Refunds.RefundTest do
 
   test "Create a refund", %{charge: charge, card: card} do
     use_cassette("refunds/create") do
-      {:ok, created_charge} = Charge.create(%{charge | card: card})
+      {:ok, created_charge} = Charge.create(%{charge | card: card}, PINXS.config("api key"))
 
-      {:ok, refund} = Refund.create(created_charge)
+      {:ok, refund} = Refund.create(created_charge, PINXS.config("api key"))
 
       assert refund.amount == 50000
       assert refund.token != nil
@@ -39,7 +39,7 @@ defmodule PINXS.Refunds.RefundTest do
 
   test "Get all refunds" do
     use_cassette("refunds/get_all") do
-      {:ok, refunds} = Refund.get_all()
+      {:ok, refunds} = Refund.get_all(PINXS.config("api key"))
 
       assert length(refunds.items) == 10
     end
@@ -47,11 +47,11 @@ defmodule PINXS.Refunds.RefundTest do
 
   test "Get a refund", %{charge: charge, card: card} do
     use_cassette("refunds/get_one") do
-      {:ok, created_charge} = Charge.create(%{charge | card: card})
+      {:ok, created_charge} = Charge.create(%{charge | card: card}, PINXS.config("api key"))
 
-      {:ok, refund} = Refund.create(created_charge)
+      {:ok, refund} = Refund.create(created_charge, PINXS.config("api key"))
 
-      {:ok, retrieved_refund} = Refund.get(refund)
+      {:ok, retrieved_refund} = Refund.get(refund, PINXS.config("api key"))
 
       assert refund == retrieved_refund
     end
@@ -59,11 +59,11 @@ defmodule PINXS.Refunds.RefundTest do
 
   test "Get refunds for a charge", %{charge: charge, card: card} do
     use_cassette("refunds/get_refunds_for_charge") do
-      {:ok, created_charge} = Charge.create(%{charge | card: card})
+      {:ok, created_charge} = Charge.create(%{charge | card: card}, PINXS.config("api key"))
 
-      {:ok, refund} = Refund.create(created_charge)
+      {:ok, refund} = Refund.create(created_charge, PINXS.config("api key"))
 
-      {:ok, retrieved_refunds} = Refund.get_all_for_charge(created_charge)
+      {:ok, retrieved_refunds} = Refund.get_all_for_charge(created_charge, PINXS.config("api key"))
 
       assert [refund] == retrieved_refunds.items
     end

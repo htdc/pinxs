@@ -10,13 +10,19 @@ defmodule PINXS.HTTP.API do
   are available where extreme customisation is desired
   """
 
-  def delete(url), do: Client.delete(url)
-  def delete(url, module), do: delete(url) |> Response.transform(module)
-  def get(url), do: Client.get(url)
-  def get(url, module), do: get(url) |> Response.transform(module)
-  def search(url, params, module), do: Client.get(url, params) |> Response.transform(module)
-  def post(url, params), do: Client.post(url, params)
-  def post(url, params, module), do: post(url, params) |> Response.transform(module)
-  def put(url, params), do: Client.put(url, params)
-  def put(url, params, module), do: put(url, params) |> Response.transform(module)
+  def delete(url, config), do: Client.authenticated_delete(url, config)
+  def delete(url, module, config), do: delete(url, config) |> Response.transform(module)
+  def get(url, config), do: Client.authenticated_get(url, config)
+  def get(url, module, config), do: Client.authenticated_get(url, config) |> Response.transform(module)
+
+  def search(url, params, module, config),
+    do: Client.authenticated_search(url, params, config) |> Response.transform(module)
+
+  def post(url, params, config), do: Client.authenticated_post(url, params, config)
+
+  def post(url, params, module, config),
+    do: post(url, params, config) |> Response.transform(module)
+
+  def put(url, params, config), do: Client.authenticated_put(url, params, config)
+  def put(url, params, module, config), do: put(url, params, config) |> Response.transform(module)
 end

@@ -16,29 +16,33 @@ Documentation a (HexDocs)[https://hexdocs.pm/pinxs/]
 ```elixir
 def deps do
   [
-    {:pinxs, "~> 0.1.3"}
+    {:pinxs, "~> 1.0.0"}
   ]
 end
 ```
 
-You will also need to add your API key to your config.
+Configure the endpoint you wish to use
 
 ```elixir
 config :pinxs,
-  api_key: "${PIN_PAYMENTS_API_KEY}",
-  pin_url: "https://api.pinpayments.com" # or "https://test-api.pin.net.au/1" in test environment
+  pin_url: "https://api.pinpayments.com" # or "https://test-api.pin.net.au/1" in dev/test environment
 ```
+
+You will also need to use your API key for authenticating each type of request.
 
 ## Overview
 
-All responses are transformed to return `{:ok, item(s)}` or `{:error, PINX.Error}`
+All requests must provide your API key.  The helper `PINXS.config("YOUR KEY")`.  The reason this is done on a per
+request basis, rather than a global configuration is to allow changes at runtime on a per request basis.
+
+All responses are transformed to return `{:ok, item(s)}` or `{:error, PINXS.Error}`
 
 This enables us to leverage pattern matching and the `with` construct very nicely.
 
 ### Example charge creation
 
 ```elixir
-    order = Order.create(#...)
+    order = Order.create(...)
 
     card = %Card{
       number: "5520000000000000",
@@ -60,7 +64,7 @@ This enables us to leverage pattern matching and the `with` construct very nicel
     }
 
     with {:ok, created_order} <- Repo.insert(order),
-         {:ok, created_charge} <- Charge.create(charge),
+         {:ok, created_charge} <- Charge.create(charge, PINXS.config("MY API KEY")),
          {:ok, paid_order} <- Order.mark_paid(created_order, created_charge),
          {:ok, _email} <- Mailer.send("receipt", created_charge),
          {:ok, _email} <- Mailer.send("notify_fulfullment_team", order)

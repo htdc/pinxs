@@ -5,7 +5,7 @@ defmodule PINXS.BalanceTest do
 
   test "Retrieve balance" do
     use_cassette("balance") do
-      {:ok, balance} = Balance.get()
+      {:ok, balance} = Balance.get(PINXS.config("api key"))
       assert balance.available == [%{amount: 50000, currency: "AUD"}]
     end
   end

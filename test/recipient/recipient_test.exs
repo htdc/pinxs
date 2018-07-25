@@ -21,7 +21,7 @@ defmodule PINXS.Recipient.RecipientTest do
 
   test "Create a recipient", %{recipient: recipient, bank_account: bank_account} do
     use_cassette("recipients/create") do
-      {:ok, created} = Recipient.create(%{ recipient | bank_account: bank_account})
+      {:ok, created} = Recipient.create(%{ recipient | bank_account: bank_account}, PINXS.config("api key"))
 
       assert created.token != nil
     end
@@ -29,9 +29,9 @@ defmodule PINXS.Recipient.RecipientTest do
 
   test "Create recipient from bank account token", %{recipient: recipient, bank_account: bank_account} do
     use_cassette("recipients/create_from_token") do
-      {:ok, created_account} = BankAccount.create(bank_account)
+      {:ok, created_account} = BankAccount.create(bank_account, PINXS.config("api key"))
 
-      {:ok, created} = Recipient.create(%{ recipient | bank_account_token: created_account.token})
+      {:ok, created} = Recipient.create(%{ recipient | bank_account_token: created_account.token}, PINXS.config("api key"))
 
       assert created.token != nil
     end
@@ -39,9 +39,9 @@ defmodule PINXS.Recipient.RecipientTest do
 
   test "Get a recipient", %{recipient: recipient, bank_account: bank_account} do
     use_cassette("recipients/get") do
-      {:ok, created} = Recipient.create(%{ recipient | bank_account: bank_account})
+      {:ok, created} = Recipient.create(%{ recipient | bank_account: bank_account}, PINXS.config("api key"))
 
-      {:ok, retrieved} = Recipient.get(created.token)
+      {:ok, retrieved} = Recipient.get(created.token, PINXS.config("api key"))
 
       assert created == retrieved
     end
@@ -49,18 +49,18 @@ defmodule PINXS.Recipient.RecipientTest do
 
   test "Get all" do
     use_cassette("recipients/get_all") do
-      {:ok, %{items: [recipient | _]}} = Recipient.get_all()
+      {:ok, %{items: [recipient | _]}} = Recipient.get_all(PINXS.config("api key"))
 
       assert recipient.token =~ ~r/rp_.*/
     end
   end
   test "Update recipient with new bank account", %{recipient: recipient, bank_account: bank_account} do
     use_cassette("recipients/update") do
-      {:ok, created} = Recipient.create(%{ recipient | bank_account: bank_account})
+      {:ok, created} = Recipient.create(%{ recipient | bank_account: bank_account}, PINXS.config("api key"))
 
-      {:ok, created_account} = BankAccount.create(bank_account)
+      {:ok, created_account} = BankAccount.create(bank_account, PINXS.config("api key"))
 
-      {:ok, updated_recipient} = Recipient.update_recipient(created, %{bank_account_token: created_account.token})
+      {:ok, updated_recipient} = Recipient.update_recipient(created, %{bank_account_token: created_account.token}, PINXS.config("api key"))
 
       assert created.bank_account != updated_recipient.bank_account
     end

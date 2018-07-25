@@ -15,8 +15,8 @@ defmodule PINXS.Balance do
   @doc """
   Retrieves your balance information
   """
-  @spec get() :: {:ok, Balance.t()} | {:error, PINXS.Error.t()}
-  def get() do
-    API.get("/balance", __MODULE__)
+  @spec get(PINXS.t()) :: {:ok, Balance.t()} | {:error, PINXS.Error.t()}
+  def get(%PINXS{} = config) do
+    API.get("/balance", __MODULE__, config)
   end
 end

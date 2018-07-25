@@ -46,7 +46,7 @@ defmodule PINXS.MixProject do
       {:exvcr, "~> 0.10", only: :test},
       {:mix_test_watch, "~> 0.6", only: :dev},
       {:hackney, "~> 1.12"},
-      {:httpoison, "~> 1.1.1"},
+      {:httpoison, "~> 1.2.0"},
       {:poison, "~> 3.1"}
     ]
   end

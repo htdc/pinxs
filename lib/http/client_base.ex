@@ -3,6 +3,7 @@ defmodule PINXS.HTTP.ClientBase do
   use HTTPoison.Base
 
   @pin_url Application.get_env(:pinxs, :pin_url, "https://test-api.pin.net.au/1")
+
   def authenticated_delete(url, config) do
     delete(url, transform_config(config), []) |> normalize()
   end

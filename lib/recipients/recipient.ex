@@ -37,43 +37,43 @@ defmodule PINXS.Recipients.Recipient do
   @doc """
   Create a recipient
   """
-  @spec create(Recipient.t()) :: {:ok, Recipient.t()} | {:error, PINXS.Error.t()}
-  def create(%Recipient{bank_account: bank_account} = recipient) when not is_nil(bank_account) do
-    API.post("/recipients", recipient, __MODULE__)
+  @spec create(Recipient.t(), PINXS.t()) :: {:ok, Recipient.t()} | {:error, PINXS.Error.t()}
+  def create(%Recipient{bank_account: bank_account} = recipient, %PINXS{} = config) when not is_nil(bank_account) do
+    API.post("/recipients", recipient, __MODULE__, config)
   end
 
-  def create(%Recipient{bank_account_token: bank_account_token} = recipient) when not is_nil(bank_account_token) do
-    API.post("/recipients", recipient, __MODULE__)
+  def create(%Recipient{bank_account_token: bank_account_token} = recipient, %PINXS{} = config) when not is_nil(bank_account_token) do
+    API.post("/recipients", recipient, __MODULE__, config)
   end
 
 
   @doc """
   Gets a recipient
   """
-  @spec get(String.t) :: {:ok, Recipient.t} | {:error, PINXS.Error.t}
-  def get(recipient_token) do
-    API.get("/recipients/#{recipient_token}", __MODULE__)
+  @spec get(String.t(), PINXS.t()) :: {:ok, Recipient.t} | {:error, PINXS.Error.t}
+  def get(recipient_token, %PINXS{} = config) do
+    API.get("/recipients/#{recipient_token}", __MODULE__, config)
   end
 
   @doc """
   Gets a paginated list of recipients
   """
-  @spec get_all() :: {:ok, [Recipient.t]} | {:error, PINXS.Error.t}
-  def get_all() do
-    API.get("/recipients", __MODULE__)
+  @spec get_all(PINXS.t()) :: {:ok, [Recipient.t]} | {:error, PINXS.Error.t}
+  def get_all(%PINXS{} = config) do
+    API.get("/recipients", __MODULE__, config)
   end
 
   @doc """
   Get a specific page of recipients
   """
-  def get_all(page) do
-    API.get("/recipients?page=#{page}", __MODULE__)
+  def get_all(page, %PINXS{} = config) do
+    API.get("/recipients?page=#{page}", __MODULE__, config)
   end
 
   @doc """
   Update recipient details
   """
-  def update_recipient(%Recipient{ token: token}, params) do
-    API.put("/recipients/#{token}", params, __MODULE__)
+  def update_recipient(%Recipient{ token: token}, params, %PINXS{} = config) do
+    API.put("/recipients/#{token}", params, __MODULE__, config)
   end
 end

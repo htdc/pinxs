@@ -28,9 +28,9 @@ defmodule PINXS.Transfers.TransferTest do
 
   test "Create a transfer", %{transfer: transfer, recipient: recipient} do
     use_cassette("transfers/create") do
-      {:ok, created_recipient} = Recipient.create(recipient)
+      {:ok, created_recipient} = Recipient.create(recipient, PINXS.config("api key"))
 
-      {:ok, created_transfer} = Transfer.create(%{transfer | currency: "AUD",  recipient: created_recipient.token})
+      {:ok, created_transfer} = Transfer.create(%{transfer | currency: "AUD",  recipient: created_recipient.token}, PINXS.config("api key"))
 
       assert created_transfer.token != nil
     end
@@ -38,9 +38,9 @@ defmodule PINXS.Transfers.TransferTest do
 
   test "Create a transfer with missing currency", %{transfer: transfer, recipient: recipient} do
     use_cassette("transfers/create_with_missing_currency") do
-      {:ok, created_recipient} = Recipient.create(recipient)
+      {:ok, created_recipient} = Recipient.create(recipient, PINXS.config("api key"))
 
-      {:ok, created_transfer} = Transfer.create(%{transfer | recipient: created_recipient.token})
+      {:ok, created_transfer} = Transfer.create(%{transfer | recipient: created_recipient.token}, PINXS.config("api key"))
 
       assert created_transfer.token != nil
     end
@@ -48,7 +48,7 @@ defmodule PINXS.Transfers.TransferTest do
 
   test "Get all transfers" do
     use_cassette("transfers/get_all") do
-      {:ok, %{items: [transfer | _]}} = Transfer.get_all()
+      {:ok, %{items: [transfer | _]}} = Transfer.get_all(PINXS.config("api key"))
 
       assert transfer != nil
     end
@@ -56,7 +56,7 @@ defmodule PINXS.Transfers.TransferTest do
 
   test "Get specific page of transfers" do
     use_cassette("transfers/get_all_by_page") do
-      {:ok, %{items: items}} = Transfer.get_all(2)
+      {:ok, %{items: items}} = Transfer.get_all(2, PINXS.config("api key"))
 
       assert items == []
     end
@@ -64,11 +64,11 @@ defmodule PINXS.Transfers.TransferTest do
 
   test "Get a transfer", %{transfer: transfer, recipient: recipient} do
     use_cassette("transfers/get_specific_transfer") do
-      {:ok, created_recipient} = Recipient.create(recipient)
+      {:ok, created_recipient} = Recipient.create(recipient, PINXS.config("api key"))
 
-      {:ok, created_transfer} = Transfer.create(%{transfer | currency: "AUD",  recipient: created_recipient.token})
+      {:ok, created_transfer} = Transfer.create(%{transfer | currency: "AUD",  recipient: created_recipient.token}, PINXS.config("api key"))
 
-      {:ok, retrieved_transfer} = Transfer.get(created_transfer.token)
+      {:ok, retrieved_transfer} = Transfer.get(created_transfer.token, PINXS.config("api key"))
 
       assert created_transfer == retrieved_transfer
     end
@@ -76,7 +76,7 @@ defmodule PINXS.Transfers.TransferTest do
 
   test "Search for a transfer" do
     use_cassette("transfers/search") do
-      {:ok, retrieved_transfers} = Transfer.search(%{query: "hagrid@hogwarts.wiz"})
+      {:ok, retrieved_transfers} = Transfer.search(%{query: "hagrid@hogwarts.wiz"}, PINXS.config("api key"))
 
       assert retrieved_transfers.count == 5
       assert retrieved_transfers.items != []
@@ -85,11 +85,11 @@ defmodule PINXS.Transfers.TransferTest do
 
   test "Get line items", %{transfer: transfer, recipient: recipient} do
     use_cassette("transfers/get_line_items") do
-      {:ok, created_recipient} = Recipient.create(recipient)
+      {:ok, created_recipient} = Recipient.create(recipient, PINXS.config("api key"))
 
-      {:ok, created_transfer} = Transfer.create(%{transfer | currency: "AUD",  recipient: created_recipient.token})
+      {:ok, created_transfer} = Transfer.create(%{transfer | currency: "AUD",  recipient: created_recipient.token}, PINXS.config("api key"))
 
-      {:ok, %{items: items}} = Transfer.get_line_items(created_transfer.token)
+      {:ok, %{items: items}} = Transfer.get_line_items(created_transfer.token, PINXS.config("api key"))
 
       assert items != []
     end

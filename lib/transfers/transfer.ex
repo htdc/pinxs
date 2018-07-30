@@ -39,42 +39,43 @@ defmodule PINXS.Transfers.Transfer do
   @doc """
   Create a transfer
   """
-  @spec create(Transfer.t) :: {:ok, Transfer.t} | {:error, PINXS.Error.t}
-  def create(%Transfer{currency: "AUD"} = transfer) do
-    API.post("/transfers", transfer, __MODULE__)
+  @spec create(Transfer.t(), PINXS.t()) :: {:ok, Transfer.t} | {:error, PINXS.Error.t}
+  def create(%Transfer{currency: "AUD"} = transfer, %PINXS{} = config) do
+    API.post("/transfers", transfer, __MODULE__, config)
   end
 
-  def create(%Transfer{} = transfer) do
+  def create(%Transfer{} = transfer, %PINXS{} = config) do
     Map.put(transfer, :currency, "AUD")
-    |> create
+    |> create(config)
   end
 
   @doc """
   Gets a transfer
   """
-  @spec get(String.t) :: {:ok, Transfer.t} | {:error, PINXS.Error.t}
-  def get(transfer_token) do
-    API.get("/transfers/#{transfer_token}", __MODULE__)
+  @spec get(String.t(), PINXS.t()) :: {:ok, Transfer.t} | {:error, PINXS.Error.t}
+  def get(transfer_token, %PINXS{} = config) do
+    API.get("/transfers/#{transfer_token}", __MODULE__, config)
   end
 
   @doc """
   Gets a paginated list of transfers
   """
-  @spec get_all() :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t}
-  def get_all() do
-    API.get("/transfers", __MODULE__)
+  @spec get_all(PINXS.t()) :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t}
+  def get_all(%PINXS{} = config) do
+    API.get("/transfers", __MODULE__, config)
   end
 
   @doc """
   Gets a specific pages of transfers
   """
-  @spec get_all(non_neg_integer()) :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t}
-  def get_all(page) when is_integer(page) do
-    API.get("/transfers?page=#{page}", __MODULE__)
+  @spec get_all(non_neg_integer(), PINXS.t()) :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t}
+  def get_all(page, %PINXS{} = config) when is_integer(page) do
+    API.get("/transfers?page=#{page}", __MODULE__, config)
   end
 
-  def get_line_items(transfer_token) do
-    API.get("/transfers/#{transfer_token}/line_items",__MODULE__)
+  @spec get_line_items(String.t(), PINXS.t()) :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t}
+  def get_line_items(transfer_token, %PINXS{} = config) do
+    API.get("/transfers/#{transfer_token}/line_items",__MODULE__, config)
   end
 
     @doc """
@@ -92,8 +93,8 @@ defmodule PINXS.Transfers.Transfer do
   ```
   """
 
-  @spec search(map()) :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t()}
-  def search(query_map) do
-    API.search("/transfers/search", query_map, __MODULE__)
+  @spec search(map(), PINXS.t()) :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t()}
+  def search(query_map, %PINXS{} = config) do
+    API.search("/transfers/search", query_map, __MODULE__, config)
   end
 end

@@ -53,8 +53,8 @@ defmodule PINXS.Cards.Card do
   @doc """
   Creates a tokenized credit card
   """
-  @spec create(Card.t()) :: {:ok, Card.t()} | {:error, PINXS.Error.t()}
-  def create(%Card{} = card) do
-    API.post("/cards", card, __MODULE__)
+  @spec create(Card.t(), PINXS.t()) :: {:ok, Card.t()} | {:error, PINXS.Error.t()}
+  def create(%Card{} = card, %PINXS{} = config) do
+    API.post("/cards", card, __MODULE__, config)
   end
 end

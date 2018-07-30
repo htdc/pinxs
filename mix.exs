@@ -4,7 +4,7 @@ defmodule PINXS.MixProject do
   def project do
     [
       app: :pinxs,
-      version: "0.1.3",
+      version: "1.0.0",
       elixir: "~> 1.6",
       source_url: "https://github.com/htdc/pinxs",
       description: """
@@ -46,7 +46,7 @@ defmodule PINXS.MixProject do
       {:exvcr, "~> 0.10", only: :test},
       {:mix_test_watch, "~> 0.6", only: :dev},
       {:hackney, "~> 1.12"},
-      {:httpoison, "~> 1.1.1"},
+      {:httpoison, "~> 1.2.0"},
       {:poison, "~> 3.1"}
     ]
   end

@@ -16,7 +16,7 @@ defmodule PINXS.Cards.CardTest do
     }
 
     use_cassette("cards") do
-      {:ok, response} = Card.create(card)
+      {:ok, response} = Card.create(card, PINXS.config("api_key"))
 
       assert response.expiry_year == 2020
     end
@@ -33,7 +33,7 @@ defmodule PINXS.Cards.CardTest do
     }
 
     use_cassette("card_with_missing_field") do
-      {:error, response} = Card.create(card)
+      {:error, response} = Card.create(card, PINXS.config("api_key"))
 
       assert response.error_description == "One or more parameters were missing or invalid"
     end

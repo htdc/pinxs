@@ -33,41 +33,39 @@ defmodule PINXS.Refunds.Refund do
   @doc """
   Create a refund from a given charge
   """
-  @spec create(Charge.t, map()) :: {:ok, Refund.t} | {:error, PINXS.Error.t}
-  def create(%Charge{token: token}, amount \\ %{}) do
-    API.post("/charges/#{token}/refunds", amount, __MODULE__)
+  @spec create(Charge.t, map(), PINXS.t()) :: {:ok, Refund.t} | {:error, PINXS.Error.t}
+  def create(%Charge{token: token}, amount \\ %{}, %PINXS{} = config) do
+    API.post("/charges/#{token}/refunds", amount, __MODULE__, config)
   end
 
   @doc """
   Retrieves a specific refunds
   """
-  @spec get(Refund.t) :: {:ok, Refund.t} | {:error, PINXS.Error.t}
-  def get(%Refund{token: token}) do
-    API.get("/refunds/#{token}", __MODULE__)
+  @spec get(Refund.t(), PINXS.t()) :: {:ok, Refund.t} | {:error, PINXS.Error.t}
+  def get(%Refund{token: token}, %PINXS{} = config) do
+    API.get("/refunds/#{token}", __MODULE__, config)
   end
 
   @doc """
   Get a paginated list of refunds
   """
-  @spec get_all() :: {:ok, [Refund.t]} | {:error, PINXS.Error.t}
-  def get_all() do
-    API.get("/refunds", __MODULE__)
+  @spec get_all(PINXS.t()) :: {:ok, [Refund.t]} | {:error, PINXS.Error.t}
+  def get_all(%PINXS{} = config) do
+    API.get("/refunds", __MODULE__, config)
   end
   @doc """
   Gets a specific page of refunds
   """
-  @spec get_all(integer()) :: {:ok, [Refund.t]} | {:error, PINXS.Error.t}
-  def get_all(page) when is_integer(page) do
-    API.get("/refunds?page=#{page}", __MODULE__)
+  @spec get_all(integer(), PINXS.t()) :: {:ok, [Refund.t]} | {:error, PINXS.Error.t}
+  def get_all(page, %PINXS{} = config) when is_integer(page) do
+    API.get("/refunds?page=#{page}", __MODULE__, config)
   end
 
   @doc """
   Gets refunds for a specific charge
   """
-  @spec get_all_for_charge(Charge.t) :: {:ok, [Refund.t]} | {:error, PINXS.Error.t}
-  def get_all_for_charge(%Charge{token: token}) do
-    API.get("/charges/#{token}/refunds", __MODULE__)
+  @spec get_all_for_charge(Charge.t, PINXS.t()) :: {:ok, [Refund.t]} | {:error, PINXS.Error.t}
+  def get_all_for_charge(%Charge{token: token}, %PINXS{} = config) do
+    API.get("/charges/#{token}/refunds", __MODULE__, config)
   end
-
-
 end

@@ -73,11 +73,12 @@ defmodule PINXS.Charges.Charge do
   @doc """
   Captures a previously authorized charge
   """
-  @spec capture(Charge.t, PINXS.t()) :: {:ok, Charge.t()} | {:error, PINXS.Error.t()}
+  @spec capture(Charge.t(), PINXS.t()) :: {:ok, Charge.t()} | {:error, PINXS.Error.t()}
   def capture(%Charge{} = charge, %PINXS{} =  config) do
     capture(charge, %{}, config)
   end
 
+  @spec capture(Charge.t(), map(), PINXS.t()) :: {:ok, Charge.t()} | {:error, PINXS.Error.t()}
   def capture(%Charge{token: token}, amount, %PINXS{} = config) do
     API.put("/charges/#{token}/capture", amount, __MODULE__, config)
   end

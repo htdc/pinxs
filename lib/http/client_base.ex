@@ -2,7 +2,7 @@ defmodule PINXS.HTTP.ClientBase do
   @moduledoc false
   use HTTPoison.Base
 
-  @pin_url Application.get_env(:pinxs, :pin_url, "https://test-api.pin.net.au/1")
+  @default_url "https://test-api.pin.net.au/1"
 
   def authenticated_delete(url, config) do
     delete(url, transform_config(config), []) |> normalize()
@@ -25,7 +25,7 @@ defmodule PINXS.HTTP.ClientBase do
   end
 
   def process_url(endpoint) do
-    @pin_url <> endpoint
+    pin_url() <> endpoint
   end
 
   def process_request_headers(headers) when is_list(headers), do: headers
@@ -47,4 +47,11 @@ defmodule PINXS.HTTP.ClientBase do
 
   def normalize({:ok, response}), do: {:error, response}
   def normalize(any), do: any
+
+  defp pin_url do
+    case Application.get_env(:pinxs, :api_key, @default_url) do
+      {:system, env_var} -> System.get_env(env_var) || @default_url
+      value -> value
+    end
+  end
 end

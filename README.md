@@ -16,7 +16,7 @@ Documentation a (HexDocs)[https://hexdocs.pm/pinxs/]
 ```elixir
 def deps do
   [
-    {:pinxs, "~> 1.0.0"}
+    {:pinxs, "~> 1.1.0"}
   ]
 end
 ```

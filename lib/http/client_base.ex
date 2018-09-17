@@ -2,8 +2,8 @@ defmodule PINXS.HTTP.ClientBase do
   @moduledoc false
   use HTTPoison.Base
 
-  def pin_url(url, %PINXS{url: base_url}) do
-    base_url <> url
+  def pin_url(path, %PINXS{url: base_url}) do
+    base_url <> path
   end
 
   def authenticated_delete(url, config) do

@@ -13,7 +13,7 @@ defmodule PINXS.BankAccounts.BankAccountTest do
     }
 
     use_cassette("bank_accounts/create") do
-      {:ok, created_account} = BankAccount.create(bank_account, PINXS.config("api_key"))
+      {:ok, created_account} = BankAccount.create(bank_account, PINXS.config("api_key", :test))
 
       assert created_account.number == "XXX456"
       assert created_account.token == "ba_PRNU-gZfs7TAFYQN4fRT9g"

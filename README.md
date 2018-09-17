@@ -21,14 +21,9 @@ def deps do
 end
 ```
 
-Configure the endpoint you wish to use
+# Config
 
-```elixir
-config :pinxs,
-  pin_url: "https://api.pinpayments.com" # or "https://test-api.pin.net.au/1" in dev/test environment
-```
-
-You will also need to use your API key for authenticating each type of request.
+API key and the Pin URL are sent as a config object with each request.  `PINXS.config` helpers are provided for convenience.
 
 ## Overview
 

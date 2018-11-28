@@ -144,7 +144,7 @@ defmodule PINXS.Charges.Charge do
   ```
   """
 
-  @spec search(map(), PINXS.t()) :: {:ok, [Charge.t()]} | {:error, PINXS.Error.t()}
+  @spec search(map(), PINXS.t()) :: {:ok, map()} | {:error, PINXS.Error.t()}
   def search(query_map, %PINXS{} =  config) do
     API.search("/charges/search", query_map, __MODULE__, config)
   end

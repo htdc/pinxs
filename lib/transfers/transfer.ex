@@ -93,7 +93,7 @@ defmodule PINXS.Transfers.Transfer do
   ```
   """
 
-  @spec search(map(), PINXS.t()) :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t()}
+  @spec search(map(), PINXS.t()) :: {:ok, map()} | {:error, PINXS.Error.t()}
   def search(query_map, %PINXS{} = config) do
     API.search("/transfers/search", query_map, __MODULE__, config)
   end

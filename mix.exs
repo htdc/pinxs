@@ -26,7 +26,7 @@ defmodule PINXS.MixProject do
       licenses: ["MIT"],
       maintainers: ["Martin Feckie"],
       links: %{
-        "Github"=> "https://github.com/htdc/pinxs"
+        "Github" => "https://github.com/htdc/pinxs"
       }
     ]
   end

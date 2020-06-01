@@ -87,7 +87,8 @@ defmodule PINXS.Charges.ChargeTest do
 
   test "Capture a charge", %{charge: charge, card: card} do
     use_cassette("capture_full_charge") do
-      {:ok, uncaptured_charge} = Charge.create(%{charge | capture: false, card: card}, PINXS.config("api_key", :test))
+      {:ok, uncaptured_charge} =
+        Charge.create(%{charge | capture: false, card: card}, PINXS.config("api_key", :test))
 
       assert uncaptured_charge.captured == false
 
@@ -99,11 +100,13 @@ defmodule PINXS.Charges.ChargeTest do
 
   test "Capture a partial charge", %{charge: charge, card: card} do
     use_cassette("capture_partial_charge") do
-      {:ok, uncaptured_charge} = Charge.create(%{charge | capture: false, card: card}, PINXS.config("api_key", :test))
+      {:ok, uncaptured_charge} =
+        Charge.create(%{charge | capture: false, card: card}, PINXS.config("api_key", :test))
 
       assert uncaptured_charge.captured == false
 
-      {:error, err} = Charge.capture(uncaptured_charge, %{amount: 200}, PINXS.config("api_key", :test))
+      {:error, err} =
+        Charge.capture(uncaptured_charge, %{amount: 200}, PINXS.config("api_key", :test))
 
       assert err.error_description == "You must capture the full amount that was authorised"
     end
@@ -122,7 +125,8 @@ defmodule PINXS.Charges.ChargeTest do
 
   test "Get a specific charge", %{charge: charge, card: card} do
     use_cassette("get_charge") do
-      {:ok, created_charge} = Charge.create(%{charge | card: card}, PINXS.config("api_key", :test))
+      {:ok, created_charge} =
+        Charge.create(%{charge | card: card}, PINXS.config("api_key", :test))
 
       {:ok, retreived_charge} = Charge.get(created_charge.token, PINXS.config("api_key", :test))
 
@@ -132,7 +136,8 @@ defmodule PINXS.Charges.ChargeTest do
 
   test "Search for a charge" do
     use_cassette("search_charges") do
-      {:ok, retreived_charges} = Charge.search(%{query: "hagrid@hogwarts.wiz"}, PINXS.config("api_key", :test))
+      {:ok, retreived_charges} =
+        Charge.search(%{query: "hagrid@hogwarts.wiz"}, PINXS.config("api_key", :test))
 
       assert retreived_charges.count == 25
       assert retreived_charges.items != []
@@ -153,7 +158,8 @@ defmodule PINXS.Charges.ChargeTest do
       failing_card = %{card | number: @card_numbers.declined}
 
       use_cassette("charge_failures/declined") do
-        {:error, declined} = Charge.create(%{charge | card: failing_card}, PINXS.config("api_key", :test))
+        {:error, declined} =
+          Charge.create(%{charge | card: failing_card}, PINXS.config("api_key", :test))
 
         assert declined.error_description == "The card was declined"
       end
@@ -163,9 +169,11 @@ defmodule PINXS.Charges.ChargeTest do
       failing_card = %{card | number: @card_numbers.insufficient_funds}
 
       use_cassette("charge_failures/insufficient_funds") do
-        {:error, declined} = Charge.create(%{charge | card: failing_card}, PINXS.config("api_key", :test))
+        {:error, declined} =
+          Charge.create(%{charge | card: failing_card}, PINXS.config("api_key", :test))
 
-        assert declined.error_description == "There are not enough funds available to process the requested amount"
+        assert declined.error_description ==
+                 "There are not enough funds available to process the requested amount"
       end
     end
 
@@ -173,7 +181,8 @@ defmodule PINXS.Charges.ChargeTest do
       failing_card = %{card | number: @card_numbers.invalid_cvc}
 
       use_cassette("charge_failures/invalid_cvc") do
-        {:error, declined} = Charge.create(%{charge | card: failing_card}, PINXS.config("api_key", :test))
+        {:error, declined} =
+          Charge.create(%{charge | card: failing_card}, PINXS.config("api_key", :test))
 
         assert declined.error_description == "The card verification code (cvc) was incorrect"
       end
@@ -183,7 +192,8 @@ defmodule PINXS.Charges.ChargeTest do
       failing_card = %{card | number: @card_numbers.invalid_card}
 
       use_cassette("charge_failures/invalid_card") do
-        {:error, declined} = Charge.create(%{charge | card: failing_card}, PINXS.config("api_key", :test))
+        {:error, declined} =
+          Charge.create(%{charge | card: failing_card}, PINXS.config("api_key", :test))
 
         assert declined.error_description == "The card was invalid"
       end
@@ -193,7 +203,8 @@ defmodule PINXS.Charges.ChargeTest do
       failing_card = %{card | number: @card_numbers.processing_error}
 
       use_cassette("charge_failures/processing_error") do
-        {:error, declined} = Charge.create(%{charge | card: failing_card}, PINXS.config("api_key", :test))
+        {:error, declined} =
+          Charge.create(%{charge | card: failing_card}, PINXS.config("api_key", :test))
 
         assert declined.error_description == "An error occurred while processing the card"
       end
@@ -203,9 +214,11 @@ defmodule PINXS.Charges.ChargeTest do
       failing_card = %{card | number: @card_numbers.suspected_fraud}
 
       use_cassette("charge_failures/suspected_fraud") do
-        {:error, declined} = Charge.create(%{charge | card: failing_card}, PINXS.config("api_key", :test))
+        {:error, declined} =
+          Charge.create(%{charge | card: failing_card}, PINXS.config("api_key", :test))
 
-        assert declined.error_description == "The transaction was flagged as possibly fraudulent and subsequently declined"
+        assert declined.error_description ==
+                 "The transaction was flagged as possibly fraudulent and subsequently declined"
       end
     end
   end

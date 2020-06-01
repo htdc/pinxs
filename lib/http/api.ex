@@ -11,9 +11,14 @@ defmodule PINXS.HTTP.API do
   """
 
   def delete(url, %PINXS{} = config), do: Client.authenticated_delete(url, config)
-  def delete(url, module, %PINXS{} = config), do: delete(url, config) |> Response.transform(module)
+
+  def delete(url, module, %PINXS{} = config),
+    do: delete(url, config) |> Response.transform(module)
+
   def get(url, %PINXS{} = config), do: Client.authenticated_get(url, config)
-  def get(url, module, %PINXS{} = config), do: Client.authenticated_get(url, config) |> Response.transform(module)
+
+  def get(url, module, %PINXS{} = config),
+    do: Client.authenticated_get(url, config) |> Response.transform(module)
 
   def search(url, params, module, %PINXS{} = config),
     do: Client.authenticated_search(url, params, config) |> Response.transform(module)
@@ -24,5 +29,7 @@ defmodule PINXS.HTTP.API do
     do: post(url, params, config) |> Response.transform(module)
 
   def put(url, params, %PINXS{} = config), do: Client.authenticated_put(url, params, config)
-  def put(url, params, module, %PINXS{} = config), do: put(url, params, config) |> Response.transform(module)
+
+  def put(url, params, module, %PINXS{} = config),
+    do: put(url, params, config) |> Response.transform(module)
 end

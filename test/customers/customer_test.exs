@@ -105,7 +105,8 @@ defmodule PINXS.Customers.CustomerTest do
 
       {:ok, _} = Charge.create(charge, PINXS.config("api_key", :test))
 
-      {:ok, %{items: [charge | _]}} = Customer.get_charges(created_customer, PINXS.config("api_key", :test))
+      {:ok, %{items: [charge | _]}} =
+        Customer.get_charges(created_customer, PINXS.config("api_key", :test))
 
       assert charge.description == "Dragon eggs"
     end
@@ -114,7 +115,9 @@ defmodule PINXS.Customers.CustomerTest do
   test "Get customer's cards", %{customer: customer} do
     use_cassette("get_customer_cards") do
       {:ok, created_customer} = Customer.create(customer, PINXS.config("api_key", :test))
-      {:ok, %{items: [card | _]}} = Customer.get_cards(created_customer, PINXS.config("api_key", :test))
+
+      {:ok, %{items: [card | _]}} =
+        Customer.get_cards(created_customer, PINXS.config("api_key", :test))
 
       assert card.expiry_year == 2020
     end
@@ -124,7 +127,12 @@ defmodule PINXS.Customers.CustomerTest do
     use_cassette("add_card_to_customer") do
       {:ok, created_customer} = Customer.create(customer, PINXS.config("api_key", :test))
 
-      {:ok, created_card} = Customer.add_card(created_customer, %{card | expiry_year: 2019}, PINXS.config("api_key", :test))
+      {:ok, created_card} =
+        Customer.add_card(
+          created_customer,
+          %{card | expiry_year: 2019},
+          PINXS.config("api_key", :test)
+        )
 
       assert created_card.expiry_year == 2019
     end
@@ -133,9 +141,12 @@ defmodule PINXS.Customers.CustomerTest do
   test "Add card to customer with token", %{customer: customer, card: card} do
     use_cassette("add_card_token_to_customer") do
       {:ok, created_customer} = Customer.create(customer, PINXS.config("api_key", :test))
-      {:ok, created_card} = Card.create(%{card | expiry_year: 2018}, PINXS.config("api_key", :test))
 
-      {:ok, added_card} = Customer.add_card(created_customer, created_card.token, PINXS.config("api_key", :test))
+      {:ok, created_card} =
+        Card.create(%{card | expiry_year: 2018}, PINXS.config("api_key", :test))
+
+      {:ok, added_card} =
+        Customer.add_card(created_customer, created_card.token, PINXS.config("api_key", :test))
 
       assert added_card.expiry_year == 2018
     end
@@ -144,9 +155,16 @@ defmodule PINXS.Customers.CustomerTest do
   test "Delete customer card", %{customer: customer, card: card} do
     use_cassette("delete_customer_card") do
       {:ok, created_customer} = Customer.create(customer, PINXS.config("api_key", :test))
-      {:ok, created_card} = Customer.add_card(created_customer, %{card | expiry_year: 2019}, PINXS.config("api_key", :test))
 
-      {:ok, delete_card} = Customer.delete_card(created_customer, created_card.token, PINXS.config("api_key", :test))
+      {:ok, created_card} =
+        Customer.add_card(
+          created_customer,
+          %{card | expiry_year: 2019},
+          PINXS.config("api_key", :test)
+        )
+
+      {:ok, delete_card} =
+        Customer.delete_card(created_customer, created_card.token, PINXS.config("api_key", :test))
 
       assert delete_card == true
     end

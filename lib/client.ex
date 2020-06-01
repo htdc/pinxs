@@ -37,6 +37,7 @@ defmodule PINXS.Client do
       Tesla.Middleware.KeepRequest,
       Tesla.Middleware.Compression,
       Tesla.Middleware.Logger,
+      PINXS.Middleware.Normalize,
       {Tesla.Middleware.JSON, [engine_opts: [keys: :atoms]]}
     ]
 

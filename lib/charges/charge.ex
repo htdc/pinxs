@@ -26,7 +26,7 @@ defmodule PINXS.Charges.Charge do
 
   """
 
-  @derive [Poison.Encoder]
+  @derive [Poison.Encoder, Jason.Encoder]
   defstruct [
     :amount_refunded,
     :amount,
@@ -73,11 +73,11 @@ defmodule PINXS.Charges.Charge do
   @doc """
   Captures a previously authorized charge
   """
-  def capture(%Charge{} = charge, %PINXS{} = config) do
+  def capture(%Charge{} = charge, config) do
     capture(charge, %{}, config)
   end
 
-  def capture(%Charge{token: token}, amount, %PINXS{} = config) do
+  def capture(%Charge{token: token}, amount, config) do
     API.put("/charges/#{token}/capture", amount, __MODULE__, config)
   end
 
@@ -88,39 +88,39 @@ defmodule PINXS.Charges.Charge do
 
 
   """
-  def create(%Charge{card: card} = charge_map, %PINXS{} = config) when not is_nil(card),
+  def create(%Charge{card: card} = charge_map, config) when not is_nil(card),
     do: create_charge(charge_map, config)
 
-  def create(%Charge{card_token: card_token} = charge_map, %PINXS{} = config)
+  def create(%Charge{card_token: card_token} = charge_map, config)
       when not is_nil(card_token),
       do: create_charge(charge_map, config)
 
-  def create(%Charge{customer_token: customer_token} = charge_map, %PINXS{} = config)
+  def create(%Charge{customer_token: customer_token} = charge_map, config)
       when not is_nil(customer_token),
       do: create_charge(charge_map, config)
 
-  defp create_charge(charge_map, %PINXS{} = config) do
+  defp create_charge(charge_map, config) do
     API.post("/charges", charge_map, __MODULE__, config)
   end
 
   @doc """
   Retrieves a paginated list of charges
   """
-  def get_all(%PINXS{} = config) do
+  def get_all(config) do
     API.get("/charges", __MODULE__, config)
   end
 
   @doc """
   Retrieves a specific pages of charges
   """
-  def get_all(page, %PINXS{} = config) do
+  def get_all(page, config) do
     API.get("/charges?page=#{page}", __MODULE__, config)
   end
 
   @doc """
   Retrieves a single charge
   """
-  def get(token, %PINXS{} = config) do
+  def get(token, config) do
     API.get("/charges/#{token}", __MODULE__, config)
   end
 
@@ -139,7 +139,7 @@ defmodule PINXS.Charges.Charge do
   ```
   """
 
-  def search(query_map, %PINXS{} = config) do
+  def search(query_map, config) do
     API.search("/charges/search", query_map, __MODULE__, config)
   end
 end

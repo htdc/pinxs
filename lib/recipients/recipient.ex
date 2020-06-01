@@ -37,20 +37,19 @@ defmodule PINXS.Recipients.Recipient do
   @doc """
   Create a recipient
   """
-  @spec create(Recipient.t(), PINXS.t()) :: {:ok, Recipient.t()} | {:error, PINXS.Error.t()}
-  def create(%Recipient{bank_account: bank_account} = recipient, %PINXS{} = config) when not is_nil(bank_account) do
+  def create(%Recipient{bank_account: bank_account} = recipient, %PINXS{} = config)
+      when not is_nil(bank_account) do
     API.post("/recipients", recipient, __MODULE__, config)
   end
 
-  def create(%Recipient{bank_account_token: bank_account_token} = recipient, %PINXS{} = config) when not is_nil(bank_account_token) do
+  def create(%Recipient{bank_account_token: bank_account_token} = recipient, %PINXS{} = config)
+      when not is_nil(bank_account_token) do
     API.post("/recipients", recipient, __MODULE__, config)
   end
-
 
   @doc """
   Gets a recipient
   """
-  @spec get(String.t(), PINXS.t()) :: {:ok, Recipient.t} | {:error, PINXS.Error.t}
   def get(recipient_token, %PINXS{} = config) do
     API.get("/recipients/#{recipient_token}", __MODULE__, config)
   end
@@ -58,7 +57,6 @@ defmodule PINXS.Recipients.Recipient do
   @doc """
   Gets a paginated list of recipients
   """
-  @spec get_all(PINXS.t()) :: {:ok, [Recipient.t]} | {:error, PINXS.Error.t}
   def get_all(%PINXS{} = config) do
     API.get("/recipients", __MODULE__, config)
   end
@@ -73,7 +71,7 @@ defmodule PINXS.Recipients.Recipient do
   @doc """
   Update recipient details
   """
-  def update_recipient(%Recipient{ token: token}, params, %PINXS{} = config) do
+  def update_recipient(%Recipient{token: token}, params, %PINXS{} = config) do
     API.put("/recipients/#{token}", params, __MODULE__, config)
   end
 end

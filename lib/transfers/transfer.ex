@@ -21,25 +21,25 @@ defmodule PINXS.Transfers.Transfer do
     :total_credits,
     :total_debits
   ]
+
   @type t :: %__MODULE__{
-    amount: integer(),
-    bank_account: nil | PINXS.BankAccounts.BankAccount,
-    created_at: nil | String.t,
-    currency: nil | String.t,
-    description: nil | String.t,
-    paid_at: nil | String.t,
-    recipient: String.t,
-    reference: nil | String.t,
-    status: nil | String.t,
-    token: nil | String.t,
-    total_credits: nil | integer(),
-    total_debits: nil | integer()
-  }
+          amount: integer(),
+          bank_account: nil | PINXS.BankAccounts.BankAccount,
+          created_at: nil | String.t(),
+          currency: nil | String.t(),
+          description: nil | String.t(),
+          paid_at: nil | String.t(),
+          recipient: String.t(),
+          reference: nil | String.t(),
+          status: nil | String.t(),
+          token: nil | String.t(),
+          total_credits: nil | integer(),
+          total_debits: nil | integer()
+        }
 
   @doc """
   Create a transfer
   """
-  @spec create(Transfer.t(), PINXS.t()) :: {:ok, Transfer.t} | {:error, PINXS.Error.t}
   def create(%Transfer{currency: "AUD"} = transfer, %PINXS{} = config) do
     API.post("/transfers", transfer, __MODULE__, config)
   end
@@ -52,7 +52,6 @@ defmodule PINXS.Transfers.Transfer do
   @doc """
   Gets a transfer
   """
-  @spec get(String.t(), PINXS.t()) :: {:ok, Transfer.t} | {:error, PINXS.Error.t}
   def get(transfer_token, %PINXS{} = config) do
     API.get("/transfers/#{transfer_token}", __MODULE__, config)
   end
@@ -60,7 +59,6 @@ defmodule PINXS.Transfers.Transfer do
   @doc """
   Gets a paginated list of transfers
   """
-  @spec get_all(PINXS.t()) :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t}
   def get_all(%PINXS{} = config) do
     API.get("/transfers", __MODULE__, config)
   end
@@ -68,17 +66,15 @@ defmodule PINXS.Transfers.Transfer do
   @doc """
   Gets a specific pages of transfers
   """
-  @spec get_all(non_neg_integer(), PINXS.t()) :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t}
   def get_all(page, %PINXS{} = config) when is_integer(page) do
     API.get("/transfers?page=#{page}", __MODULE__, config)
   end
 
-  @spec get_line_items(String.t(), PINXS.t()) :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t}
   def get_line_items(transfer_token, %PINXS{} = config) do
-    API.get("/transfers/#{transfer_token}/line_items",__MODULE__, config)
+    API.get("/transfers/#{transfer_token}/line_items", __MODULE__, config)
   end
 
-    @doc """
+  @doc """
   Retrieve transfers based on search criteria
 
   ## Search options
@@ -93,7 +89,6 @@ defmodule PINXS.Transfers.Transfer do
   ```
   """
 
-  @spec search(map(), PINXS.t()) :: {:ok, map()} | {:error, PINXS.Error.t()}
   def search(query_map, %PINXS{} = config) do
     API.search("/transfers/search", query_map, __MODULE__, config)
   end

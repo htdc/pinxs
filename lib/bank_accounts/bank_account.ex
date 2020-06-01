@@ -21,11 +21,9 @@ defmodule PINXS.BankAccounts.BankAccount do
           branch: String.t()
         }
 
-
   @doc """
   Create a bank account
   """
-  @spec create(BankAccount.t(), PINXS.t()) :: {:ok, BankAccount.t} | {:error, PINXS.Error.t}
   def create(%BankAccount{} = bank_account, %PINXS{} = config) do
     API.post("/bank_accounts", bank_account, __MODULE__, config)
   end

@@ -45,7 +45,6 @@ defmodule PINXS.MixProject do
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:exvcr, "~> 0.10", only: :test},
       {:gun, "> 1.3.0"},
-      {:mix_test_watch, "~> 0.6", only: :dev},
       {:nug, "> 0.3.0", only: [:dev, :test]},
       {:httpoison, "~> 1.2.0"},
       {:poison, "~> 3.1"},

@@ -13,7 +13,7 @@ defmodule PINXS.Webhooks.Webhook do
   ```
   """
 
-  @derive [Poison.Encoder]
+  @derive [Poison.Encoder, Jason.Encoder]
   defstruct [
     :url,
     :token,
@@ -33,19 +33,19 @@ defmodule PINXS.Webhooks.Webhook do
   @doc """
   Creates a webhook
   """
-  def create(%Webhook{} = webhook, %PINXS{} = config) do
+  def create(%Webhook{} = webhook, config) do
     API.post("/webhook_endpoints", webhook, __MODULE__, config)
   end
 
-  def delete(token, %PINXS{} = config) do
+  def delete(token, config) do
     API.delete("/webhook_endpoints/#{token}", __MODULE__, config)
   end
 
-  def get(%PINXS{} = config) do
+  def get(config) do
     API.get("/webhook_endpoints", __MODULE__, config)
   end
 
-  def get(token, %PINXS{} = config) do
+  def get(token, config) do
     API.get("/webhook_endpoints/#{token}", __MODULE__, config)
   end
 end

@@ -6,7 +6,7 @@ defmodule PINXS.Transfers.Transfer do
   Proived functions for creating and working with transfers
   """
 
-  @derive [Poison.Encoder]
+  @derive [Poison.Encoder, Jason.Encoder]
   defstruct [
     :amount,
     :bank_account,
@@ -40,11 +40,11 @@ defmodule PINXS.Transfers.Transfer do
   @doc """
   Create a transfer
   """
-  def create(%Transfer{currency: "AUD"} = transfer, %PINXS{} = config) do
+  def create(%Transfer{currency: "AUD"} = transfer, config) do
     API.post("/transfers", transfer, __MODULE__, config)
   end
 
-  def create(%Transfer{} = transfer, %PINXS{} = config) do
+  def create(%Transfer{} = transfer, config) do
     Map.put(transfer, :currency, "AUD")
     |> create(config)
   end
@@ -52,25 +52,30 @@ defmodule PINXS.Transfers.Transfer do
   @doc """
   Gets a transfer
   """
-  def get(transfer_token, %PINXS{} = config) do
+  def get(transfer_token, config) do
     API.get("/transfers/#{transfer_token}", __MODULE__, config)
   end
 
   @doc """
   Gets a paginated list of transfers
   """
-  def get_all(%PINXS{} = config) do
+  def get_all(config) do
     API.get("/transfers", __MODULE__, config)
   end
 
+  @spec get_all(integer, %{
+          :__struct__ => PINXS | Tesla.Client,
+          optional(:api_key) => binary,
+          optional(:url) => binary
+        }) :: {:error, PINXS.Error.t()} | {:ok, %{:__struct__ => atom, optional(atom) => any}}
   @doc """
   Gets a specific pages of transfers
   """
-  def get_all(page, %PINXS{} = config) when is_integer(page) do
+  def get_all(page, config) when is_integer(page) do
     API.get("/transfers?page=#{page}", __MODULE__, config)
   end
 
-  def get_line_items(transfer_token, %PINXS{} = config) do
+  def get_line_items(transfer_token, config) do
     API.get("/transfers/#{transfer_token}/line_items", __MODULE__, config)
   end
 
@@ -89,7 +94,11 @@ defmodule PINXS.Transfers.Transfer do
   ```
   """
 
-  def search(query_map, %PINXS{} = config) do
+  def search(query_map, %Tesla.Client{} = config) do
+    API.search("/transfers/search", Map.to_list(query_map), __MODULE__, config)
+  end
+
+  def search(query_map, config) do
     API.search("/transfers/search", query_map, __MODULE__, config)
   end
 end

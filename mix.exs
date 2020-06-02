@@ -47,7 +47,7 @@ defmodule PINXS.MixProject do
       {:exvcr, "~> 0.10", only: :test},
       {:gun, "> 1.3.0"},
       {:jason, "> 1.2.0"},
-      {:nug, ">= 0.3.3", only: [:dev, :test]},
+      {:nug, "0.3.4", only: [:dev, :test]},
       {:httpoison, "~> 1.2.0"},
       {:poison, "~> 3.1"},
       {:tesla, "> 1.3.0"}

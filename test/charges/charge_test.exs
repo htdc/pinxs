@@ -238,18 +238,6 @@ defmodule PINXS.Charges.ChargeTest do
       end
     end
 
-    # TODO fix -> need a used card token to try and reuse
-    # test "Create a charge with a used token", %{charge: charge, card_token: card_token} do
-    #   with_proxy(PINXS.Client.test_url(), "test/fixtures/charge_with_used_card_token.fixture") do
-    #     client = client(address)
-    #     charge_map = %{charge | card_token: card_token}
-    #     {:error, err} = Charge.create(charge_map, client)
-
-    #     assert err.error_description ==
-    #              "Token already used. Card tokens can only be used once, to create a charge or assign a card to a customer"
-    #   end
-    # end
-
     test "Create a charge with a card token", %{card: card_map, charge: charge} do
       with_proxy(PINXS.Client.test_url(), "test/fixtures/charge_with_card_token.fixture") do
         {:ok, card} = Card.create(card_map, client(address))

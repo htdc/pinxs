@@ -2,7 +2,7 @@ defmodule PINXS.BankAccounts.BankAccount do
   alias PINXS.HTTP.API
   alias __MODULE__
 
-  @derive [Poison.Encoder]
+  @derive [Poison.Encoder, Jason.Encoder]
   defstruct [
     :token,
     :name,
@@ -24,7 +24,7 @@ defmodule PINXS.BankAccounts.BankAccount do
   @doc """
   Create a bank account
   """
-  def create(%BankAccount{} = bank_account, %PINXS{} = config) do
+  def create(%BankAccount{} = bank_account, config) do
     API.post("/bank_accounts", bank_account, __MODULE__, config)
   end
 end

@@ -23,7 +23,7 @@ defmodule PINXS.Refunds.RefundTest do
       email: "hagrid@hogwarts.wiz",
       description: "Dragon eggs",
       ip_address: "127.0.0.1",
-      amount: 50000
+      amount: 50_000
     }
 
     {:ok, charge: charge, card: card}
@@ -36,7 +36,7 @@ defmodule PINXS.Refunds.RefundTest do
 
       {:ok, refund} = Refund.create(created_charge, client)
 
-      assert refund.amount == 50000
+      assert refund.amount == 50_000
       assert refund.token != nil
     end
   end

@@ -54,7 +54,7 @@ This enables us to leverage pattern matching and the `with` construct very nicel
       email: "hagrid@hogwarts.wiz",
       description: "Dragon eggs",
       ip_address: "127.0.0.1",
-      amount: 50000,
+      amount: 50_000,
       card: card
     }
 

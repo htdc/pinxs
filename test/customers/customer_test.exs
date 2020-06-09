@@ -105,7 +105,7 @@ defmodule PINXS.Customers.CustomerTest do
         email: "hagrid@hogwarts.wiz",
         description: "Dragon eggs",
         ip_address: "127.0.0.1",
-        amount: 50000,
+        amount: 50_000,
         customer_token: created_customer.token
       }
 

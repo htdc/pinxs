@@ -7,7 +7,7 @@ defmodule PINXS.BalanceTest do
   test "Retrieve balance" do
     with_proxy(PINXS.Client.test_url(), "test/fixtures/balance.fixture") do
       {:ok, balance} = Balance.get(client(address))
-      assert balance.available == [%{amount: 50000, currency: "AUD"}]
+      assert balance.available == [%{amount: 50_000, currency: "AUD"}]
     end
   end
 end

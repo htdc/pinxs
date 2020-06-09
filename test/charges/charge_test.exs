@@ -23,7 +23,7 @@ defmodule PINXS.Charges.ChargeTest do
       email: "hagrid@hogwarts.wiz",
       description: "Dragon eggs",
       ip_address: "127.0.0.1",
-      amount: 50000
+      amount: 50_000
     }
 
     card_token = "card_R6khtY81EZE5RiqkidVhgA"
@@ -36,7 +36,7 @@ defmodule PINXS.Charges.ChargeTest do
       client = client(address)
       charge = %{charge | card: card}
       {:ok, charge} = Charge.create(charge, client)
-      assert charge.amount == 50000
+      assert charge.amount == 50_000
       assert charge.email == "hagrid@hogwarts.wiz"
       assert charge.card.token == "card_u2vD9fa5icjORwtWm8t6dw"
       assert charge.captured == true
@@ -52,7 +52,7 @@ defmodule PINXS.Charges.ChargeTest do
       {:ok, charge} = Charge.create(charge_map, client(address))
 
       assert charge.captured == true
-      assert charge.amount == 50000
+      assert charge.amount == 50_000
     end
   end
 
@@ -65,7 +65,7 @@ defmodule PINXS.Charges.ChargeTest do
       {:ok, charge} = Charge.create(charge_map, client(address))
 
       assert charge.captured == true
-      assert charge.amount == 50000
+      assert charge.amount == 50_000
     end
   end
 
@@ -101,7 +101,7 @@ defmodule PINXS.Charges.ChargeTest do
 
       %{items: [charge | _]} = charges
 
-      assert charge.amount == 50000
+      assert charge.amount == 50_000
       assert length(charges.items) == 25
     end
   end

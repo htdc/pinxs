@@ -38,13 +38,14 @@ defmodule PINXS.Client do
   - `adapter` Allows you to use a different `Tesla.Adapter` to the default which is `Tesla.Adapter.Gun`
   """
   def new(%PINXS{} = secrets, url, adapter), do: new(secrets.api_key, url, adapter)
+  def new(api_key, url, adapter) when is_binary(api_key) do
     middleware = [
       Tesla.Middleware.Query,
-      {Tesla.Middleware.BasicAuth, [username: secrets.api_key]},
+      {Tesla.Middleware.BasicAuth, [username: api_key]},
       {Tesla.Middleware.BaseUrl, url},
-      Tesla.Middleware.KeepRequest,
+      PINXS.Middleware.KeepRequest,
       Tesla.Middleware.Compression,
-      Tesla.Middleware.Logger,
+      {Tesla.Middleware.Logger, [filter_headers: ["authorization"]]},
       PINXS.Middleware.Normalize,
       {Tesla.Middleware.JSON, [engine_opts: [keys: :atoms]]}
     ]

@@ -59,7 +59,7 @@ This enables us to leverage pattern matching and the `with` construct very nicel
     }
 
     with {:ok, created_order} <- Repo.insert(order),
-         {:ok, created_charge} <- Charge.create(charge, PINXS.config("MY API KEY")),
+         {:ok, created_charge} <- Charge.create(charge, PINXS.Client.new("MY API KEY")),
          {:ok, paid_order} <- Order.mark_paid(created_order, created_charge),
          {:ok, _email} <- Mailer.send("receipt", created_charge),
          {:ok, _email} <- Mailer.send("notify_fulfullment_team", order)
@@ -79,12 +79,10 @@ This enables us to leverage pattern matching and the `with` construct very nicel
 
 ## Testing
 
-All of the HTTP request / responses have been stored using ExVCR, this makes it relatively easy to test.
+All of the HTTP request / responses have been stored using Nug, this makes it relatively easy to test.
 
 If you need to make changes to the stored responses, then you'll need to set your Pin API key as an environment variable.
 
 ```shell
 export PIN_API_KEY=mykey
 ```
-
-And then you can run `mix vcr.delete` to remove all the stored response and work with your own set

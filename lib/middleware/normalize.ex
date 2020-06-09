@@ -1,4 +1,5 @@
 defmodule PINXS.Middleware.Normalize do
+  @behaviour Tesla.Middleware
   alias Tesla.Env
 
   def call(%Env{} = env, next, _options) do

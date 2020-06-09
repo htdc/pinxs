@@ -1,4 +1,7 @@
 defmodule PINXS.BankAccounts.BankAccount do
+  @moduledoc """
+  Used for interacting with BankAccounts in Pin Payments
+  """
   alias PINXS.HTTP.API
   alias __MODULE__
 

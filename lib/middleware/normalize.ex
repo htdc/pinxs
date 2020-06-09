@@ -1,4 +1,10 @@
 defmodule PINXS.Middleware.Normalize do
+  @moduledoc """
+  Transforms HTTP responses from Tesla in {:ok, response} / {:error, reason} tuples
+
+  The allows us to pattern match without having to also check every
+  request was a `2xx` response
+  """
   @behaviour Tesla.Middleware
   alias Tesla.Env
 

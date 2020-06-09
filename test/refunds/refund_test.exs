@@ -1,6 +1,6 @@
 defmodule PINXS.Refunds.RefundTest do
   use ExUnit.Case, async: true
-  use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
+
   alias PINXS.Cards.Card
   alias PINXS.Charges.Charge
   alias PINXS.Refunds.Refund
@@ -30,11 +30,11 @@ defmodule PINXS.Refunds.RefundTest do
   end
 
   test "Create a refund", %{charge: charge, card: card} do
-    use_cassette("refunds/create") do
-      {:ok, created_charge} =
-        Charge.create(%{charge | card: card}, PINXS.config("api_key", :test))
+    with_proxy(PINXS.Client.test_url(), "test/fixtures/refunds/create.fixture") do
+      client = client(address)
+      {:ok, created_charge} = Charge.create(%{charge | card: card}, client)
 
-      {:ok, refund} = Refund.create(created_charge, PINXS.config("api_key", :test))
+      {:ok, refund} = Refund.create(created_charge, client)
 
       assert refund.amount == 50000
       assert refund.token != nil
@@ -42,88 +42,35 @@ defmodule PINXS.Refunds.RefundTest do
   end
 
   test "Get all refunds" do
-    use_cassette("refunds/get_all") do
-      {:ok, refunds} = Refund.get_all(PINXS.config("api_key", :test))
+    with_proxy(PINXS.Client.test_url(), "test/fixtures/refunds/get_all.fixture") do
+      {:ok, refunds} = Refund.get_all(client(address))
 
-      assert length(refunds.items) == 10
+      assert length(refunds.items) == 25
     end
   end
 
   test "Get a refund", %{charge: charge, card: card} do
-    use_cassette("refunds/get_one") do
-      {:ok, created_charge} =
-        Charge.create(%{charge | card: card}, PINXS.config("api_key", :test))
+    with_proxy(PINXS.Client.test_url(), "test/fixtures/refunds/get_one.fixture") do
+      client = client(address)
+      {:ok, created_charge} = Charge.create(%{charge | card: card}, client)
 
-      {:ok, refund} = Refund.create(created_charge, PINXS.config("api_key", :test))
+      {:ok, refund} = Refund.create(created_charge, client)
 
-      {:ok, retrieved_refund} = Refund.get(refund, PINXS.config("api_key", :test))
+      {:ok, retrieved_refund} = Refund.get(refund, client)
 
       assert refund == retrieved_refund
     end
   end
 
   test "Get refunds for a charge", %{charge: charge, card: card} do
-    use_cassette("refunds/get_refunds_for_charge") do
-      {:ok, created_charge} =
-        Charge.create(%{charge | card: card}, PINXS.config("api_key", :test))
+    with_proxy(PINXS.Client.test_url(), "test/fixtures/refunds/get_refunds_for_charge.fixture") do
+      client = client(address)
+      {:ok, created_charge} = Charge.create(%{charge | card: card}, client)
 
-      {:ok, refund} = Refund.create(created_charge, PINXS.config("api_key", :test))
+      {:ok, refund} = Refund.create(created_charge, client)
 
-      {:ok, retrieved_refunds} =
-        Refund.get_all_for_charge(created_charge, PINXS.config("api_key", :test))
-
+      {:ok, retrieved_refunds} = Refund.get_all_for_charge(created_charge, client)
       assert [refund] == retrieved_refunds.items
-    end
-  end
-
-  describe "new client" do
-    test "Create a refund", %{charge: charge, card: card} do
-      with_proxy(PINXS.Client.test_url(), "test/fixtures/refunds/create.fixture") do
-        client = client(address)
-        {:ok, created_charge} =
-          Charge.create(%{charge | card: card}, client)
-
-        {:ok, refund} = Refund.create(created_charge, client)
-
-        assert refund.amount == 50000
-        assert refund.token != nil
-      end
-    end
-
-    test "Get all refunds" do
-      with_proxy(PINXS.Client.test_url(), "test/fixtures/refunds/get_all.fixture") do
-        {:ok, refunds} = Refund.get_all(client(address))
-
-        assert length(refunds.items) == 25
-      end
-    end
-
-    test "Get a refund", %{charge: charge, card: card} do
-      with_proxy(PINXS.Client.test_url(), "test/fixtures/refunds/get_one.fixture") do
-        client = client(address)
-        {:ok, created_charge} =
-          Charge.create(%{charge | card: card}, client)
-
-        {:ok, refund} = Refund.create(created_charge, client)
-
-        {:ok, retrieved_refund} = Refund.get(refund, client)
-
-        assert refund == retrieved_refund
-      end
-    end
-
-    test "Get refunds for a charge", %{charge: charge, card: card} do
-      with_proxy(PINXS.Client.test_url(), "test/fixtures/refunds/get_refunds_for_charge.fixture") do
-        client = client(address)
-        {:ok, created_charge} =
-          Charge.create(%{charge | card: card}, client)
-
-        {:ok, refund} = Refund.create(created_charge, client)
-
-        {:ok, retrieved_refunds} =
-          Refund.get_all_for_charge(created_charge, client)
-        assert [refund] == retrieved_refunds.items
-      end
     end
   end
 end

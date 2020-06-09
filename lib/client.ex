@@ -38,6 +38,7 @@ defmodule PINXS.Client do
   - `adapter` Allows you to use a different `Tesla.Adapter` to the default which is `Tesla.Adapter.Gun`
   """
   def new(%PINXS{} = secrets, url, adapter), do: new(secrets.api_key, url, adapter)
+
   def new(api_key, url, adapter) when is_binary(api_key) do
     middleware = [
       Tesla.Middleware.Query,
@@ -67,6 +68,9 @@ defmodule PINXS.Client do
     "https://api.pin.net.au/1"
   end
 
+  @doc """
+  Test URL for communicating with Pin Payments
+  """
   def test_url do
     "https://test-api.pin.net.au/1"
   end

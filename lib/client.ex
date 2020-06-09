@@ -9,7 +9,11 @@ defmodule PINXS.Client do
   - `secrets` is [`%PINXS{}`](`PINXS`) struct
   """
   def new(%PINXS{} = secrets) do
-    new(secrets, default_url(), default_adapter())
+    new(secrets.api_key, default_url(), default_adapter())
+  end
+
+  def new(api_key) when is_binary(api_key) do
+    new(api_key, default_url(), default_adapter())
   end
 
   @doc """
@@ -19,7 +23,11 @@ defmodule PINXS.Client do
   - `url` allows you to override the URL where requests will be sent.  Useful for testing
   """
   def new(%PINXS{} = secrets, url) do
-    new(secrets, url, default_adapter())
+    new(secrets.api_key, url, default_adapter())
+  end
+
+  def new(api_key, url) when is_binary(api_key) do
+    new(api_key, url, default_adapter())
   end
 
   @doc """
@@ -29,7 +37,7 @@ defmodule PINXS.Client do
   - `url` allows you to override the URL where requests will be sent.  Useful for testing
   - `adapter` Allows you to use a different `Tesla.Adapter` to the default which is `Tesla.Adapter.Gun`
   """
-  def new(%PINXS{} = secrets, url, adapter) do
+  def new(%PINXS{} = secrets, url, adapter), do: new(secrets.api_key, url, adapter)
     middleware = [
       Tesla.Middleware.Query,
       {Tesla.Middleware.BasicAuth, [username: secrets.api_key]},

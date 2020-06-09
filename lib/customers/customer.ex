@@ -18,7 +18,7 @@ defmodule PINXS.Customers.Customer do
   - card_token
   """
 
-  @derive [Poison.Encoder, Jason.Encoder]
+  @derive [Jason.Encoder]
   defstruct [
     :email,
     :card,

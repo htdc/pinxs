@@ -6,7 +6,7 @@ defmodule PINXS.Transfers.Transfer do
   Proived functions for creating and working with transfers
   """
 
-  @derive [Poison.Encoder, Jason.Encoder]
+  @derive [Jason.Encoder]
   defstruct [
     :amount,
     :bank_account,

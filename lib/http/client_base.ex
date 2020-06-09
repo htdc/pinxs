@@ -6,22 +6,27 @@ defmodule PINXS.HTTP.ClientBase do
     base_url <> path
   end
 
+  @deprecated "Using the HTTPoison client is deprecated, and will be removed in 3.x, please use PINXS.Client instead"
   def authenticated_delete(url, config) do
     delete(pin_url(url, config), transform_config(config), []) |> normalize()
   end
 
+  @deprecated "Using the HTTPoison client is deprecated, and will be removed in 3.x, please use PINXS.Client instead"
   def authenticated_get(url, config) do
     get(pin_url(url, config), transform_config(config), []) |> normalize()
   end
 
+  @deprecated "Using the HTTPoison client is deprecated, and will be removed in 3.x, please use PINXS.Client instead"
   def authenticated_post(url, params, config) do
     post(pin_url(url, config), params, transform_config(config)) |> normalize()
   end
 
+  @deprecated "Using the HTTPoison client is deprecated, and will be removed in 3.x, please use PINXS.Client instead"
   def authenticated_put(url, params, config) do
     put(pin_url(url, config), params, transform_config(config)) |> normalize()
   end
 
+  @deprecated "Using the HTTPoison client is deprecated, and will be removed in 3.x, please use PINXS.Client instead"
   def authenticated_search(url, body, config) do
     request(:get, pin_url(url, config), body, transform_config(config)) |> normalize()
   end

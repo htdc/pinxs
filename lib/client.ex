@@ -1,6 +1,6 @@
 defmodule PINXS.Client do
   @moduledoc """
-  Used for building a Tesla client for use with the Spreedly API
+  Used for building a Tesla client for use with the Pin Payments API
   """
 
   @doc """

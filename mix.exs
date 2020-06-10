@@ -4,7 +4,7 @@ defmodule PINXS.MixProject do
   def project do
     [
       app: :pinxs,
-      version: "2.1.0",
+      version: "3.0.0",
       elixir: "~> 1.6",
       source_url: "https://github.com/htdc/pinxs",
       description: """
@@ -42,14 +42,11 @@ defmodule PINXS.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
-      {:exvcr, "~> 0.10", only: :test},
+      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:gun, "> 1.3.0"},
       {:jason, "> 1.2.0"},
       {:nug, "0.3.4", only: [:dev, :test]},
-      {:httpoison, "~> 1.2.0"},
-      {:poison, "~> 3.1"},
       {:tesla, "> 1.3.0"}
     ]
   end

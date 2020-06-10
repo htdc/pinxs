@@ -19,7 +19,7 @@ defmodule PINXS.Cards.Card do
 
   """
 
-  @derive [Poison.Encoder, Jason.Encoder]
+  @derive [Jason.Encoder]
   defstruct [
     :address_city,
     :address_country,

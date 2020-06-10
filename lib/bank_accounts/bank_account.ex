@@ -5,7 +5,7 @@ defmodule PINXS.BankAccounts.BankAccount do
   alias PINXS.HTTP.API
   alias __MODULE__
 
-  @derive [Poison.Encoder, Jason.Encoder]
+  @derive [Jason.Encoder]
   defstruct [
     :token,
     :name,

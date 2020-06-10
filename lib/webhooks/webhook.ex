@@ -13,7 +13,7 @@ defmodule PINXS.Webhooks.Webhook do
   ```
   """
 
-  @derive [Poison.Encoder, Jason.Encoder]
+  @derive [Jason.Encoder]
   defstruct [
     :url,
     :token,

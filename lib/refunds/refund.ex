@@ -7,7 +7,7 @@ defmodule PINXS.Refunds.Refund do
   Provides functions for working with refunds
   """
 
-  @derive [Poison.Encoder, Jason.Encoder]
+  @derive [Jason.Encoder]
   defstruct [
     :token,
     :success,

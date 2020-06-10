@@ -26,7 +26,7 @@ defmodule PINXS.Charges.Charge do
 
   """
 
-  @derive [Poison.Encoder, Jason.Encoder]
+  @derive [Jason.Encoder]
   defstruct [
     :amount_refunded,
     :amount,

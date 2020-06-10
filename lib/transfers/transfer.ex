@@ -63,11 +63,6 @@ defmodule PINXS.Transfers.Transfer do
     API.get("/transfers", __MODULE__, config)
   end
 
-  @spec get_all(integer, %{
-          :__struct__ => PINXS | Tesla.Client,
-          optional(:api_key) => binary,
-          optional(:url) => binary
-        }) :: {:error, PINXS.Error.t()} | {:ok, %{:__struct__ => atom, optional(atom) => any}}
   @doc """
   Gets a specific pages of transfers
   """

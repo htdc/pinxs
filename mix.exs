@@ -4,7 +4,7 @@ defmodule PINXS.MixProject do
   def project do
     [
       app: :pinxs,
-      version: "2.0.3",
+      version: "2.1.0",
       elixir: "~> 1.6",
       source_url: "https://github.com/htdc/pinxs",
       description: """
@@ -12,6 +12,7 @@ defmodule PINXS.MixProject do
       """,
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      elixirc_paths: elixirc_paths(Mix.env()),
       package: package(),
       docs: [
         logo: "./images/pin_payments.png",
@@ -26,7 +27,7 @@ defmodule PINXS.MixProject do
       licenses: ["MIT"],
       maintainers: ["Martin Feckie"],
       links: %{
-        "Github"=> "https://github.com/htdc/pinxs"
+        "Github" => "https://github.com/htdc/pinxs"
       }
     ]
   end
@@ -34,7 +35,7 @@ defmodule PINXS.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger, :gun]
     ]
   end
 
@@ -44,10 +45,16 @@ defmodule PINXS.MixProject do
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
       {:exvcr, "~> 0.10", only: :test},
-      {:mix_test_watch, "~> 0.6", only: :dev},
-      {:hackney, "~> 1.12"},
+      {:gun, "> 1.3.0"},
+      {:jason, "> 1.2.0"},
+      {:nug, "0.3.4", only: [:dev, :test]},
       {:httpoison, "~> 1.2.0"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:tesla, "> 1.3.0"}
     ]
   end
+
+  # Specifies which paths to compile per environment.
+  defp elixirc_paths(:test), do: ["lib", "test/support", "test/support/test_helpers"]
+  defp elixirc_paths(_), do: ["lib"]
 end

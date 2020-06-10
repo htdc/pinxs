@@ -26,7 +26,6 @@ defmodule PINXS.HTTP.Response do
   end
 
   def transform({:ok, %{status_code: 204}}, _module), do: {:ok, true}
-  def transform({:ok, %{status: 204}}, _module), do: {:ok, true}
 
   def transform({:ok, %{body: %{response: response}}}, module) when is_list(response) do
     {:ok, Enum.map(response, &struct(module, &1))}

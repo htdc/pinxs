@@ -19,7 +19,7 @@ defmodule PINXS.Cards.Card do
 
   """
 
-  @derive [Poison.Encoder, Jason.Encoder]
+  @derive Poison.Encoder
   defstruct [
     :address_city,
     :address_country,
@@ -53,7 +53,8 @@ defmodule PINXS.Cards.Card do
   @doc """
   Creates a tokenized credit card
   """
-  def create(%Card{} = card, config) do
+  @spec create(Card.t(), PINXS.t()) :: {:ok, Card.t()} | {:error, PINXS.Error.t()}
+  def create(%Card{} = card, %PINXS{} = config) do
     API.post("/cards", card, __MODULE__, config)
   end
 end

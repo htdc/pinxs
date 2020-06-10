@@ -2,7 +2,7 @@ defmodule PINXS do
   @moduledoc """
   Convenience functions for building config structs
   """
-  @enforce_keys [:api_key]
+  @enforce_keys [:api_key, :url]
   defstruct [:api_key, :url]
 
   @type t :: %__MODULE__{

@@ -1,11 +1,8 @@
 defmodule PINXS.BankAccounts.BankAccount do
-  @moduledoc """
-  Used for interacting with BankAccounts in Pin Payments
-  """
   alias PINXS.HTTP.API
   alias __MODULE__
 
-  @derive [Poison.Encoder, Jason.Encoder]
+  @derive [Poison.Encoder]
   defstruct [
     :token,
     :name,
@@ -24,10 +21,12 @@ defmodule PINXS.BankAccounts.BankAccount do
           branch: String.t()
         }
 
+
   @doc """
   Create a bank account
   """
-  def create(%BankAccount{} = bank_account, config) do
+  @spec create(BankAccount.t(), PINXS.t()) :: {:ok, BankAccount.t} | {:error, PINXS.Error.t}
+  def create(%BankAccount{} = bank_account, %PINXS{} = config) do
     API.post("/bank_accounts", bank_account, __MODULE__, config)
   end
 end

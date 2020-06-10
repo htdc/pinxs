@@ -6,7 +6,7 @@ defmodule PINXS.Transfers.Transfer do
   Proived functions for creating and working with transfers
   """
 
-  @derive [Poison.Encoder, Jason.Encoder]
+  @derive [Poison.Encoder]
   defstruct [
     :amount,
     :bank_account,
@@ -21,30 +21,30 @@ defmodule PINXS.Transfers.Transfer do
     :total_credits,
     :total_debits
   ]
-
   @type t :: %__MODULE__{
-          amount: integer(),
-          bank_account: nil | PINXS.BankAccounts.BankAccount,
-          created_at: nil | String.t(),
-          currency: nil | String.t(),
-          description: nil | String.t(),
-          paid_at: nil | String.t(),
-          recipient: String.t(),
-          reference: nil | String.t(),
-          status: nil | String.t(),
-          token: nil | String.t(),
-          total_credits: nil | integer(),
-          total_debits: nil | integer()
-        }
+    amount: integer(),
+    bank_account: nil | PINXS.BankAccounts.BankAccount,
+    created_at: nil | String.t,
+    currency: nil | String.t,
+    description: nil | String.t,
+    paid_at: nil | String.t,
+    recipient: String.t,
+    reference: nil | String.t,
+    status: nil | String.t,
+    token: nil | String.t,
+    total_credits: nil | integer(),
+    total_debits: nil | integer()
+  }
 
   @doc """
   Create a transfer
   """
-  def create(%Transfer{currency: "AUD"} = transfer, config) do
+  @spec create(Transfer.t(), PINXS.t()) :: {:ok, Transfer.t} | {:error, PINXS.Error.t}
+  def create(%Transfer{currency: "AUD"} = transfer, %PINXS{} = config) do
     API.post("/transfers", transfer, __MODULE__, config)
   end
 
-  def create(%Transfer{} = transfer, config) do
+  def create(%Transfer{} = transfer, %PINXS{} = config) do
     Map.put(transfer, :currency, "AUD")
     |> create(config)
   end
@@ -52,34 +52,33 @@ defmodule PINXS.Transfers.Transfer do
   @doc """
   Gets a transfer
   """
-  def get(transfer_token, config) do
+  @spec get(String.t(), PINXS.t()) :: {:ok, Transfer.t} | {:error, PINXS.Error.t}
+  def get(transfer_token, %PINXS{} = config) do
     API.get("/transfers/#{transfer_token}", __MODULE__, config)
   end
 
   @doc """
   Gets a paginated list of transfers
   """
-  def get_all(config) do
+  @spec get_all(PINXS.t()) :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t}
+  def get_all(%PINXS{} = config) do
     API.get("/transfers", __MODULE__, config)
   end
 
-  @spec get_all(integer, %{
-          :__struct__ => PINXS | Tesla.Client,
-          optional(:api_key) => binary,
-          optional(:url) => binary
-        }) :: {:error, PINXS.Error.t()} | {:ok, %{:__struct__ => atom, optional(atom) => any}}
   @doc """
   Gets a specific pages of transfers
   """
-  def get_all(page, config) when is_integer(page) do
+  @spec get_all(non_neg_integer(), PINXS.t()) :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t}
+  def get_all(page, %PINXS{} = config) when is_integer(page) do
     API.get("/transfers?page=#{page}", __MODULE__, config)
   end
 
-  def get_line_items(transfer_token, config) do
-    API.get("/transfers/#{transfer_token}/line_items", __MODULE__, config)
+  @spec get_line_items(String.t(), PINXS.t()) :: {:ok, [Transfer.t]} | {:error, PINXS.Error.t}
+  def get_line_items(transfer_token, %PINXS{} = config) do
+    API.get("/transfers/#{transfer_token}/line_items",__MODULE__, config)
   end
 
-  @doc """
+    @doc """
   Retrieve transfers based on search criteria
 
   ## Search options
@@ -94,11 +93,8 @@ defmodule PINXS.Transfers.Transfer do
   ```
   """
 
-  def search(query_map, %Tesla.Client{} = config) do
-    API.search("/transfers/search", Map.to_list(query_map), __MODULE__, config)
-  end
-
-  def search(query_map, config) do
+  @spec search(map(), PINXS.t()) :: {:ok, map()} | {:error, PINXS.Error.t()}
+  def search(query_map, %PINXS{} = config) do
     API.search("/transfers/search", query_map, __MODULE__, config)
   end
 end

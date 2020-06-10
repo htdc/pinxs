@@ -1,5 +1,6 @@
 defmodule PINXS.Balance do
   alias PINXS.HTTP.API
+  alias __MODULE__
 
   @moduledoc """
   Provides a function for retrieving your balance
@@ -14,7 +15,8 @@ defmodule PINXS.Balance do
   @doc """
   Retrieves your balance information
   """
-  def get(config) do
+  @spec get(PINXS.t()) :: {:ok, Balance.t()} | {:error, PINXS.Error.t()}
+  def get(%PINXS{} = config) do
     API.get("/balance", __MODULE__, config)
   end
 end

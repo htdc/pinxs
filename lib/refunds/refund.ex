@@ -7,7 +7,7 @@ defmodule PINXS.Refunds.Refund do
   Provides functions for working with refunds
   """
 
-  @derive [Poison.Encoder]
+  @derive [Poison.Encoder, Jason.Encoder]
   defstruct [
     :token,
     :success,
@@ -33,43 +33,35 @@ defmodule PINXS.Refunds.Refund do
   @doc """
   Create a refund from a given charge
   """
-  @spec create(Charge.t(), map(), PINXS.t()) :: {:ok, Refund.t()} | {:error, PINXS.Error.t()}
-  def create(%Charge{token: token}, amount \\ %{}, %PINXS{} = config) do
+  def create(%Charge{token: token}, amount \\ %{}, config) do
     API.post("/charges/#{token}/refunds", amount, __MODULE__, config)
   end
 
   @doc """
   Retrieves a specific refunds
   """
-  @spec get(Refund.t(), PINXS.t()) :: {:ok, Refund.t()} | {:error, PINXS.Error.t()}
-  def get(%Refund{token: token}, %PINXS{} = config) do
+  def get(%Refund{token: token}, config) do
     API.get("/refunds/#{token}", __MODULE__, config)
   end
 
   @doc """
   Get a paginated list of refunds
   """
-  @spec get_all(PINXS.t()) ::
-          {:ok, %{items: [Refund.t()], count: integer()}} | {:error, PINXS.Error.t()}
-  def get_all(%PINXS{} = config) do
+  def get_all(config) do
     API.get("/refunds", __MODULE__, config)
   end
 
   @doc """
   Gets a specific page of refunds
   """
-  @spec get_all(integer(), PINXS.t()) ::
-          {:ok, %{items: [Refund.t()], count: integer()}} | {:error, PINXS.Error.t()}
-  def get_all(page, %PINXS{} = config) when is_integer(page) do
+  def get_all(page, config) when is_integer(page) do
     API.get("/refunds?page=#{page}", __MODULE__, config)
   end
 
   @doc """
   Gets refunds for a specific charge
   """
-  @spec get_all_for_charge(Charge.t(), PINXS.t()) ::
-          {:ok, %{items: [Refund.t()], count: integer()}} | {:error, PINXS.Error.t()}
-  def get_all_for_charge(%Charge{token: token}, %PINXS{} = config) do
+  def get_all_for_charge(%Charge{token: token}, config) do
     API.get("/charges/#{token}/refunds", __MODULE__, config)
   end
 end

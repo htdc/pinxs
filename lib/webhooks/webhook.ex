@@ -13,7 +13,7 @@ defmodule PINXS.Webhooks.Webhook do
   ```
   """
 
-  @derive [Poison.Encoder, Jason.Encoder]
+  @derive [Poison.Encoder]
   defstruct [
     :url,
     :token,
@@ -22,30 +22,34 @@ defmodule PINXS.Webhooks.Webhook do
     :updated_at
   ]
 
-  @type t :: %__MODULE__{
-          url: String.t(),
-          token: nil | String.t(),
-          key: nil | String.t(),
-          created_at: nil | DateTime.t(),
-          updated_at: nil | DateTime.t()
-        }
+  @type t :: %__MODULE__ {
+    url: String.t(),
+    token: nil | String.t(),
+    key: nil | String.t(),
+    created_at: nil | DateTime.t(),
+    updated_at: nil | DateTime.t()
+  }
 
   @doc """
   Creates a webhook
   """
-  def create(%Webhook{} = webhook, config) do
+  @spec create(Webhook.t(), PINXS.t()) :: {:ok, Webhook.t()} | {:error, PINXS.Error.t()}
+  def create(%Webhook{} = webhook, %PINXS{} = config) do
     API.post("/webhook_endpoints", webhook, __MODULE__, config)
   end
 
-  def delete(token, config) do
+  @spec delete(String.t(), PINXS.t()) :: {:ok, true} | {:error, PINXS.Error.t()}
+  def delete(token, %PINXS{} = config) do
     API.delete("/webhook_endpoints/#{token}", __MODULE__, config)
   end
 
-  def get(config) do
+  @spec get(PINXS.t()) :: {:ok, Webook.t() | {:error, PINXS.Error.t()}}
+  def get(%PINXS{} = config) do
     API.get("/webhook_endpoints", __MODULE__, config)
   end
 
-  def get(token, config) do
+  @spec get(String.t(), %PINXS{}) :: {:ok, Webhook.t()} | {:error, PINXS.Error.t()}
+  def get(token, %PINXS{} = config) do
     API.get("/webhook_endpoints/#{token}", __MODULE__, config)
   end
 end

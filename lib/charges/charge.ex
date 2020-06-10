@@ -26,7 +26,7 @@ defmodule PINXS.Charges.Charge do
 
   """
 
-  @derive [Poison.Encoder, Jason.Encoder]
+  @derive [Poison.Encoder]
   defstruct [
     :amount_refunded,
     :amount,
@@ -73,11 +73,13 @@ defmodule PINXS.Charges.Charge do
   @doc """
   Captures a previously authorized charge
   """
-  def capture(%Charge{} = charge, config) do
+  @spec capture(Charge.t(), PINXS.t()) :: {:ok, Charge.t()} | {:error, PINXS.Error.t()}
+  def capture(%Charge{} = charge, %PINXS{} =  config) do
     capture(charge, %{}, config)
   end
 
-  def capture(%Charge{token: token}, amount, config) do
+  @spec capture(Charge.t(), map(), PINXS.t()) :: {:ok, Charge.t()} | {:error, PINXS.Error.t()}
+  def capture(%Charge{token: token}, amount, %PINXS{} = config) do
     API.put("/charges/#{token}/capture", amount, __MODULE__, config)
   end
 
@@ -88,12 +90,12 @@ defmodule PINXS.Charges.Charge do
 
 
   """
-  def create(%Charge{card: card} = charge_map, config) when not is_nil(card),
+  @spec create(Charge.t(), PINXS.t()) :: {:ok, Charge.t()} | {:error, PINXS.Error.t()}
+  def create(%Charge{card: card} = charge_map, %PINXS{} = config) when not is_nil(card),
     do: create_charge(charge_map, config)
 
-  def create(%Charge{card_token: card_token} = charge_map, config)
-      when not is_nil(card_token),
-      do: create_charge(charge_map, config)
+  def create(%Charge{card_token: card_token} = charge_map, config) when not is_nil(card_token),
+    do: create_charge(charge_map, config)
 
   def create(%Charge{customer_token: customer_token} = charge_map, config)
       when not is_nil(customer_token),
@@ -106,21 +108,24 @@ defmodule PINXS.Charges.Charge do
   @doc """
   Retrieves a paginated list of charges
   """
-  def get_all(config) do
+  @spec get_all(PINXS.t()) :: {:ok, [Charge.t()]} | {:error, PINXS.Error.t}
+  def get_all(%PINXS{} = config) do
     API.get("/charges", __MODULE__, config)
   end
 
   @doc """
   Retrieves a specific pages of charges
   """
-  def get_all(page, config) do
+  @spec get_all(integer(), PINXS.t()) :: {:ok, [Charge.t()]} | {:error, PINXS.Error.t}
+  def get_all(page, %PINXS{} = config) do
     API.get("/charges?page=#{page}", __MODULE__, config)
   end
 
   @doc """
   Retrieves a single charge
   """
-  def get(token, config) do
+  @spec get(String.t(), PINXS.t()) :: {:ok, Charge.t()} | {:error, PINXS.Error.t()}
+  def get(token, %PINXS{} = config) do
     API.get("/charges/#{token}", __MODULE__, config)
   end
 
@@ -139,7 +144,8 @@ defmodule PINXS.Charges.Charge do
   ```
   """
 
-  def search(query_map, config) do
+  @spec search(map(), PINXS.t()) :: {:ok, map()} | {:error, PINXS.Error.t()}
+  def search(query_map, %PINXS{} =  config) do
     API.search("/charges/search", query_map, __MODULE__, config)
   end
 end

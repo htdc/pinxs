@@ -124,4 +124,18 @@ defmodule PINXS.Charges.ChargeTest do
       assert retreived_charges.items != []
     end
   end
+
+  test "Void an authed charge", %{charge: charge, card: card} do
+    with_proxy(PINXS.Client.test_url(), "test/fixtures/void-auth.fixture") do
+      {:ok, uncaptured_charge} =
+        Charge.create(%{charge | capture: false, card: card}, client(address))
+
+      assert uncaptured_charge.authorisation_voided == false
+
+      {:ok, voided_charge} = Charge.void(uncaptured_charge.token, client(address))
+
+      assert voided_charge.authorisation_voided == true
+    end
+  end
+
 end

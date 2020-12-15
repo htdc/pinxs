@@ -31,6 +31,7 @@ defmodule PINXS.Charges.Charge do
     :amount_refunded,
     :amount,
     :authorisation_expired,
+    :authorisation_voided,
     :capture,
     :captured,
     :card_token,
@@ -53,6 +54,7 @@ defmodule PINXS.Charges.Charge do
           amount_refunded: nil | integer(),
           amount: nil | integer(),
           authorisation_expired: nil | boolean(),
+          authorisation_voided: nil | boolean(),
           capture: nil | boolean(),
           captured: nil | boolean(),
           card_token: nil | String.t(),
@@ -141,5 +143,12 @@ defmodule PINXS.Charges.Charge do
 
   def search(query_map, config) do
     API.search("/charges/search", query_map, __MODULE__, config)
+  end
+
+  @doc """
+  Voids a pre-authorized charge without claiming funds
+  """
+  def void(token, config) do
+    API.put("/charges/#{token}/void", %{}, __MODULE__, config)
   end
 end

@@ -43,7 +43,7 @@ defmodule PINXS.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.16", only: :dev, runtime: false},
-      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:gun, "> 1.3.0"},
       {:jason, "> 1.2.0"},
       {:nug, "0.3.4", only: [:dev, :test]},

@@ -2,8 +2,10 @@ defmodule PINXS.Cards.CardTest do
   use ExUnit.Case, async: true
 
   alias PINXS.Cards.Card
-  use Nug
-  import PINXS.TestHelpers
+
+  use Nug,
+    upstream_url: PINXS.Client.test_url(),
+    client_builder: &PINXS.TestClient.setup/1
 
   test "Create a card" do
     card = %Card{
@@ -17,8 +19,8 @@ defmodule PINXS.Cards.CardTest do
       cvc: "321"
     }
 
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/cards.fixture") do
-      {:ok, response} = Card.create(card, client(address))
+    with_proxy("cards.fixture") do
+      {:ok, response} = Card.create(card, client)
 
       assert response.expiry_year == 2020
     end
@@ -34,8 +36,8 @@ defmodule PINXS.Cards.CardTest do
       cvc: "321"
     }
 
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/card_with_missing_field.fixture") do
-      {:error, response} = Card.create(card, client(address))
+    with_proxy("card_with_missing_field.fixture") do
+      {:error, response} = Card.create(card, client)
 
       assert response.error_description == "One or more parameters were missing or invalid"
     end

@@ -4,8 +4,10 @@ defmodule PINXS.Charges.ChargeTest do
   alias PINXS.Charges.Charge
   alias PINXS.Cards.Card
   alias PINXS.Customers.Customer
-  import PINXS.TestHelpers
-  use Nug
+
+  use Nug,
+    upstream_url: PINXS.Client.test_url(),
+    client_builder: &PINXS.TestClient.setup/1
 
   setup do
     card = %Card{
@@ -32,8 +34,7 @@ defmodule PINXS.Charges.ChargeTest do
   end
 
   test "Create a charge with full card details", %{card: card, charge: charge} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/create_charge.fixture") do
-      client = client(address)
+    with_proxy("create_charge.fixture") do
       charge = %{charge | card: card}
       {:ok, charge} = Charge.create(charge, client)
       assert charge.amount == 50_000
@@ -44,12 +45,12 @@ defmodule PINXS.Charges.ChargeTest do
   end
 
   test "Create a charge with a card token", %{card: card_map, charge: charge} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/charge_with_card_token.fixture") do
-      {:ok, card} = Card.create(card_map, client(address))
+    with_proxy("charge_with_card_token.fixture") do
+      {:ok, card} = Card.create(card_map, client)
 
       charge_map = %{charge | card_token: card.token}
 
-      {:ok, charge} = Charge.create(charge_map, client(address))
+      {:ok, charge} = Charge.create(charge_map, client)
 
       assert charge.captured == true
       assert charge.amount == 50_000
@@ -57,12 +58,12 @@ defmodule PINXS.Charges.ChargeTest do
   end
 
   test "Create a charge with a customer token", %{charge: charge, customer: customer} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/charge_with_customer_token.fixture") do
-      {:ok, customer} = Customer.create(customer, client(address))
+    with_proxy("charge_with_customer_token.fixture") do
+      {:ok, customer} = Customer.create(customer, client)
 
       charge_map = %{charge | customer_token: customer.token}
 
-      {:ok, charge} = Charge.create(charge_map, client(address))
+      {:ok, charge} = Charge.create(charge_map, client)
 
       assert charge.captured == true
       assert charge.amount == 50_000
@@ -70,34 +71,32 @@ defmodule PINXS.Charges.ChargeTest do
   end
 
   test "Capture a charge", %{charge: charge, card: card} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/capture_full_charge.fixture") do
-      {:ok, uncaptured_charge} =
-        Charge.create(%{charge | capture: false, card: card}, client(address))
+    with_proxy("capture_full_charge.fixture") do
+      {:ok, uncaptured_charge} = Charge.create(%{charge | capture: false, card: card}, client)
 
       assert uncaptured_charge.captured == false
 
-      {:ok, captured_charge} = Charge.capture(uncaptured_charge, client(address))
+      {:ok, captured_charge} = Charge.capture(uncaptured_charge, client)
 
       assert captured_charge.captured == true
     end
   end
 
   test "Capture a partial charge", %{charge: charge, card: card} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/capture_partial_charge.fixture") do
-      {:ok, uncaptured_charge} =
-        Charge.create(%{charge | capture: false, card: card}, client(address))
+    with_proxy("capture_partial_charge.fixture") do
+      {:ok, uncaptured_charge} = Charge.create(%{charge | capture: false, card: card}, client)
 
       assert uncaptured_charge.captured == false
 
-      {:error, err} = Charge.capture(uncaptured_charge, %{amount: 200}, client(address))
+      {:error, err} = Charge.capture(uncaptured_charge, %{amount: 200}, client)
 
       assert err.error_description == "You must capture the full amount that was authorised"
     end
   end
 
   test "Get all charges" do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/get_all_charges.fixture") do
-      {:ok, charges} = Charge.get_all(client(address))
+    with_proxy("get_all_charges.fixture") do
+      {:ok, charges} = Charge.get_all(client)
 
       %{items: [charge | _]} = charges
 
@@ -107,18 +106,18 @@ defmodule PINXS.Charges.ChargeTest do
   end
 
   test "Get a specific charge", %{charge: charge, card: card} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/get_charge.fixture") do
-      {:ok, created_charge} = Charge.create(%{charge | card: card}, client(address))
+    with_proxy("get_charge.fixture") do
+      {:ok, created_charge} = Charge.create(%{charge | card: card}, client)
 
-      {:ok, retreived_charge} = Charge.get(created_charge.token, client(address))
+      {:ok, retreived_charge} = Charge.get(created_charge.token, client)
 
       assert created_charge == retreived_charge
     end
   end
 
   test "Search for a charge" do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/search_charges.fixture") do
-      {:ok, retreived_charges} = Charge.search([query: "hagrid@hogwarts.wiz"], client(address))
+    with_proxy("search_charges.fixture") do
+      {:ok, retreived_charges} = Charge.search([query: "hagrid@hogwarts.wiz"], client)
 
       assert retreived_charges.count == 25
       assert retreived_charges.items != []
@@ -126,16 +125,14 @@ defmodule PINXS.Charges.ChargeTest do
   end
 
   test "Void an authed charge", %{charge: charge, card: card} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/void-auth.fixture") do
-      {:ok, uncaptured_charge} =
-        Charge.create(%{charge | capture: false, card: card}, client(address))
+    with_proxy("void-auth.fixture") do
+      {:ok, uncaptured_charge} = Charge.create(%{charge | capture: false, card: card}, client)
 
       assert uncaptured_charge.authorisation_voided == false
 
-      {:ok, voided_charge} = Charge.void(uncaptured_charge.token, client(address))
+      {:ok, voided_charge} = Charge.void(uncaptured_charge.token, client)
 
       assert voided_charge.authorisation_voided == true
     end
   end
-
 end

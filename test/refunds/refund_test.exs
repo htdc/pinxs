@@ -4,6 +4,7 @@ defmodule PINXS.Refunds.RefundTest do
   alias PINXS.Cards.Card
   alias PINXS.Charges.Charge
   alias PINXS.Refunds.Refund
+
   use Nug,
     upstream_url: PINXS.Client.test_url(),
     client_builder: &PINXS.TestClient.setup/1
@@ -31,7 +32,7 @@ defmodule PINXS.Refunds.RefundTest do
   end
 
   test "Create a refund", %{charge: charge, card: card} do
-    with_proxy( "refunds/create.fixture") do
+    with_proxy("refunds/create.fixture") do
       {:ok, created_charge} = Charge.create(%{charge | card: card}, client)
 
       {:ok, refund} = Refund.create(created_charge, client)
@@ -42,7 +43,7 @@ defmodule PINXS.Refunds.RefundTest do
   end
 
   test "Get all refunds" do
-    with_proxy( "refunds/get_all.fixture") do
+    with_proxy("refunds/get_all.fixture") do
       {:ok, refunds} = Refund.get_all(client)
 
       assert length(refunds.items) == 25
@@ -50,7 +51,7 @@ defmodule PINXS.Refunds.RefundTest do
   end
 
   test "Get a refund", %{charge: charge, card: card} do
-    with_proxy( "refunds/get_one.fixture") do
+    with_proxy("refunds/get_one.fixture") do
       {:ok, created_charge} = Charge.create(%{charge | card: card}, client)
 
       {:ok, refund} = Refund.create(created_charge, client)
@@ -62,7 +63,7 @@ defmodule PINXS.Refunds.RefundTest do
   end
 
   test "Get refunds for a charge", %{charge: charge, card: card} do
-    with_proxy( "refunds/get_refunds_for_charge.fixture") do
+    with_proxy("refunds/get_refunds_for_charge.fixture") do
       {:ok, created_charge} = Charge.create(%{charge | card: card}, client)
 
       {:ok, refund} = Refund.create(created_charge, client)

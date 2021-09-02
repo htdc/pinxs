@@ -4,8 +4,10 @@ defmodule PINXS.Customers.CustomerTest do
   alias PINXS.Cards.Card
   alias PINXS.Customers.Customer
   alias PINXS.Charges.Charge
-  use Nug
-  import PINXS.TestHelpers
+
+  use Nug,
+    upstream_url: PINXS.Client.test_url(),
+    client_builder: &PINXS.TestClient.setup/1
 
   setup do
     card = %Card{
@@ -25,35 +27,32 @@ defmodule PINXS.Customers.CustomerTest do
   end
 
   test "Creating a customer", %{customer: customer} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/create_customer.fixture") do
-      {:ok, customer} = Customer.create(customer, client(address))
+    with_proxy("create_customer.fixture") do
+      {:ok, customer} = Customer.create(customer, client)
 
       assert customer.token == "cus_--WoYjMhIsbglISJqdNHMA"
     end
   end
 
   test "Create customer with missing information", %{card: card} do
-    with_proxy(
-      PINXS.Client.test_url(),
-      "test/fixtures/create_customer_with_missing_fields.fixture"
-    ) do
-      {:error, err} = Customer.create(%Customer{card: card}, client(address))
+    with_proxy("create_customer_with_missing_fields.fixture") do
+      {:error, err} = Customer.create(%Customer{card: card}, client)
 
       assert err.error_description == "One or more parameters were missing or invalid"
     end
   end
 
   test "Get all customers" do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/get_all_customers.fixture") do
-      {:ok, customers} = Customer.get_all(client(address))
+    with_proxy("get_all_customers.fixture") do
+      {:ok, customers} = Customer.get_all(client)
 
       assert length(customers.items) == 2
     end
   end
 
   test "Get paged customers" do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/get_paged_customers.fixture") do
-      {:ok, customers} = Customer.get_all(2, client(address))
+    with_proxy("get_paged_customers.fixture") do
+      {:ok, customers} = Customer.get_all(2, client)
 
       assert customers.items == []
       assert customers.pagination.pages == 1
@@ -61,44 +60,43 @@ defmodule PINXS.Customers.CustomerTest do
   end
 
   test "Get single customer" do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/get_customer.fixture") do
-      {:ok, customer} = Customer.get("cus_--WoYjMhIsbglISJqdNHMA", client(address))
+    with_proxy("get_customer.fixture") do
+      {:ok, customer} = Customer.get("cus_--WoYjMhIsbglISJqdNHMA", client)
 
       assert customer.email == "hagrid@hogwarts.wiz"
     end
   end
 
   test "Get a non existing customer" do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/get_non_existing_customer.fixture") do
-      {:error, response} = Customer.get("whatevs", client(address))
+    with_proxy("get_non_existing_customer.fixture") do
+      {:error, response} = Customer.get("whatevs", client)
 
       assert response.error == "not_found"
     end
   end
 
   test "Update a customer" do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/update_customer.fixture") do
-      {:ok, customer} = Customer.get("cus_--WoYjMhIsbglISJqdNHMA", client(address))
+    with_proxy("update_customer.fixture") do
+      {:ok, customer} = Customer.get("cus_--WoYjMhIsbglISJqdNHMA", client)
       to_update = %{email: "hagrid@gmail.com"}
-      {:ok, updated} = Customer.update(customer, to_update, client(address))
+      {:ok, updated} = Customer.update(customer, to_update, client)
 
       assert updated.email == "hagrid@gmail.com"
     end
   end
 
   test "Delete a customer", %{customer: customer} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/delete_customer.fixture") do
-      {:ok, created_customer} = Customer.create(customer, client(address))
+    with_proxy("delete_customer.fixture") do
+      {:ok, created_customer} = Customer.create(customer, client)
 
-      {:ok, deleted} = Customer.delete(created_customer, client(address))
+      {:ok, deleted} = Customer.delete(created_customer, client)
 
       assert deleted == true
     end
   end
 
   test "Get customer's charges", %{customer: customer} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/get_customer_charges.fixture") do
-      client = client(address)
+    with_proxy("get_customer_charges.fixture") do
       {:ok, created_customer} = Customer.create(customer, client)
 
       charge = %Charge{
@@ -118,8 +116,7 @@ defmodule PINXS.Customers.CustomerTest do
   end
 
   test "Get customer's cards", %{customer: customer} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/get_customer_cards.fixture") do
-      client = client(address)
+    with_proxy("get_customer_cards.fixture") do
       {:ok, created_customer} = Customer.create(customer, client)
 
       {:ok, %{items: [card | _]}} = Customer.get_cards(created_customer, client)
@@ -129,8 +126,7 @@ defmodule PINXS.Customers.CustomerTest do
   end
 
   test "Add card to customer", %{customer: customer, card: card} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/add_card_to_customer.fixture") do
-      client = client(address)
+    with_proxy("add_card_to_customer.fixture") do
       {:ok, created_customer} = Customer.create(customer, client)
 
       {:ok, created_card} =
@@ -145,8 +141,7 @@ defmodule PINXS.Customers.CustomerTest do
   end
 
   test "Add card to customer with token", %{customer: customer, card: card} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/add_card_token_to_customer.fixture") do
-      client = client(address)
+    with_proxy("add_card_token_to_customer.fixture") do
       {:ok, created_customer} = Customer.create(customer, client)
 
       {:ok, created_card} = Card.create(%{card | expiry_year: 2021}, client)
@@ -158,8 +153,7 @@ defmodule PINXS.Customers.CustomerTest do
   end
 
   test "Delete customer card", %{customer: customer, card: card} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/delete_customer_card.fixture") do
-      client = client(address)
+    with_proxy("delete_customer_card.fixture") do
       {:ok, created_customer} = Customer.create(customer, client)
 
       {:ok, created_card} =

@@ -2,15 +2,16 @@ defmodule PINXS.Webhooks.WebhookTest do
   use ExUnit.Case, async: true
 
   alias PINXS.Webhooks.Webhook
-  use Nug
-  import PINXS.TestHelpers
+  use Nug,
+    upstream_url: PINXS.Client.test_url(),
+    client_builder: &PINXS.TestClient.setup/1
 
   test "Creates a webhook" do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/webhooks/create.fixture") do
+    with_proxy("webhooks/create.fixture") do
       {:ok, webhook} =
         Webhook.create(
           %Webhook{url: "https://www.example.com/webhooks"},
-          client(address)
+          client
         )
 
       assert webhook.token != nil
@@ -18,8 +19,8 @@ defmodule PINXS.Webhooks.WebhookTest do
   end
 
   test "Retrieve webooks" do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/webhooks/get_all.fixture") do
-      client = client(address)
+    with_proxy("webhooks/get_all.fixture") do
+      client = client
 
       {:ok, webhook} =
         Webhook.create(
@@ -34,9 +35,7 @@ defmodule PINXS.Webhooks.WebhookTest do
   end
 
   test "Retrieve specific webhook" do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/webhooks/get.fixture") do
-      client = client(address)
-
+    with_proxy("webhooks/get.fixture") do
       {:ok, webhook} =
         Webhook.create(
           %Webhook{url: "https://www.example.com/webhooks3"},
@@ -50,9 +49,7 @@ defmodule PINXS.Webhooks.WebhookTest do
   end
 
   test "Delete webhook" do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/webhooks/delete.fixture") do
-      client = client(address)
-
+    with_proxy("webhooks/delete.fixture") do
       {:ok, webhook} =
         Webhook.create(
           %Webhook{url: "https://www.example.com/webhooks4"},

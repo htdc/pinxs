@@ -4,8 +4,9 @@ defmodule PINXS.Transfers.TransferTest do
   alias PINXS.Transfers.Transfer
   alias PINXS.BankAccounts.BankAccount
   alias PINXS.Recipients.Recipient
-  use Nug
-  import PINXS.TestHelpers
+  use Nug,
+    upstream_url: PINXS.Client.test_url(),
+    client_builder: &PINXS.TestClient.setup/1
 
   setup do
     transfer = %Transfer{
@@ -30,8 +31,7 @@ defmodule PINXS.Transfers.TransferTest do
   end
 
   test "Create a transfer", %{transfer: transfer, recipient: recipient} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/transfers/create.fixture") do
-      client = client(address)
+    with_proxy("transfers/create.fixture") do
       {:ok, created_recipient} = Recipient.create(recipient, client)
 
       {:ok, created_transfer} =
@@ -45,11 +45,7 @@ defmodule PINXS.Transfers.TransferTest do
   end
 
   test "Create a transfer with missing currency", %{transfer: transfer, recipient: recipient} do
-    with_proxy(
-      PINXS.Client.test_url(),
-      "test/fixtures/transfers/create_with_missing_currency.fixture"
-    ) do
-      client = client(address)
+    with_proxy("transfers/create_with_missing_currency.fixture") do
       {:ok, created_recipient} = Recipient.create(recipient, client)
 
       {:ok, created_transfer} =
@@ -63,27 +59,23 @@ defmodule PINXS.Transfers.TransferTest do
   end
 
   test "Get all transfers" do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/transfers/get_all.fixture") do
-      {:ok, %{items: [transfer | _]}} = Transfer.get_all(client(address))
+    with_proxy("transfers/get_all.fixture") do
+      {:ok, %{items: [transfer | _]}} = Transfer.get_all(client)
 
       assert transfer != nil
     end
   end
 
   test "Get specific page of transfers" do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/transfers/get_all_by_page.fixture") do
-      {:ok, %{items: items}} = Transfer.get_all(2, client(address))
+    with_proxy("transfers/get_all_by_page.fixture") do
+      {:ok, %{items: items}} = Transfer.get_all(2, client)
 
       assert items == []
     end
   end
 
   test "Get a transfer", %{transfer: transfer, recipient: recipient} do
-    with_proxy(
-      PINXS.Client.test_url(),
-      "test/fixtures/transfers/get_specific_transfer.fixture"
-    ) do
-      client = client(address)
+    with_proxy("transfers/get_specific_transfer.fixture") do
       {:ok, created_recipient} = Recipient.create(recipient, client)
 
       {:ok, created_transfer} =
@@ -99,9 +91,8 @@ defmodule PINXS.Transfers.TransferTest do
   end
 
   test "Search for a transfer" do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/transfers/search.fixture") do
-      {:ok, retrieved_transfers} =
-        Transfer.search(%{query: "hagrid@hogwarts.wiz"}, client(address))
+    with_proxy("transfers/search.fixture") do
+      {:ok, retrieved_transfers} = Transfer.search(%{query: "hagrid@hogwarts.wiz"}, client)
 
       assert retrieved_transfers.count == 5
       assert retrieved_transfers.items != []
@@ -109,8 +100,7 @@ defmodule PINXS.Transfers.TransferTest do
   end
 
   test "Get line items", %{transfer: transfer, recipient: recipient} do
-    with_proxy(PINXS.Client.test_url(), "test/fixtures/transfers/get_line_items.fixture") do
-      client = client(address)
+    with_proxy("transfers/get_line_items.fixture") do
       {:ok, created_recipient} = Recipient.create(recipient, client)
 
       {:ok, created_transfer} =

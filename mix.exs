@@ -46,7 +46,7 @@ defmodule PINXS.MixProject do
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:gun, "> 1.3.0"},
       {:jason, "> 1.2.0"},
-      {:nug, "0.3.4", only: [:dev, :test]},
+      {:nug, "0.4.0", only: [:dev, :test]},
       {:tesla, "> 1.3.0"}
     ]
   end

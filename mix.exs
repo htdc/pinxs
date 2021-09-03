@@ -35,7 +35,7 @@ defmodule PINXS.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :gun]
+      extra_applications: [:logger, :gun, :idna]
     ]
   end
 
@@ -43,8 +43,10 @@ defmodule PINXS.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.2", only: :dev, runtime: false},
+      {:castore, "0.1.11"},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:gun, "> 1.3.0"},
+      {:idna, "~> 6.0"},
       {:jason, "> 1.2.0"},
       {:nug, "0.4.0", only: [:dev, :test]},
       {:tesla, "> 1.3.0"}

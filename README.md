@@ -9,7 +9,7 @@ Made with love at [HotDoc](https://www.hotdoc.com.au)
 
 ![HotDoc](https://d4c51m54o196o.cloudfront.net/assets/website/logos/hotdoc-logo-b3cd790d36793669cc9d528780f46af7.svg)
 
-Documentation a (HexDocs)[https://hexdocs.pm/pinxs/]
+Documentation at [HexDocs](https://hexdocs.pm/pinxs/)
 
 ## Installation
 

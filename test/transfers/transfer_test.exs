@@ -114,4 +114,20 @@ defmodule PINXS.Transfers.TransferTest do
       assert items != []
     end
   end
+
+  test "Get line items with page", %{transfer: transfer, recipient: recipient} do
+    with_proxy("transfers/get_line_items_per_page.fixture") do
+      {:ok, created_recipient} = Recipient.create(recipient, client)
+
+      {:ok, created_transfer} =
+        Transfer.create(
+          %{transfer | currency: "AUD", recipient: created_recipient.token},
+          client
+        )
+
+      {:ok, %{items: items}} = Transfer.get_line_items(created_transfer.token, 2, client)
+
+      assert items == []
+    end
+  end
 end

@@ -71,8 +71,13 @@ defmodule PINXS.Transfers.Transfer do
   end
 
   def get_line_items(transfer_token, config) do
-    API.get("/transfers/#{transfer_token}/line_items", __MODULE__, config)
+    API.get("/transfers/#{transfer_token}/line_items?per_page=500", __MODULE__, config)
   end
+
+  def get_line_items(transfer_token, page, config) do
+    API.get("/transfers/#{transfer_token}/line_items?page=#{page}&per_page=500", __MODULE__, config)
+  end
+
 
   @doc """
   Retrieve transfers based on search criteria

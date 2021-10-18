@@ -24,7 +24,14 @@ defmodule PINXS.Webhooks.Event do
   Get webhook events
   """
   def get_all(%Tesla.Client{} = config) do
-    API.get("/events", __MODULE__, config)
+    API.get("/events?per_page=500", __MODULE__, config)
+  end
+
+  @doc """
+  Get webhook events by page
+  """
+  def get_all(page, %Tesla.Client{} = config) do
+    API.get("/events?per_page=500&page=#{page}", __MODULE__, config)
   end
 
   @doc """

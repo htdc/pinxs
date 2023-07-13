@@ -8,15 +8,19 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup elixir
-        uses: actions/setup-elixir@v1
+      # Step: Check out the code.
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step: Setup Elixir + Erlang image as the base.
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
         with:
-          elixir-version: "1.12.2" # Define the elixir version [required]
-          otp-version: "24.0" # Define the OTP version [required]
+          elixir-version: "1.14.5" # Define the elixir version [required]
+          otp-version: "25.0" # Define the OTP version [required]
       - name: Install Dependencies
         run: mix deps.get
       - name: Run Tests

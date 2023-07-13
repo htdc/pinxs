@@ -134,7 +134,7 @@ defmodule PINXS.Charges.Charge do
   @doc """
   Retrieves a single charge
   """
-  def get(token, config) do
+  def get(token, config) when is_binary(token) do
     API.get("/charges/#{token}", __MODULE__, config)
   end
 

@@ -13,7 +13,7 @@ defmodule PINXS.Charges.ChargeTest do
     card = %Card{
       number: "5520000000000000",
       expiry_month: "12",
-      expiry_year: "20",
+      expiry_year: "25",
       name: "Rubius Hagrid",
       address_line1: "The Game Keepers Cottage",
       address_city: "Hogwarts",
@@ -112,6 +112,16 @@ defmodule PINXS.Charges.ChargeTest do
       {:ok, retreived_charge} = Charge.get(created_charge.token, client)
 
       assert created_charge == retreived_charge
+    end
+  end
+
+  test "Get a charge supplying nil token", %{charge: charge, card: card} do
+    with_proxy("get_nil_charge.fixture") do
+      {:ok, created_charge} = Charge.create(%{charge | card: card}, client)
+
+      assert_raise FunctionClauseError, fn ->
+        Charge.get(nil, client)
+      end
     end
   end
 

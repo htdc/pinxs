@@ -39,7 +39,7 @@ defmodule PINXS.Charges.ChargeTest do
       {:ok, charge} = Charge.create(charge, client)
       assert charge.amount == 50_000
       assert charge.email == "hagrid@hogwarts.wiz"
-      assert charge.card.token == "card_u2vD9fa5icjORwtWm8t6dw"
+      assert charge.card.token == "card_pJ1BLE6sCmjHnCPooMA_tA"
       assert charge.captured == true
     end
   end

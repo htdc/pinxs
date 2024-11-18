@@ -11,16 +11,16 @@ defmodule PINXS.Webhooks.WebhookEventTest do
     with_proxy("webhooks/events/get_all.fixture") do
       {:ok, events} = Event.get_all(client)
 
-      assert length(events) == 8
+      assert length(events) == 75
     end
   end
 
   test "Gets webhook event" do
     with_proxy("webhooks/events/get.fixture") do
-      {:ok, event} = Event.get("evt_JV_7Ri698ge902K6AQyuCg", client)
+      {:ok, event} = Event.get("evt_4t2D3ges-DNWyaxfg0zQ8Q", client)
 
 
-      assert event.token == "evt_JV_7Ri698ge902K6AQyuCg"
+      assert event.token == "evt_4t2D3ges-DNWyaxfg0zQ8Q"
       assert event.type == "transfer.created"
     end
   end

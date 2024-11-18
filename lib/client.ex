@@ -69,13 +69,13 @@ defmodule PINXS.Client do
   Default URL for communicating with Pin Payments
   """
   def default_url do
-    "https://api.pin.net.au/1"
+    "https://api.pinpayments.com/1"
   end
 
   @doc """
   Test URL for communicating with Pin Payments
   """
   def test_url do
-    "https://test-api.pin.net.au/1"
+    "https://test-api.pinpayments.com/1"
   end
 end

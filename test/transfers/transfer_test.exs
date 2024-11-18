@@ -94,7 +94,7 @@ defmodule PINXS.Transfers.TransferTest do
     with_proxy("transfers/search.fixture") do
       {:ok, retrieved_transfers} = Transfer.search(%{query: "hagrid@hogwarts.wiz"}, client)
 
-      assert retrieved_transfers.count == 5
+      assert retrieved_transfers.count == 17
       assert retrieved_transfers.items != []
     end
   end

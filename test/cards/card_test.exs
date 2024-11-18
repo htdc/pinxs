@@ -11,7 +11,7 @@ defmodule PINXS.Cards.CardTest do
     card = %Card{
       number: "5520000000000000",
       expiry_month: "12",
-      expiry_year: "20",
+      expiry_year: "30",
       name: "Rubius Hagrid",
       address_line1: "The Game Keepers Cottage",
       address_city: "Hogwarts",
@@ -22,7 +22,7 @@ defmodule PINXS.Cards.CardTest do
     with_proxy("cards.fixture") do
       {:ok, response} = Card.create(card, client)
 
-      assert response.expiry_year == 2020
+      assert response.expiry_year == 2030
     end
   end
 

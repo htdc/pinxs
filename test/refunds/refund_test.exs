@@ -13,7 +13,7 @@ defmodule PINXS.Refunds.RefundTest do
     card = %Card{
       number: "5520000000000000",
       expiry_month: "12",
-      expiry_year: "20",
+      expiry_year: "30",
       name: "Rubius Hagrid",
       address_line1: "The Game Keepers Cottage",
       address_city: "Hogwarts",
@@ -46,7 +46,7 @@ defmodule PINXS.Refunds.RefundTest do
     with_proxy("refunds/get_all.fixture") do
       {:ok, refunds} = Refund.get_all(client)
 
-      assert length(refunds.items) == 25
+      assert length(refunds.items) == 20
     end
   end
 

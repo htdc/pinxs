@@ -13,7 +13,7 @@ defmodule PINXS.Customers.CustomerTest do
     card = %Card{
       number: "5520000000000000",
       expiry_month: "12",
-      expiry_year: "20",
+      expiry_year: "30",
       name: "Rubius Hagrid",
       address_line1: "The Game Keepers Cottage",
       address_city: "Hogwarts",
@@ -30,7 +30,7 @@ defmodule PINXS.Customers.CustomerTest do
     with_proxy("create_customer.fixture") do
       {:ok, customer} = Customer.create(customer, client)
 
-      assert customer.token == "cus_--WoYjMhIsbglISJqdNHMA"
+      assert customer.token == "cus_DGrwx9DKOevzPZ1e9dwnxg"
     end
   end
 
@@ -46,7 +46,7 @@ defmodule PINXS.Customers.CustomerTest do
     with_proxy("get_all_customers.fixture") do
       {:ok, customers} = Customer.get_all(client)
 
-      assert length(customers.items) == 2
+      assert length(customers.items) == 16
     end
   end
 
@@ -61,7 +61,7 @@ defmodule PINXS.Customers.CustomerTest do
 
   test "Get single customer" do
     with_proxy("get_customer.fixture") do
-      {:ok, customer} = Customer.get("cus_--WoYjMhIsbglISJqdNHMA", client)
+      {:ok, customer} = Customer.get("cus_xTHNEXjR1A2-8KtOKEpeyQ", client)
 
       assert customer.email == "hagrid@hogwarts.wiz"
     end
@@ -77,7 +77,7 @@ defmodule PINXS.Customers.CustomerTest do
 
   test "Update a customer" do
     with_proxy("update_customer.fixture") do
-      {:ok, customer} = Customer.get("cus_--WoYjMhIsbglISJqdNHMA", client)
+      {:ok, customer} = Customer.get("cus_01VO6LV4uIyOrwS_fcQ3Ww", client)
       to_update = %{email: "hagrid@gmail.com"}
       {:ok, updated} = Customer.update(customer, to_update, client)
 
@@ -121,7 +121,7 @@ defmodule PINXS.Customers.CustomerTest do
 
       {:ok, %{items: [card | _]}} = Customer.get_cards(created_customer, client)
 
-      assert card.expiry_year == 2020
+      assert card.expiry_year == 2030
     end
   end
 
@@ -132,11 +132,11 @@ defmodule PINXS.Customers.CustomerTest do
       {:ok, created_card} =
         Customer.add_card(
           created_customer,
-          %{card | expiry_year: 2020},
+          %{card | expiry_year: 2029},
           client
         )
 
-      assert created_card.expiry_year == 2020
+      assert created_card.expiry_year == 2029
     end
   end
 
@@ -144,11 +144,11 @@ defmodule PINXS.Customers.CustomerTest do
     with_proxy("add_card_token_to_customer.fixture") do
       {:ok, created_customer} = Customer.create(customer, client)
 
-      {:ok, created_card} = Card.create(%{card | expiry_year: 2021}, client)
+      {:ok, created_card} = Card.create(%{card | expiry_year: 2029}, client)
 
       {:ok, added_card} = Customer.add_card(created_customer, created_card.token, client)
 
-      assert added_card.expiry_year == 2021
+      assert added_card.expiry_year == 2029
     end
   end
 
@@ -159,7 +159,7 @@ defmodule PINXS.Customers.CustomerTest do
       {:ok, created_card} =
         Customer.add_card(
           created_customer,
-          %{card | expiry_year: 2021},
+          %{card | expiry_year: 2030},
           client
         )
 
